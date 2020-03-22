@@ -1,0 +1,84 @@
+openapi: '3.0.2'
+info:
+  title: API Title
+  version: '1.0'
+paths:
+  /todos:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+  /todo/{id}:
+    get:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Todo'
+        '404':
+          description: |
+            A Todo with the provided id was not found
+        '500':
+          description: | 
+            Unexpected Internal Server Error while processing request
+    post:
+      responses:
+        '200':
+          description: OK
+          content:
+            text:
+              schema:
+                $ref: '#/components/schemas/Todo'
+                description: The created todo
+        '500':
+          description: | 
+            Unexpected Internal Server Error while processing request
+    put:
+      responses:
+        '200':
+          description: OK
+          content:
+            text:
+              schema:
+                $ref: '#/components/schemas/Todo'
+                description: |
+                  Todo state before the update, empty if the Id was not found. 
+                  In this case a new todo has been created.
+        '500':
+          description: | 
+            Unexpected Internal Server Error while processing request
+    delete:
+      responses:
+        '200':
+          description: |
+            The Todo with the provided id has been deleted 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+        '404':
+          description: |
+            A Todo with the provided id was not found
+        '500':
+          description: | 
+            Unexpected Internal Server Error while processing request
+components:
+  schemas:
+    Todo:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        description:
+          type: string

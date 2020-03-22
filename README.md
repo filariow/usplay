@@ -12,3 +12,4 @@ The aim of this project is to study the following technologies:
 - Helm
 - Docker
 - Docker-Compose
+- Istio
