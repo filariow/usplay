@@ -1,0 +1,16 @@
+name: Build DumpMe Docker image
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image based on Google Distroless
+      run: docker build services/dumpme --file services/dumpme/build/container/ubuntu.Dockerfile 

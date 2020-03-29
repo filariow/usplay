@@ -1,0 +1,16 @@
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: dumpme
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: dumpme
+      version: v1
+  action: ALLOW
+  rules:
+    - to:
+      - operation:
+          paths: [ "/dumpme" ]
