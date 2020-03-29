@@ -1,0 +1,113 @@
+##################################################################################################
+# todo service
+##################################################################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.todo.name }}
+spec:
+  replicas: {{ .Values.todo.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.todo.name }}
+      version: {{ .Values.todo.version }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.todo.name }}
+        version: {{ .Values.todo.version }}
+    spec:
+      serviceAccountName: {{ .Values.todo.serviceAccountName }}
+      containers:
+      - image: {{ .Values.todo.image.repository }}
+        imagePullPolicy: {{ .Values.todo.image.pullPolicy }}
+        name: {{ .Values.todo.name }}
+        ports:
+        - containerPort: {{ .Values.todo.image.containerPort }}
+        resources:
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.todo.name }}
+  labels:
+    app: {{ .Values.todo.name }}
+spec:
+  ports:
+  - name: http
+    port: {{ .Values.todo.servicePort }}
+    targetPort: {{ .Values.todo.image.containerPort }}
+  selector:
+    app: {{ .Values.todo.name }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Values.todo.name }}
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ .Values.todo.name }}
+spec:
+  hosts:
+  {{- range .Values.ingress.hosts }}
+    - {{ .host | quote }}
+  {{- end }}
+  gateways:
+  - usplay-gateway
+  http:
+  - match:
+    - uri:
+        exact: /api/v1/todo
+      ignoreUriCase: true
+    rewrite:
+      uri: /todo
+    route:
+    - destination:
+        port:
+          number: {{ .Values.todo.servicePort }}
+        host: {{ .Values.todo.name }}
+  - match:
+    - uri:
+        prefix: /api/v1/todo/
+      ignoreUriCase: true
+    rewrite:
+      uri: /todo/
+    route:
+    - destination:
+        port:
+          number: {{ .Values.todo.servicePort }}
+        host: {{ .Values.todo.name }}
+  - match:
+    - uri:
+        exact: /api/v1/todos
+      ignoreUriCase: true
+    rewrite:
+      uri: /todos
+    route:
+    - destination:
+        port:
+          number: {{ .Values.todo.servicePort }}
+        host: {{ .Values.todo.name }}
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: {{ .Values.todo.name }}
+  namespace: {{ .Values.namespace | default "default" }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.todo.name }}
+      version: {{ .Values.todo.version }}
+  action: ALLOW
+  rules:
+    - to:
+        - operation:
+            paths: ["/todo", "/todos"]
+            methods: ["GET"]
+    - to:
+        - operation:
+            paths: ["/todo"]
+            methods: ["POST", "PUT", "DELETE"]

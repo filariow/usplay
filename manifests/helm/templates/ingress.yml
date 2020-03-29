@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: usplay-gateway
+spec:
+  selector:
+    istio: ingressgateway # use Istio default gateway implementation
+  servers:
+  - port:
+      number: {{ .Values.ingress.port }}
+      name: http
+      protocol: HTTP
+    hosts:
+    {{- range .Values.ingress.hosts }}
+      - {{ .host | quote }}
+    {{- end }}
