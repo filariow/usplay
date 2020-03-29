@@ -1,0 +1,17 @@
+namespace: default
+
+todo:
+  name: todo
+  version: v1
+  replicas: 1
+  serviceAccountName: todo
+  servicePort: 80
+  image:
+    repository: filario/usplay-api-todo:latest
+    containerPort: 8080
+    pullPolicy: Always
+
+ingress:
+  port: 80
+  hosts:
+    - host: "*"
