@@ -1,0 +1,13 @@
+# Add 'repo' label to any root file changes
+repo:
+  - ./*
+  
+# Add '@domain/core' label to any change within the 'core' package
+services:
+  - services/**/*
+
+todo:
+  - services/todo/*
+
+k8s:
+  - manifest/**/*
