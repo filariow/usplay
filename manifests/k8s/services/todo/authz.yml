@@ -1,0 +1,42 @@
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: todo
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: todo
+      version: v1
+  action: ALLOW
+  rules:
+    - from:
+      - source:
+          requestPrincipals:
+            ["testing@secure.istio.io/testing@secure.istio.io"]
+      to:
+      - operation:
+          paths: ["/todo", "/todos"]
+          methods: ["GET"]
+    - from:
+      - source:
+          requestPrincipals:
+            ["testing@secure.istio.io/testing@secure.istio.io"]
+      to:
+      - operation:
+          paths: ["/todo"]
+          methods: ["POST", "PUT", "DELETE"]
+---
+apiVersion: "security.istio.io/v1beta1"
+kind: "RequestAuthentication"
+metadata:
+  name: "jwt-example"
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: todo
+  jwtRules:
+    - issuer: "testing@secure.istio.io"
+      jwksUri: "https://raw.githubusercontent.com/istio/istio/release-1.5/security/tools/jwt/samples/jwks.json"
