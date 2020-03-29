@@ -1,0 +1,32 @@
+##################################################################################################
+# intruder service
+##################################################################################################
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: intruder
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: intruder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: intruder
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: intruder
+        version: v1
+    spec:
+      serviceAccountName: intruder
+      containers:
+      - image: bash
+        imagePullPolicy: IfNotPresent
+        name: intruder
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do sleep 60; done"]
+        resources:
