@@ -1,0 +1,68 @@
+##################################################################################################
+# dumpme service
+##################################################################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dumpme
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dumpme
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: dumpme
+        version: v1
+    spec:
+      serviceAccountName: dumpme
+      containers:
+        - image: filario/usplay-api-dumpme:latest
+          imagePullPolicy: Always
+          name: dumpme
+          ports:
+            - containerPort: 8080
+          resources:
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dumpme
+  labels:
+    app: dumpme
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  selector:
+    app: dumpme
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dumpme
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: dumpme
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - usplay-gateway
+  http:
+    - match:
+        - uri:
+            exact: /api/v1/dumpme
+          ignoreUriCase: true
+      rewrite:
+        uri: /dumpme
+      route:
+        - destination:
+            port:
+              number: 80
+            host: dumpme
