@@ -11,3 +11,6 @@ todo:
 
 k8s:
   - manifest/**/*
+
+docker:
+  - /**/*.Dockerfile
