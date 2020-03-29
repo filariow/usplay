@@ -1,0 +1,37 @@
+version: "3.7"
+services:
+  devenv:
+    user: vscode
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    ports:
+      - "10080:8080"
+
+    volumes:
+      # Update this to wherever you want VS Code to mount the folder of your project
+      - ../../../:/workspace:cached
+      # Preserve VSCode Extensions
+      - vscode_extension:/home/vscode/.vscode-server/extensions
+      - vscode_insider_extension:/home/vscode/.vscode-server-insiders/extensions
+      # Forwards the local Docker socket to the container.
+      - /var/run/docker.sock:/var/run/docker.sock
+
+    working_dir: "/workspace/services/todo"
+    cap_add:
+     - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+
+    # Overrides default command so things don't shut down after the process ends.
+    command: sleep infinity
+
+volumes:
+  vscode_extension:
+    external:
+      name: "vscode_extension_go"
+  vscode_insider_extension:
+    external:
+      name: "vscode_insiders_extension_go"
