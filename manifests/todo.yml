@@ -19,12 +19,12 @@ spec:
     spec:
       serviceAccountName: todo
       containers:
-      - image: filario/usplay-api-todo:latest
-        imagePullPolicy: Always
-        name: todo
-        ports:
-        - containerPort: 8080
-        resources:
+        - image: filario/usplay-api-todo:latest
+          imagePullPolicy: Always
+          name: todo
+          ports:
+            - containerPort: 8080
+          resources:
 ---
 apiVersion: v1
 kind: Service
@@ -34,9 +34,9 @@ metadata:
     app: todo
 spec:
   ports:
-  - name: http
-    port: 80
-    targetPort: 8080
+    - name: http
+      port: 80
+      targetPort: 8080
   selector:
     app: todo
 ---
@@ -51,40 +51,61 @@ metadata:
   name: todo
 spec:
   hosts:
-  - "*"
+    - "*"
   gateways:
-  - usplay-gateway
+    - usplay-gateway
   http:
-  - match:
-    - uri:
-        exact: /api/v1/todo
-      ignoreUriCase: true
-    rewrite:
-      uri: /todo
-    route:
-    - destination:
-        port:
-          number: 80
-        host: todo
-  - match:
-    - uri:
-        prefix: /api/v1/todo/
-      ignoreUriCase: true
-    rewrite:
-      uri: /todo/
-    route:
-    - destination:
-        port:
-          number: 80
-        host: todo
-  - match:
-    - uri:
-        exact: /api/v1/todos
-      ignoreUriCase: true
-    rewrite:
-      uri: /todos
-    route:
-    - destination:
-        port:
-          number: 80
-        host: todo
+    - match:
+        - uri:
+            exact: /api/v1/todo
+          ignoreUriCase: true
+      rewrite:
+        uri: /todo
+      route:
+        - destination:
+            port:
+              number: 80
+            host: todo
+    - match:
+        - uri:
+            prefix: /api/v1/todo/
+          ignoreUriCase: true
+      rewrite:
+        uri: /todo/
+      route:
+        - destination:
+            port:
+              number: 80
+            host: todo
+    - match:
+        - uri:
+            exact: /api/v1/todos
+          ignoreUriCase: true
+      rewrite:
+        uri: /todos
+      route:
+        - destination:
+            port:
+              number: 80
+            host: todo
+---
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: todo
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: todo
+      version: v1
+  action: ALLOW
+  rules:
+    - to:
+        - operation:
+            paths: ["/todo", "/todos"]
+            methods: ["GET"]
+    - to:
+        - operation:
+            paths: ["/todo"]
+            methods: ["POST", "PUT", "DELETE"]
