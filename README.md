@@ -13,3 +13,4 @@ The aim of this project is to study the following technologies:
 - Docker
 - Docker-Compose
 - Istio
+- Github Actions
