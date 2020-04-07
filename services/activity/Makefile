@@ -30,9 +30,10 @@ bcsvr.ubuntu:
 	docker build -t usplay/us_activity:"$$(date +%s)" -f build/container/server/ubuntu.Dockerfile .
 
 # build executables
-.PHONY: ball bcli bsvr
+.PHONY: ball bcli bsvr clean tball
 
 ball: bcli bsvr
+tball: bcli bsvr clean
 
 bcli:
 	mkdir -p bin
@@ -45,3 +46,6 @@ bsvr:
 	go mod verify
 	go get -v ./...
 	CGO_ENABLED=0 go build -ldflags="-w -s" -a -installsuffix cgo -o bin/svr_activity cmd/server/main.go
+
+clean:
+	rm -rf bin/

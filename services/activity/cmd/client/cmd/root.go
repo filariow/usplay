@@ -7,6 +7,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const defTarget = "localhost:8080"
+
 var (
 	rootCmd = &cobra.Command{
 		Use:   "usactivity_cli",
@@ -18,7 +20,7 @@ var (
 )
 
 func init() {
-	rootCmd.PersistentFlags().StringVarP(&target, "target", "t", "localhost:8080", "the address of the target server")
+	rootCmd.PersistentFlags().StringVarP(&target, "target", "t", defTarget, "the address of the target server")
 	rootCmd.AddCommand(cmdCreate)
 	rootCmd.AddCommand(cmdRead)
 	rootCmd.AddCommand(cmdUpdate)
