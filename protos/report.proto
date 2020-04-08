@@ -1,0 +1,95 @@
+syntax = "proto3";
+package gen;
+
+import "google/protobuf/timestamp.proto";
+option optimize_for = LITE_RUNTIME;
+
+// The Report service definition.
+service ReportSvc {
+    // Generates a new report
+    rpc Generate (GenerateReportRequest) returns (GenerateReportReply) {}
+    // Reads an report
+    rpc Read (ReadReportRequest) returns (ReadReportReply) {}
+    // Delete an report
+    rpc Delete (DeleteReportRequest) returns (DeleteReportReply) {}
+    // List an report
+    rpc List (ListReportsRequest) returns (ListReportsReply) {}
+}
+
+// The request message containing the report details
+message GenerateReportRequest {
+    string Name = 1;
+    TimeSpan Period = 2;
+}
+
+// The response message containing the id of the report
+message GenerateReportReply {
+    string Id = 1;
+}
+
+// The request message for the read request
+message ReadReportRequest {
+    string Id = 1;
+}
+
+// The response message to the read request
+message ReadReportReply {
+    Report report = 1;
+}
+
+// The request message for the delete request
+message DeleteReportRequest {
+    string Id = 1;
+}
+
+// The response message to the delete request
+message DeleteReportReply {
+    Report report = 1;
+}
+
+// The request message for the update request
+message UpdateReportRequest {
+    string Id = 1;
+    string Name = 2;
+    string Code = 3;
+    string Description = 4;
+}
+
+// The response message to the update request.
+// Returns the old values for the Report
+message UpdateReportReply {
+    Report report = 1;
+}
+
+// The request message for the list reports request
+message ListReportsRequest { }
+
+// The response message to the list reports request.
+message ListReportsReply {
+    repeated Report reports = 1;
+}
+
+message Report {
+    string Id = 1;
+    string Name = 2;
+    string OrderId = 3;
+    TimeSpan Period = 4;
+    repeated Activity Activities = 5;
+}
+
+message TimeSpan {
+    google.protobuf.Timestamp from = 1;
+    google.protobuf.Timestamp to = 2;
+}
+
+message Activity {
+    string Id = 1;
+    ActivityType type = 2;
+    TimeSpan period = 3;
+}
+
+message ActivityType {
+    string Id = 1;
+    string Code = 2;
+    string Name = 3;
+}
