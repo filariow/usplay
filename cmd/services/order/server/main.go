@@ -5,7 +5,7 @@ import (
 	"net"
 
 	"github.com/FrancescoIlario/usplay/internal/order/api"
-	"github.com/FrancescoIlario/usplay/pkg/order/comm"
+	"github.com/FrancescoIlario/usplay/pkg/services/order/comm"
 
 	"google.golang.org/grpc"
 )

@@ -15,7 +15,7 @@ services:
 
     volumes:
       # Update this to wherever you want VS Code to mount the folder of your project
-      - ../../../:/workspace:cached
+      - ../:/workspace:cached
       # Preserve VSCode Extensions
       - vscode_extension:/home/vscode/.vscode-server/extensions
       - vscode_insider_extension:/home/vscode/.vscode-server-insiders/extensions

@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/FrancescoIlario/usplay/pkg/report/comm"
+	"github.com/FrancescoIlario/usplay/pkg/services/report/comm"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )

@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/FrancescoIlario/usplay/internal/order/storage"
-	"github.com/FrancescoIlario/usplay/pkg/order/comm"
+	"github.com/FrancescoIlario/usplay/pkg/services/order/comm"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
