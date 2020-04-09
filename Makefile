@@ -1,19 +1,21 @@
 SHELL := /bin/bash
 
-.PHONY: all clean
+.PHONY: clean
 
 clean:
 	rm -rf ./bin/
 
-##################################################
-#################### SERVICES ####################
-##################################################
-
 # Generate gRPC cli/server code for Go
-.PHONY: protos
+.PHONY: protos containers bin
 
 protos:
 ifndef TARGET
 	TARGET=all
 endif
 	$(MAKE) -f build/protos/Makefile $(TARGET)
+
+containers:
+	$(MAKE) -f build/container/Makefile TARGET=$(TARGET)
+
+bin:
+	$(MAKE) -f build/bins/Makefile TARGET=$(TARGET) all
