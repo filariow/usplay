@@ -3,7 +3,7 @@ package api
 import (
 	"context"
 
-	"github.com/FrancescoIlario/usplay/internal/report/storage"
+	"github.com/FrancescoIlario/usplay/internal/services/report/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/report/comm"
 
 	"google.golang.org/grpc/codes"

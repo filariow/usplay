@@ -3,7 +3,7 @@ package api
 import (
 	"context"
 
-	"github.com/FrancescoIlario/usplay/internal/order/storage"
+	"github.com/FrancescoIlario/usplay/internal/services/order/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/order/comm"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"

@@ -6,12 +6,11 @@ package comm
 import (
 	context "context"
 	fmt "fmt"
-	math "math"
-
 	proto "github.com/golang/protobuf/proto"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -39,7 +38,7 @@ func (m *CreateOrderRequest) Reset()         { *m = CreateOrderRequest{} }
 func (m *CreateOrderRequest) String() string { return proto.CompactTextString(m) }
 func (*CreateOrderRequest) ProtoMessage()    {}
 func (*CreateOrderRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a684c9a0549e7832, []int{0}
+	return fileDescriptor_cd01338c35d87077, []int{0}
 }
 
 func (m *CreateOrderRequest) XXX_Unmarshal(b []byte) error {
@@ -93,7 +92,7 @@ func (m *CreateOrderReply) Reset()         { *m = CreateOrderReply{} }
 func (m *CreateOrderReply) String() string { return proto.CompactTextString(m) }
 func (*CreateOrderReply) ProtoMessage()    {}
 func (*CreateOrderReply) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a684c9a0549e7832, []int{1}
+	return fileDescriptor_cd01338c35d87077, []int{1}
 }
 
 func (m *CreateOrderReply) XXX_Unmarshal(b []byte) error {
@@ -133,7 +132,7 @@ func (m *ReadOrderRequest) Reset()         { *m = ReadOrderRequest{} }
 func (m *ReadOrderRequest) String() string { return proto.CompactTextString(m) }
 func (*ReadOrderRequest) ProtoMessage()    {}
 func (*ReadOrderRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a684c9a0549e7832, []int{2}
+	return fileDescriptor_cd01338c35d87077, []int{2}
 }
 
 func (m *ReadOrderRequest) XXX_Unmarshal(b []byte) error {
@@ -173,7 +172,7 @@ func (m *ReadOrderReply) Reset()         { *m = ReadOrderReply{} }
 func (m *ReadOrderReply) String() string { return proto.CompactTextString(m) }
 func (*ReadOrderReply) ProtoMessage()    {}
 func (*ReadOrderReply) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a684c9a0549e7832, []int{3}
+	return fileDescriptor_cd01338c35d87077, []int{3}
 }
 
 func (m *ReadOrderReply) XXX_Unmarshal(b []byte) error {
@@ -213,7 +212,7 @@ func (m *DeleteOrderRequest) Reset()         { *m = DeleteOrderRequest{} }
 func (m *DeleteOrderRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteOrderRequest) ProtoMessage()    {}
 func (*DeleteOrderRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a684c9a0549e7832, []int{4}
+	return fileDescriptor_cd01338c35d87077, []int{4}
 }
 
 func (m *DeleteOrderRequest) XXX_Unmarshal(b []byte) error {
@@ -253,7 +252,7 @@ func (m *DeleteOrderReply) Reset()         { *m = DeleteOrderReply{} }
 func (m *DeleteOrderReply) String() string { return proto.CompactTextString(m) }
 func (*DeleteOrderReply) ProtoMessage()    {}
 func (*DeleteOrderReply) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a684c9a0549e7832, []int{5}
+	return fileDescriptor_cd01338c35d87077, []int{5}
 }
 
 func (m *DeleteOrderReply) XXX_Unmarshal(b []byte) error {
@@ -296,7 +295,7 @@ func (m *UpdateOrderRequest) Reset()         { *m = UpdateOrderRequest{} }
 func (m *UpdateOrderRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateOrderRequest) ProtoMessage()    {}
 func (*UpdateOrderRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a684c9a0549e7832, []int{6}
+	return fileDescriptor_cd01338c35d87077, []int{6}
 }
 
 func (m *UpdateOrderRequest) XXX_Unmarshal(b []byte) error {
@@ -358,7 +357,7 @@ func (m *UpdateOrderReply) Reset()         { *m = UpdateOrderReply{} }
 func (m *UpdateOrderReply) String() string { return proto.CompactTextString(m) }
 func (*UpdateOrderReply) ProtoMessage()    {}
 func (*UpdateOrderReply) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a684c9a0549e7832, []int{7}
+	return fileDescriptor_cd01338c35d87077, []int{7}
 }
 
 func (m *UpdateOrderReply) XXX_Unmarshal(b []byte) error {
@@ -397,7 +396,7 @@ func (m *ListActivitiesRequest) Reset()         { *m = ListActivitiesRequest{} }
 func (m *ListActivitiesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListActivitiesRequest) ProtoMessage()    {}
 func (*ListActivitiesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a684c9a0549e7832, []int{8}
+	return fileDescriptor_cd01338c35d87077, []int{8}
 }
 
 func (m *ListActivitiesRequest) XXX_Unmarshal(b []byte) error {
@@ -430,7 +429,7 @@ func (m *ListActivitiesReply) Reset()         { *m = ListActivitiesReply{} }
 func (m *ListActivitiesReply) String() string { return proto.CompactTextString(m) }
 func (*ListActivitiesReply) ProtoMessage()    {}
 func (*ListActivitiesReply) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a684c9a0549e7832, []int{9}
+	return fileDescriptor_cd01338c35d87077, []int{9}
 }
 
 func (m *ListActivitiesReply) XXX_Unmarshal(b []byte) error {
@@ -472,7 +471,7 @@ func (m *Order) Reset()         { *m = Order{} }
 func (m *Order) String() string { return proto.CompactTextString(m) }
 func (*Order) ProtoMessage()    {}
 func (*Order) Descriptor() ([]byte, []int) {
-	return fileDescriptor_a684c9a0549e7832, []int{10}
+	return fileDescriptor_cd01338c35d87077, []int{10}
 }
 
 func (m *Order) XXX_Unmarshal(b []byte) error {
@@ -522,57 +521,55 @@ func (m *Order) GetDescription() string {
 }
 
 func init() {
-	proto.RegisterType((*CreateOrderRequest)(nil), "gen.CreateOrderRequest")
-	proto.RegisterType((*CreateOrderReply)(nil), "gen.CreateOrderReply")
-	proto.RegisterType((*ReadOrderRequest)(nil), "gen.ReadOrderRequest")
-	proto.RegisterType((*ReadOrderReply)(nil), "gen.ReadOrderReply")
-	proto.RegisterType((*DeleteOrderRequest)(nil), "gen.DeleteOrderRequest")
-	proto.RegisterType((*DeleteOrderReply)(nil), "gen.DeleteOrderReply")
-	proto.RegisterType((*UpdateOrderRequest)(nil), "gen.UpdateOrderRequest")
-	proto.RegisterType((*UpdateOrderReply)(nil), "gen.UpdateOrderReply")
-	proto.RegisterType((*ListActivitiesRequest)(nil), "gen.ListActivitiesRequest")
-	proto.RegisterType((*ListActivitiesReply)(nil), "gen.ListActivitiesReply")
-	proto.RegisterType((*Order)(nil), "gen.Order")
+	proto.RegisterType((*CreateOrderRequest)(nil), "comm.CreateOrderRequest")
+	proto.RegisterType((*CreateOrderReply)(nil), "comm.CreateOrderReply")
+	proto.RegisterType((*ReadOrderRequest)(nil), "comm.ReadOrderRequest")
+	proto.RegisterType((*ReadOrderReply)(nil), "comm.ReadOrderReply")
+	proto.RegisterType((*DeleteOrderRequest)(nil), "comm.DeleteOrderRequest")
+	proto.RegisterType((*DeleteOrderReply)(nil), "comm.DeleteOrderReply")
+	proto.RegisterType((*UpdateOrderRequest)(nil), "comm.UpdateOrderRequest")
+	proto.RegisterType((*UpdateOrderReply)(nil), "comm.UpdateOrderReply")
+	proto.RegisterType((*ListActivitiesRequest)(nil), "comm.ListActivitiesRequest")
+	proto.RegisterType((*ListActivitiesReply)(nil), "comm.ListActivitiesReply")
+	proto.RegisterType((*Order)(nil), "comm.Order")
 }
 
-func init() {
-	proto.RegisterFile("order.proto", fileDescriptor_a684c9a0549e7832)
-}
+func init() { proto.RegisterFile("order.proto", fileDescriptor_cd01338c35d87077) }
 
-var fileDescriptor_a684c9a0549e7832 = []byte{
-	// 362 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x54, 0xc1, 0x4a, 0xc3, 0x40,
-	0x10, 0x6d, 0x37, 0xa1, 0xd4, 0x29, 0x16, 0xdc, 0x10, 0x0d, 0x3d, 0x95, 0x05, 0x51, 0x0f, 0xf6,
-	0x50, 0x6f, 0x1e, 0x4a, 0xb4, 0x3d, 0x58, 0x10, 0x0f, 0x15, 0x3f, 0x60, 0xed, 0x0e, 0x65, 0xa1,
-	0x36, 0x69, 0xb3, 0x16, 0xfa, 0x95, 0xfe, 0x92, 0x6c, 0x76, 0x1b, 0xea, 0x66, 0x45, 0x7a, 0xf0,
-	0x16, 0xe6, 0xbd, 0x79, 0x6f, 0x76, 0xe6, 0x11, 0xe8, 0xf2, 0xb9, 0x92, 0x5b, 0xa9, 0x76, 0x83,
-	0x7c, 0x93, 0xa9, 0x8c, 0x06, 0x0b, 0x5c, 0x31, 0x0e, 0xf1, 0x78, 0x83, 0x5c, 0xe1, 0x83, 0x05,
-	0x67, 0xb8, 0xfe, 0xc4, 0x42, 0x51, 0x0a, 0xe1, 0x0b, 0xff, 0xc0, 0xa4, 0xd9, 0x6f, 0x5e, 0x9f,
-	0xcc, 0xca, 0x6f, 0x5d, 0x1b, 0x67, 0x02, 0x13, 0x62, 0x6a, 0xfa, 0x9b, 0xf6, 0xa1, 0x33, 0xc1,
-	0x62, 0xbe, 0x91, 0xb9, 0x92, 0xd9, 0x2a, 0x09, 0x4a, 0xe8, 0xb0, 0xc4, 0x2e, 0x21, 0x72, 0x2d,
-	0xf2, 0xe5, 0x8e, 0x76, 0x81, 0x4c, 0x85, 0x95, 0x27, 0x53, 0xa1, 0x69, 0x33, 0xe4, 0xc2, 0x9d,
-	0xc3, 0xa5, 0x8d, 0xe0, 0xec, 0x27, 0x4d, 0x6b, 0xdd, 0x40, 0x7b, 0xff, 0xb8, 0x92, 0xda, 0x19,
-	0x9e, 0x0e, 0x16, 0xb8, 0x1a, 0x54, 0xac, 0x0a, 0x66, 0x57, 0x10, 0x4f, 0x70, 0x89, 0xf5, 0x07,
-	0xbb, 0x46, 0x29, 0x44, 0x2e, 0xf1, 0x48, 0xab, 0x35, 0xc4, 0x6f, 0xb9, 0xe0, 0x7f, 0x5a, 0x55,
-	0xbb, 0x26, 0x9e, 0x5d, 0x07, 0xbf, 0xef, 0x3a, 0xac, 0xef, 0x3a, 0x85, 0xc8, 0xb5, 0x3c, 0x72,
-	0xe8, 0x0b, 0x88, 0x9f, 0x65, 0xa1, 0x2c, 0x22, 0xb1, 0xb0, 0x43, 0xb3, 0x09, 0x44, 0x2e, 0xa0,
-	0xa5, 0x6f, 0x01, 0x78, 0x55, 0x4a, 0x9a, 0xfd, 0xa0, 0x2e, 0x7e, 0x40, 0x60, 0x02, 0xda, 0xfb,
-	0xfa, 0xff, 0xad, 0x61, 0xf8, 0x45, 0xa0, 0xb3, 0xb7, 0x79, 0xdd, 0xce, 0x69, 0x0a, 0x2d, 0x13,
-	0x41, 0xda, 0x2b, 0x47, 0xf3, 0x46, 0xbe, 0x97, 0x78, 0xb1, 0x7c, 0xb9, 0x63, 0x0d, 0x7a, 0x0f,
-	0xa1, 0x8e, 0x1d, 0x35, 0x1c, 0x4f, 0x50, 0x7b, 0xe7, 0x1e, 0xc4, 0xf4, 0xa6, 0xd0, 0x32, 0x49,
-	0xb2, 0xee, 0xde, 0xfc, 0x59, 0x77, 0x4f, 0xe4, 0x8c, 0x82, 0x39, 0xab, 0x55, 0xf0, 0xc6, 0xca,
-	0x2a, 0x78, 0xee, 0xcf, 0x1a, 0x74, 0x04, 0xa1, 0xbe, 0x9e, 0xed, 0xf7, 0x5e, 0xd8, 0xf6, 0x7b,
-	0x8e, 0xcc, 0x1a, 0x8f, 0xe4, 0x29, 0x78, 0x6f, 0x95, 0xff, 0x8d, 0xbb, 0xef, 0x00, 0x00, 0x00,
-	0xff, 0xff, 0x3e, 0x41, 0x2a, 0x25, 0x49, 0x04, 0x00, 0x00,
+var fileDescriptor_cd01338c35d87077 = []byte{
+	// 365 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x53, 0x4f, 0x6b, 0xfa, 0x40,
+	0x10, 0xd5, 0x24, 0xca, 0xef, 0x37, 0x01, 0x91, 0xe9, 0xbf, 0xd4, 0x5e, 0xec, 0xd2, 0x43, 0xa1,
+	0xe0, 0x41, 0xb1, 0x27, 0x0f, 0xad, 0x7a, 0xa8, 0x50, 0x5a, 0xb0, 0xf4, 0x5a, 0x48, 0x93, 0x39,
+	0x2c, 0xa8, 0x9b, 0x26, 0x5b, 0xc1, 0x2f, 0xd7, 0xcf, 0x56, 0x76, 0xd7, 0x88, 0xd9, 0xa4, 0xc5,
+	0x4b, 0x6f, 0xcb, 0xbc, 0x37, 0x6f, 0xfe, 0xbd, 0x05, 0x5f, 0xa4, 0x31, 0xa5, 0xbd, 0x24, 0x15,
+	0x52, 0xa0, 0x17, 0x89, 0xe5, 0x92, 0xbd, 0x01, 0x4e, 0x52, 0x0a, 0x25, 0x3d, 0x2b, 0x68, 0x4e,
+	0x1f, 0x9f, 0x94, 0x49, 0x44, 0xf0, 0x9e, 0xc2, 0x25, 0x05, 0xf5, 0x6e, 0xfd, 0xfa, 0xff, 0x5c,
+	0xbf, 0x55, 0x6c, 0x22, 0x62, 0x0a, 0x1c, 0x13, 0x53, 0x6f, 0xec, 0x82, 0x3f, 0xa5, 0x2c, 0x4a,
+	0x79, 0x22, 0xb9, 0x58, 0x05, 0xae, 0x86, 0xf6, 0x43, 0x8c, 0x41, 0xbb, 0xa0, 0x9f, 0x2c, 0x36,
+	0xd8, 0x02, 0x67, 0x16, 0x6f, 0xb5, 0x9d, 0x59, 0xac, 0x38, 0x73, 0x0a, 0xe3, 0x42, 0x07, 0x36,
+	0x67, 0x00, 0xad, 0x3d, 0x8e, 0x52, 0xb9, 0x84, 0x86, 0x1e, 0x47, 0x93, 0xfc, 0xbe, 0xdf, 0x53,
+	0xf3, 0xf4, 0x0c, 0xc1, 0x20, 0xec, 0x0a, 0x70, 0x4a, 0x0b, 0xb2, 0x86, 0xb3, 0xa5, 0x87, 0xd0,
+	0x2e, 0xb0, 0x0e, 0x14, 0x5f, 0x01, 0xbe, 0x26, 0x71, 0xf8, 0xbb, 0xf8, 0x6e, 0x93, 0x4e, 0xc5,
+	0x26, 0xdd, 0x9f, 0x37, 0xe9, 0x95, 0x37, 0x39, 0x84, 0x76, 0xa1, 0xde, 0x81, 0x6d, 0x9e, 0xc1,
+	0xc9, 0x23, 0xcf, 0xe4, 0x7d, 0x24, 0xf9, 0x9a, 0x4b, 0x4e, 0xd9, 0xb6, 0x53, 0x36, 0x86, 0x23,
+	0x1b, 0x50, 0x92, 0x37, 0x00, 0xe1, 0x2e, 0x14, 0xd4, 0xbb, 0xae, 0xad, 0xbb, 0x07, 0xb3, 0x10,
+	0x1a, 0x3a, 0xf8, 0x77, 0x63, 0xf7, 0xbf, 0x1c, 0xf8, 0xa7, 0x6b, 0xbc, 0xac, 0x23, 0x1c, 0x41,
+	0xd3, 0xb8, 0x09, 0x03, 0xd3, 0x52, 0xd9, 0xbb, 0x9d, 0xd3, 0x0a, 0x24, 0x59, 0x6c, 0x58, 0x0d,
+	0x6f, 0xc1, 0x53, 0x1e, 0xc2, 0x2d, 0xc3, 0xf6, 0x5c, 0xe7, 0xb8, 0x14, 0x37, 0x79, 0x23, 0x68,
+	0x1a, 0x83, 0xe4, 0x55, 0xcb, 0xa6, 0xca, 0xab, 0xda, 0x46, 0x32, 0xd9, 0xe6, 0x6e, 0x79, 0x76,
+	0xd9, 0x35, 0x79, 0xb6, 0x7d, 0x5f, 0x56, 0xc3, 0x3b, 0xf0, 0xd4, 0x95, 0xf0, 0xc2, 0x30, 0x2a,
+	0x4f, 0xd9, 0x39, 0xaf, 0x06, 0xb5, 0xc2, 0xd8, 0x79, 0x70, 0xdf, 0x9b, 0xfa, 0xcb, 0x0f, 0xbe,
+	0x03, 0x00, 0x00, 0xff, 0xff, 0xf8, 0x58, 0x2e, 0x2c, 0x01, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ context.Context
-var _ grpc.ClientConnInterface
+var _ grpc.ClientConn
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion6
+const _ = grpc.SupportPackageIsVersion4
 
 // OrderSvcClient is the client API for OrderSvc service.
 //
@@ -591,16 +588,16 @@ type OrderSvcClient interface {
 }
 
 type orderSvcClient struct {
-	cc grpc.ClientConnInterface
+	cc *grpc.ClientConn
 }
 
-func NewOrderSvcClient(cc grpc.ClientConnInterface) OrderSvcClient {
+func NewOrderSvcClient(cc *grpc.ClientConn) OrderSvcClient {
 	return &orderSvcClient{cc}
 }
 
 func (c *orderSvcClient) Create(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderReply, error) {
 	out := new(CreateOrderReply)
-	err := c.cc.Invoke(ctx, "/gen.OrderSvc/Create", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/comm.OrderSvc/Create", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -609,7 +606,7 @@ func (c *orderSvcClient) Create(ctx context.Context, in *CreateOrderRequest, opt
 
 func (c *orderSvcClient) Read(ctx context.Context, in *ReadOrderRequest, opts ...grpc.CallOption) (*ReadOrderReply, error) {
 	out := new(ReadOrderReply)
-	err := c.cc.Invoke(ctx, "/gen.OrderSvc/Read", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/comm.OrderSvc/Read", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -618,7 +615,7 @@ func (c *orderSvcClient) Read(ctx context.Context, in *ReadOrderRequest, opts ..
 
 func (c *orderSvcClient) Delete(ctx context.Context, in *DeleteOrderRequest, opts ...grpc.CallOption) (*DeleteOrderReply, error) {
 	out := new(DeleteOrderReply)
-	err := c.cc.Invoke(ctx, "/gen.OrderSvc/Delete", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/comm.OrderSvc/Delete", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -627,7 +624,7 @@ func (c *orderSvcClient) Delete(ctx context.Context, in *DeleteOrderRequest, opt
 
 func (c *orderSvcClient) Update(ctx context.Context, in *UpdateOrderRequest, opts ...grpc.CallOption) (*UpdateOrderReply, error) {
 	out := new(UpdateOrderReply)
-	err := c.cc.Invoke(ctx, "/gen.OrderSvc/Update", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/comm.OrderSvc/Update", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -636,7 +633,7 @@ func (c *orderSvcClient) Update(ctx context.Context, in *UpdateOrderRequest, opt
 
 func (c *orderSvcClient) List(ctx context.Context, in *ListActivitiesRequest, opts ...grpc.CallOption) (*ListActivitiesReply, error) {
 	out := new(ListActivitiesReply)
-	err := c.cc.Invoke(ctx, "/gen.OrderSvc/List", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/comm.OrderSvc/List", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -691,7 +688,7 @@ func _OrderSvc_Create_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/gen.OrderSvc/Create",
+		FullMethod: "/comm.OrderSvc/Create",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderSvcServer).Create(ctx, req.(*CreateOrderRequest))
@@ -709,7 +706,7 @@ func _OrderSvc_Read_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/gen.OrderSvc/Read",
+		FullMethod: "/comm.OrderSvc/Read",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderSvcServer).Read(ctx, req.(*ReadOrderRequest))
@@ -727,7 +724,7 @@ func _OrderSvc_Delete_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/gen.OrderSvc/Delete",
+		FullMethod: "/comm.OrderSvc/Delete",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderSvcServer).Delete(ctx, req.(*DeleteOrderRequest))
@@ -745,7 +742,7 @@ func _OrderSvc_Update_Handler(srv interface{}, ctx context.Context, dec func(int
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/gen.OrderSvc/Update",
+		FullMethod: "/comm.OrderSvc/Update",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderSvcServer).Update(ctx, req.(*UpdateOrderRequest))
@@ -763,7 +760,7 @@ func _OrderSvc_List_Handler(srv interface{}, ctx context.Context, dec func(inter
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/gen.OrderSvc/List",
+		FullMethod: "/comm.OrderSvc/List",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(OrderSvcServer).List(ctx, req.(*ListActivitiesRequest))
@@ -772,7 +769,7 @@ func _OrderSvc_List_Handler(srv interface{}, ctx context.Context, dec func(inter
 }
 
 var _OrderSvc_serviceDesc = grpc.ServiceDesc{
-	ServiceName: "gen.OrderSvc",
+	ServiceName: "comm.OrderSvc",
 	HandlerType: (*OrderSvcServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

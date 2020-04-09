@@ -1,5 +1,5 @@
 syntax = "proto3";
-package gen;
+package comm;
 
 import "google/protobuf/timestamp.proto";
 option optimize_for = LITE_RUNTIME;

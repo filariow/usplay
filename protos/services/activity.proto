@@ -1,5 +1,5 @@
 syntax = "proto3";
-package gen;
+package comm;
 
 option optimize_for = LITE_RUNTIME;
 

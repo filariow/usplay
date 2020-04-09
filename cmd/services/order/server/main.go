@@ -4,7 +4,7 @@ import (
 	"log"
 	"net"
 
-	"github.com/FrancescoIlario/usplay/internal/order/api"
+	"github.com/FrancescoIlario/usplay/internal/services/order/api"
 	"github.com/FrancescoIlario/usplay/pkg/services/order/comm"
 
 	"google.golang.org/grpc"
