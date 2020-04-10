@@ -5,17 +5,24 @@ SHELL := /bin/bash
 clean:
 	rm -rf ./bin/
 
-# Generate gRPC cli/server code for Go
-.PHONY: protos containers bin
+.PHONY: protos container bin
+
+PROJECTS := activity report order
 
 protos:
+ifndef PRJ_TARGET
+	PRJ_TARGET=all
+endif
+	$(MAKE) -f build/protos/Makefile $(PRJ_TARGET)
+
+container:
 ifndef TARGET
 	TARGET=all
 endif
-	$(MAKE) -f build/protos/Makefile $(TARGET)
+	$(MAKE) -f build/container/Makefile $(TARGET) PRJ_TARGET=$(PRJ_TARGET)
 
-containers:
-	$(MAKE) -f build/container/Makefile TARGET=$(TARGET)
-
-bin:
-	$(MAKE) -f build/bins/Makefile TARGET=$(TARGET) all
+bin: 
+ifndef TARGET
+	TARGET=all
+endif
+	$(MAKE) -f build/bin/Makefile $(TARGET) PRJ_TARGET=$(PRJ_TARGET)

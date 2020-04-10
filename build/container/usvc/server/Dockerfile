@@ -2,11 +2,12 @@
 # STEP 1 build executable binary
 ############################
 FROM golang:1.14.1-buster as builder
+ARG USVC_NAME
 
 # Ensure ca-certficates are up to date
 RUN update-ca-certificates
 
-WORKDIR $GOPATH/src/usplay/api/activity
+WORKDIR $GOPATH/src/github.com/FrancescoIlario/usplay
 
 # use modules
 COPY go.mod .
@@ -18,8 +19,10 @@ RUN go mod download \
 COPY . .
 
 # Build the binary
-RUN mkdir -p /app/bin \
-    && CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -a -installsuffix cgo -o /app/bin/usplay_activity cmd/client/main.go
+RUN rm -rf ./bin \
+    && make bin PRJ_TARGET=${USVC_NAME} TARGET=srv \
+    && mkdir -p /app/bin/ \
+    && cp ./bin/${USVC_NAME}/${USVC_NAME}_srv /app/bin/usp_${USVC_NAME}_srv
 
 ############################
 # STEP 2 build a small image
@@ -27,9 +30,10 @@ RUN mkdir -p /app/bin \
 # using base nonroot image
 # user:group is nobody:nobody, uid:gid = 65534:65534
 FROM gcr.io/distroless/static
+ARG USVC_NAME
 
 # Copy our static executable
-COPY --from=builder /app/bin/usplay_activity /usr/bin/usplay_activity
+COPY --from=builder /app/bin/usp_${USVC_NAME}_srv /usr/bin/usp_${USVC_NAME}_srv
 
-# Run the hello binary.
-ENTRYPOINT ["/usr/bin/usplay_activity"]
+# Run the produced binary.
+ENTRYPOINT ["/usr/bin/usp_${USVC_NAME}_srv"]

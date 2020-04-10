@@ -2,11 +2,12 @@
 # STEP 1 build executable binary
 ############################
 FROM golang:1.14.1-buster as builder
+ARG USVC_NAME
 
 # Ensure ca-certficates are up to date
 RUN update-ca-certificates
 
-WORKDIR $GOPATH/src/usplay/api/order
+WORKDIR $GOPATH/src/github.com/FrancescoIlario/usplay
 
 # use modules
 COPY go.mod .
@@ -18,16 +19,19 @@ RUN go mod download \
 COPY . .
 
 # Build the binary
-RUN mkdir -p /app/bin \
-    && CGO_ENABLED=0 GOOS=linux go build -ldflags="-w -s" -a -installsuffix cgo -o /app/bin/usplay_order cmd/client/main.go
+RUN rm -rf ./bin \
+    && make bin PRJ_TARGET=${USVC_NAME} TARGET=cli \
+    && mkdir -p /app/bin/ \
+    && cp ./bin/${USVC_NAME}/${USVC_NAME}_cli /app/bin/usp_${USVC_NAME}_cli
 
 ############################
 # STEP 2 build an ubuntu image
 ############################
 FROM ubuntu:20.04
+ARG USVC_NAME
 
 # Copy our static executable
-COPY --from=builder /app/bin/usplay_order /usr/bin/usplay_order
+COPY --from=builder /app/bin/usp_${USVC_NAME}_cli /usr/bin/usp_${USVC_NAME}_cli
 
-# Run the hello binary.
-ENTRYPOINT ["/usr/bin/usplay_order"]
+# Run the produced binary.
+ENTRYPOINT ["/usr/bin/usp_${USVC_NAME}_cli"]

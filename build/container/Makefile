@@ -1,22 +1,44 @@
 # Build containers for client and server	
-.PHONY: all cli cli.raw cli.ubuntu svr svr.raw svr.ubuntu
+.PHONY: all cli srv cli.raw cli.ubuntu srv.raw srv.ubuntu
+
+ifndef PRJ_TARGET
+$(error PRJ_TARGET is not defined)
+endif
 
 ifndef TARGET
 $(error TARGET is not defined)
 endif
 
-all: svr cli
+all: srv cli
 cli: cli.raw cli.ubuntu
-svr: svr.raw svr.ubuntu
+srv: srv.raw srv.ubuntu
 
 cli.raw:
-	docker build -t usplay/us_$(TARGET):"$$(date +%s)" -f build/container/$(TARGET)/client/Dockerfile .
+	docker build \
+		--build-arg USVC_NAME=$(PRJ_TARGET) \
+		-t usplay/$(PRJ_TARGET)_cli:"$$(date +%s)" \
+		-t usplay/$(PRJ_TARGET)_cli:raw-"$$(date +%s)" \
+		-f build/container/usvc/client/Dockerfile \
+		.
 
 cli.ubuntu:
-	docker build -t usplay/us_$(TARGET):"$$(date +%s)" -f build/container/$(TARGET)/client/ubuntu.Dockerfile .
+	docker build \
+		--build-arg USVC_NAME=$(PRJ_TARGET) \
+		-t usplay/$(PRJ_TARGET)_cli:ub-"$$(date +%s)" \
+		-f build/container/usvc/client/ubuntu.Dockerfile \
+		.
 
-svr.raw:
-	docker build -t usplay/us_$(TARGET):"$$(date +%s)" -f build/container/$(TARGET)/server/Dockerfile .
+srv.raw:
+	docker build \
+		--build-arg USVC_NAME=$(PRJ_TARGET) \
+		-t usplay/$(PRJ_TARGET)_srv:"$$(date +%s)" \
+		-t usplay/$(PRJ_TARGET)_srv:raw-"$$(date +%s)" \
+		-f build/container/usvc/server/Dockerfile \
+		.
 
-svr.ubuntu:
-	docker build -t usplay/us_$(TARGET):"$$(date +%s)" -f build/container/$(TARGET)/server/ubuntu.Dockerfile .
+srv.ubuntu:
+	docker build \
+		--build-arg USVC_NAME=$(PRJ_TARGET) \
+		-t usplay/$(PRJ_TARGET)_srv:ub-"$$(date +%s)" \
+		-f build/container/usvc/server/ubuntu.Dockerfile \
+		.
