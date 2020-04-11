@@ -22,7 +22,6 @@ services:
       # Forwards the local Docker socket to the container.
       - /var/run/docker.sock:/var/run/docker.sock
 
-    working_dir: "/workspace/services/activity"
     cap_add:
      - SYS_PTRACE
     security_opt:
