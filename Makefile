@@ -11,9 +11,9 @@ PROJECTS := activity report order
 
 protos:
 ifndef PRJ_TARGET
-	PRJ_TARGET=all
+	$(error PRJ_TARGET is not defined)
 endif
-	$(MAKE) -f build/protos/Makefile $(PRJ_TARGET)
+	$(MAKE) -f build/protos/Makefile PRJ_TARGET=$(PRJ_TARGET)
 
 container:
 ifndef TARGET
