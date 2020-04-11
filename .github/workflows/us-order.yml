@@ -1,0 +1,16 @@
+name: Build Docker image for the Order microservice
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build all the Docker image for order services
+      run: make container PRJ_TARGET=order TARGET=all

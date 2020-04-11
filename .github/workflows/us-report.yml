@@ -1,0 +1,16 @@
+name: Build Docker image for the Report microservice
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build all the Docker image for report services
+      run: make container PRJ_TARGET=report TARGET=all

@@ -1,0 +1,79 @@
+syntax = "proto3";
+package comm;
+
+option optimize_for = LITE_RUNTIME;
+
+// The Activity service definition.
+service ActivitySvc {
+    // Creates a new activity
+    rpc Create (CreateActivityRequest) returns (CreateActivityReply) {}
+    // Reads an activity
+    rpc Read (ReadActivityRequest) returns (ReadActivityReply) {}
+    // Delete an activity
+    rpc Delete (DeleteActivityRequest) returns (DeleteActivityReply) {}
+    // Update an activity
+    rpc Update (UpdateActivityRequest) returns (UpdateActivityReply) {}
+    // List an activity
+    rpc List (ListActivitiesRequest) returns (ListActivitiesReply) {}
+}
+
+// The request message containing the activity details
+message CreateActivityRequest {
+    string Name = 1;
+    string Code = 2;
+    string Description = 3;
+}
+
+// The response message containing the id of the activity
+message CreateActivityReply {
+    string Id = 1;
+}
+
+// The request message for the read request
+message ReadActivityRequest {
+    string Id = 1;
+}
+
+// The response message to the read request
+message ReadActivityReply {
+    Activity activity = 1;
+}
+
+// The request message for the delete request
+message DeleteActivityRequest {
+    string Id = 1;
+}
+
+// The response message to the delete request
+message DeleteActivityReply {
+    Activity activity = 1;
+}
+
+// The request message for the update request
+message UpdateActivityRequest {
+    string Id = 1;
+    string Name = 2;
+    string Code = 3;
+    string Description = 4;
+}
+
+// The response message to the update request.
+// Returns the old values for the Activity
+message UpdateActivityReply {
+    Activity activity = 1;
+}
+
+// The request message for the list activities request
+message ListActivitiesRequest { }
+
+// The response message to the list activities request.
+message ListActivitiesReply {
+    repeated Activity activities = 1;
+}
+
+message Activity {
+    string Id = 1;
+    string Name = 2;
+    string Code = 3;
+    string Description = 4;
+}
