@@ -1,22 +1,11 @@
 # Generate gRPC cli/server code for Go
-.PHONY: all activity order report
+.PHONY: all
 
-all: activity order report
+fpath := protos/services/$(PRJ_TARGET).proto
 
-activity:
+all: $(fpath)
+	mkdir -p pkg/services/$(PRJ_TARGET)/comm
 	protoc \
 		-I protos/services \
-		--go_out=plugins=grpc:pkg/services/activity/comm \
-		protos/services/activity.proto
-
-order:
-	protoc \
-		-I protos/services \
-		--go_out=plugins=grpc:pkg/services/order/comm \
-		protos/services/order.proto
-
-report:
-	protoc \
-		-I protos/services \
-		--go_out=plugins=grpc:pkg/services/report/comm \
-		protos/services/report.proto
+		--go_out=plugins=grpc:pkg/services/$(PRJ_TARGET)/comm \
+		protos/services/$(PRJ_TARGET).proto
