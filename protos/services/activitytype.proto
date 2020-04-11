@@ -1,0 +1,90 @@
+syntax = "proto3";
+package comm;
+
+option optimize_for = LITE_RUNTIME;
+
+// The ActivityType service definition.
+service ActivityTypeSvc {
+    // Creates a new ActivityType
+    rpc Create (CreateActivityTypeRequest) returns (CreateActivityTypeReply) {}
+    // Exists an activity
+    rpc Exist (ExistActivityTypeRequest) returns (ExistActivityTypeReply) {}
+    // Reads an ActivityType
+    rpc Read (ReadActivityTypeRequest) returns (ReadActivityTypeReply) {}
+    // Delete an ActivityType
+    rpc Delete (DeleteActivityTypeRequest) returns (DeleteActivityTypeReply) {}
+    // Update an ActivityType
+    rpc Update (UpdateActivityTypeRequest) returns (UpdateActivityTypeReply) {}
+    // List an ActivityType
+    rpc List (ListActivityTypesRequest) returns (ListActivityTypesReply) {}
+}
+
+// The request message containing the ActivityType details
+message CreateActivityTypeRequest {
+    int32 Code = 1;
+    string Name = 2;
+}
+
+// The response message containing the id of the ActivityType
+message CreateActivityTypeReply {
+    string Id = 1;
+}
+
+// The request message for the read request
+message ExistActivityTypeRequest {
+    string Id = 1;
+}
+
+// The response message to the read request
+message ExistActivityTypeReply {
+    bool exists = 1;
+}
+
+// The request message for the read request
+message ReadActivityTypeRequest {
+    string Id = 1;
+}
+
+// The response message to the read request
+message ReadActivityTypeReply {
+    ActivityType ActivityType = 1;
+}
+
+// The request message for the delete request
+message DeleteActivityTypeRequest {
+    string Id = 1;
+}
+
+// The response message to the delete request
+message DeleteActivityTypeReply {
+    ActivityType ActivityType = 1;
+}
+
+// The request message for the update request
+message UpdateActivityTypeRequest {
+    string Id = 1;
+    int32 Code = 2;
+    string Name = 3;
+}
+
+// The response message to the update request.
+// Returns the old values for the ActivityType
+message UpdateActivityTypeReply {
+    ActivityType ActivityType = 1;
+}
+
+// The request message for the list ActivityTypes request
+message ListActivityTypesRequest { 
+    repeated string FilterIds = 1;
+}
+
+// The response message to the list ActivityTypes request.
+message ListActivityTypesReply {
+    repeated ActivityType ActivityTypes = 1;
+}
+
+message ActivityType {
+    string Id = 1;
+    int32 Code = 2;
+    string Name = 3;
+}
