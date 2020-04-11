@@ -1,0 +1,149 @@
+{
+  "done": [],
+  "in-progress": [],
+  "testing": [],
+  "todo": [
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "Activity",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "description": {
+        "content": "An activity has the following properties:\n1. Id: UUID\n2. ActivityTypeID: UUID\n3. Timespan\n\t1. From: Date\n    2. To: Date\n4. OrderID: UUID",
+        "mime": "text/markdown"
+      },
+      "id": "1",
+      "references": [],
+      "title": "As an User, I can create a new Activity"
+    },
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "ActivityType",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "description": {
+        "content": "An ActivityType has the following properties:\n1. Id: UUID\n2. Code: int\n3. Name: string",
+        "mime": "text/markdown"
+      },
+      "id": "5",
+      "references": [],
+      "title": "As an User, I can create a new ActivityType"
+    },
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "Order",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "description": {
+        "content": "An Order has the following properties:\n1. Id: UUID\n2. Name: string\n3. Code: string",
+        "mime": "text/markdown"
+      },
+      "id": "1",
+      "references": [],
+      "title": "As an User, I can create a new Order"
+    },
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "Activity",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "id": "2",
+      "references": [],
+      "title": "I can delete an Activity I created"
+    },
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "ActivityType",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "id": "6",
+      "references": [],
+      "title": "I can delete an ActivityType I created"
+    },
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "Order",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "id": "2",
+      "references": [],
+      "title": "I can delete an Order I created"
+    },
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "Report",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "id": "9",
+      "references": [],
+      "title": "I can read the activity Monthly report"
+    },
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "Activity",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "id": "3",
+      "references": [],
+      "title": "I can update an Activity I created"
+    },
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "Activity",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "id": "4",
+      "references": [],
+      "title": "I can update an Activity I created"
+    },
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "ActivityType",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "id": "7",
+      "references": [],
+      "title": "I can update an ActivityType I created"
+    },
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "ActivityType",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "id": "8",
+      "references": [],
+      "title": "I can update an ActivityType I created"
+    },
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "Order",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "id": "3",
+      "references": [],
+      "title": "I can update an Order I created"
+    },
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "Order",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "id": "4",
+      "references": [],
+      "title": "I can update an Order I created"
+    }
+  ]
+}
