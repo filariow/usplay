@@ -9,6 +9,6 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/gorilla/handlers v1.4.2
 	github.com/gorilla/mux v1.7.4
-	github.com/spf13/cobra v0.0.7
+	github.com/spf13/cobra v1.0.0
 	google.golang.org/grpc v1.28.1
 )
