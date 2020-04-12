@@ -22,7 +22,7 @@ COPY . .
 RUN rm -rf ./bin \
     && make bin PRJ_TARGET=${USVC_NAME} TARGET=cli \
     && mkdir -p /app/bin/ \
-    && cp ./bin/${USVC_NAME}/${USVC_NAME}_cli /app/bin/usp_${USVC_NAME}_cli
+    && cp ./bin/${USVC_NAME}/${USVC_NAME}_cli /app/bin/svc_cli
 
 ############################
 # STEP 2 build a small image
@@ -30,10 +30,9 @@ RUN rm -rf ./bin \
 # using base nonroot image
 # user:group is nobody:nobody, uid:gid = 65534:65534
 FROM gcr.io/distroless/static
-ARG USVC_NAME
 
 # Copy our static executable
-COPY --from=builder /app/bin/usp_${USVC_NAME}_cli /usr/bin/usp_${USVC_NAME}_cli
+COPY --from=builder /app/bin/ /usr/bin/
 
 # Run the produced binary.
-ENTRYPOINT ["/usr/bin/usp_${USVC_NAME}_cli"]
+ENTRYPOINT ["/usr/bin/svc_cli"]

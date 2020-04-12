@@ -22,7 +22,7 @@ COPY . .
 RUN rm -rf ./bin \
     && make bin PRJ_TARGET=${USVC_NAME} TARGET=srv \
     && mkdir -p /app/bin/ \
-    && cp ./bin/${USVC_NAME}/${USVC_NAME}_srv /app/bin/usp_${USVC_NAME}_srv
+    && cp ./bin/${USVC_NAME}/${USVC_NAME}_srv /app/bin/svc_srv
 
 ############################
 # STEP 2 build an ubuntu image
@@ -31,7 +31,7 @@ FROM ubuntu:20.04
 ARG USVC_NAME
 
 # Copy our static executable
-COPY --from=builder /app/bin/usp_${USVC_NAME}_srv /usr/bin/usp_${USVC_NAME}_srv
+COPY --from=builder /app/bin/ /usr/bin/
 
 # Run the produced binary.
-ENTRYPOINT ["/usr/bin/usp_${USVC_NAME}_srv"]
+ENTRYPOINT ["/usr/bin/svc_srv"]
