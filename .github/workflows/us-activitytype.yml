@@ -1,0 +1,16 @@
+name: Build Docker image for the ActivityType microservice
+
+on:
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build all the Docker image for ActivityType services
+      run: make container PRJ_TARGET=activitytype TARGET=all
