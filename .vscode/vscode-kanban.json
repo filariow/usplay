@@ -1,5 +1,50 @@
 {
-  "done": [],
+  "done": [
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "ActivityType",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "description": {
+        "content": "An ActivityType has the following properties:\n1. Id: UUID\n2. Code: int\n3. Name: string",
+        "mime": "text/markdown"
+      },
+      "id": "5",
+      "references": [],
+      "title": "As an User, I can create a new ActivityType"
+    },
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "ActivityType",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "id": "6",
+      "references": [],
+      "title": "I can delete an ActivityType I created"
+    },
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "ActivityType",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "id": "10",
+      "references": [],
+      "title": "I can read an ActivityType I created"
+    },
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "ActivityType",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "id": "7",
+      "references": [],
+      "title": "I can update an ActivityType I created"
+    }
+  ],
   "in-progress": [],
   "testing": [],
   "todo": [
@@ -16,20 +61,6 @@
       "id": "1",
       "references": [],
       "title": "As an User, I can create a new Activity"
-    },
-    {
-      "assignedTo": {
-        "name": "Francesco Ilario"
-      },
-      "category": "ActivityType",
-      "creation_time": "2020-04-11T16:58:59.873Z",
-      "description": {
-        "content": "An ActivityType has the following properties:\n1. Id: UUID\n2. Code: int\n3. Name: string",
-        "mime": "text/markdown"
-      },
-      "id": "5",
-      "references": [],
-      "title": "As an User, I can create a new ActivityType"
     },
     {
       "assignedTo": {
@@ -59,11 +90,21 @@
       "assignedTo": {
         "name": "Francesco Ilario"
       },
-      "category": "ActivityType",
+      "category": "Order",
       "creation_time": "2020-04-11T16:58:59.873Z",
-      "id": "6",
+      "id": "2",
       "references": [],
-      "title": "I can delete an ActivityType I created"
+      "title": "I can delete an Order I created"
+    },
+    {
+      "assignedTo": {
+        "name": "Francesco Ilario"
+      },
+      "category": "Activity",
+      "creation_time": "2020-04-11T16:58:59.873Z",
+      "id": "4",
+      "references": [],
+      "title": "I can read an Activity I created"
     },
     {
       "assignedTo": {
@@ -71,9 +112,9 @@
       },
       "category": "Order",
       "creation_time": "2020-04-11T16:58:59.873Z",
-      "id": "2",
+      "id": "4",
       "references": [],
-      "title": "I can delete an Order I created"
+      "title": "I can read an Order I created"
     },
     {
       "assignedTo": {
@@ -99,49 +140,9 @@
       "assignedTo": {
         "name": "Francesco Ilario"
       },
-      "category": "Activity",
-      "creation_time": "2020-04-11T16:58:59.873Z",
-      "id": "4",
-      "references": [],
-      "title": "I can update an Activity I created"
-    },
-    {
-      "assignedTo": {
-        "name": "Francesco Ilario"
-      },
-      "category": "ActivityType",
-      "creation_time": "2020-04-11T16:58:59.873Z",
-      "id": "7",
-      "references": [],
-      "title": "I can update an ActivityType I created"
-    },
-    {
-      "assignedTo": {
-        "name": "Francesco Ilario"
-      },
-      "category": "ActivityType",
-      "creation_time": "2020-04-11T16:58:59.873Z",
-      "id": "8",
-      "references": [],
-      "title": "I can update an ActivityType I created"
-    },
-    {
-      "assignedTo": {
-        "name": "Francesco Ilario"
-      },
       "category": "Order",
       "creation_time": "2020-04-11T16:58:59.873Z",
       "id": "3",
-      "references": [],
-      "title": "I can update an Order I created"
-    },
-    {
-      "assignedTo": {
-        "name": "Francesco Ilario"
-      },
-      "category": "Order",
-      "creation_time": "2020-04-11T16:58:59.873Z",
-      "id": "4",
       "references": [],
       "title": "I can update an Order I created"
     }
