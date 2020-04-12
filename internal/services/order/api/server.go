@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/FrancescoIlario/usplay/internal/services/order/storage"
-	"github.com/FrancescoIlario/usplay/pkg/services/order/comm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -15,13 +15,13 @@ type orderServer struct {
 }
 
 // NewOrderServer returns the default implementation of OrderSvcServer
-func NewOrderServer() comm.OrderSvcServer {
+func NewOrderServer() ordercomm.OrderSvcServer {
 	return &orderServer{
 		repo: storage.NewInMemoryStore(),
 	}
 }
 
-func (s *orderServer) Create(ctx context.Context, req *comm.CreateOrderRequest) (*comm.CreateOrderReply, error) {
+func (s *orderServer) Create(ctx context.Context, req *ordercomm.CreateOrderRequest) (*ordercomm.CreateOrderReply, error) {
 	act := storage.Order{
 		Name:        req.GetName(),
 		Code:        req.GetCode(),
@@ -33,12 +33,12 @@ func (s *orderServer) Create(ctx context.Context, req *comm.CreateOrderRequest) 
 		return nil, status.Errorf(codes.Internal, "error creating order: %v", err)
 	}
 
-	return &comm.CreateOrderReply{
+	return &ordercomm.CreateOrderReply{
 		Id: id.String(),
 	}, nil
 }
 
-func (s *orderServer) Read(ctx context.Context, req *comm.ReadOrderRequest) (*comm.ReadOrderReply, error) {
+func (s *orderServer) Read(ctx context.Context, req *ordercomm.ReadOrderRequest) (*ordercomm.ReadOrderReply, error) {
 	id := req.GetId()
 	uid, err := uuid.Parse(id)
 	if err != nil {
@@ -50,8 +50,8 @@ func (s *orderServer) Read(ctx context.Context, req *comm.ReadOrderRequest) (*co
 		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", id)
 	}
 
-	return &comm.ReadOrderReply{
-		Order: &comm.Order{
+	return &ordercomm.ReadOrderReply{
+		Order: &ordercomm.Order{
 			Code:        act.Code,
 			Description: act.Description,
 			Name:        act.Name,
@@ -60,7 +60,7 @@ func (s *orderServer) Read(ctx context.Context, req *comm.ReadOrderRequest) (*co
 	}, nil
 }
 
-func (s *orderServer) Delete(ctx context.Context, req *comm.DeleteOrderRequest) (*comm.DeleteOrderReply, error) {
+func (s *orderServer) Delete(ctx context.Context, req *ordercomm.DeleteOrderRequest) (*ordercomm.DeleteOrderReply, error) {
 	id := req.GetId()
 	uid, err := uuid.Parse(id)
 	if err != nil {
@@ -72,8 +72,8 @@ func (s *orderServer) Delete(ctx context.Context, req *comm.DeleteOrderRequest) 
 		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", id)
 	}
 
-	return &comm.DeleteOrderReply{
-		Order: &comm.Order{
+	return &ordercomm.DeleteOrderReply{
+		Order: &ordercomm.Order{
 			Code:        act.Code,
 			Description: act.Description,
 			Name:        act.Name,
@@ -82,7 +82,7 @@ func (s *orderServer) Delete(ctx context.Context, req *comm.DeleteOrderRequest) 
 	}, nil
 }
 
-func (s *orderServer) Update(ctx context.Context, req *comm.UpdateOrderRequest) (*comm.UpdateOrderReply, error) {
+func (s *orderServer) Update(ctx context.Context, req *ordercomm.UpdateOrderRequest) (*ordercomm.UpdateOrderReply, error) {
 	act := storage.Order{
 		Name:        req.GetName(),
 		Code:        req.GetCode(),
@@ -94,8 +94,8 @@ func (s *orderServer) Update(ctx context.Context, req *comm.UpdateOrderRequest) 
 		return nil, status.Errorf(codes.Internal, "error creating order: %v", err)
 	}
 
-	return &comm.UpdateOrderReply{
-		Order: &comm.Order{
+	return &ordercomm.UpdateOrderReply{
+		Order: &ordercomm.Order{
 			Code:        uact.Code,
 			Description: uact.Description,
 			Name:        uact.Name,
@@ -104,15 +104,15 @@ func (s *orderServer) Update(ctx context.Context, req *comm.UpdateOrderRequest) 
 	}, nil
 }
 
-func (s *orderServer) List(ctx context.Context, req *comm.ListActivitiesRequest) (*comm.ListActivitiesReply, error) {
+func (s *orderServer) List(ctx context.Context, req *ordercomm.ListActivitiesRequest) (*ordercomm.ListActivitiesReply, error) {
 	acts, err := s.repo.List(ctx)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "error retrieving the list of activities: %v", err)
 	}
 
-	activities := []*comm.Order{}
+	activities := []*ordercomm.Order{}
 	for _, v := range acts {
-		activities = append(activities, &comm.Order{
+		activities = append(activities, &ordercomm.Order{
 			Code:        v.Code,
 			Description: v.Description,
 			Name:        v.Name,
@@ -120,7 +120,7 @@ func (s *orderServer) List(ctx context.Context, req *comm.ListActivitiesRequest)
 		})
 	}
 
-	return &comm.ListActivitiesReply{
+	return &ordercomm.ListActivitiesReply{
 		Activities: activities,
 	}, nil
 }

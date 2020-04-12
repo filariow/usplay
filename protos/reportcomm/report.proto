@@ -1,7 +1,10 @@
 syntax = "proto3";
-package comm;
+package reportcomm;
 
 import "google/protobuf/timestamp.proto";
+
+option go_package = "reportcomm";
+// option go_package = "github.com/FrancescoIlario/usplay/pkg/services/reportcomm";
 option optimize_for = LITE_RUNTIME;
 
 // The Report service definition.

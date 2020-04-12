@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/FrancescoIlario/usplay/pkg/services/order/comm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )
@@ -20,8 +20,8 @@ var (
 			}
 			defer conn.Close()
 
-			cli := comm.NewOrderSvcClient(conn)
-			resp, err := cli.List(context.TODO(), &comm.ListActivitiesRequest{})
+			cli := ordercomm.NewOrderSvcClient(conn)
+			resp, err := cli.List(context.TODO(), &ordercomm.ListActivitiesRequest{})
 			if err != nil {
 				log.Fatalf("error calling list: %v", err)
 			}

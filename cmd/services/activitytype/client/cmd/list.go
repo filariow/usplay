@@ -4,8 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/FrancescoIlario/usplay/pkg/services/activitytype/comm"
-
+	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )
@@ -21,8 +20,8 @@ var (
 			}
 			defer conn.Close()
 
-			cli := comm.NewActivityTypeSvcClient(conn)
-			resp, err := cli.List(context.TODO(), &comm.ListActivityTypesRequest{
+			cli := activitytypecomm.NewActivityTypeSvcClient(conn)
+			resp, err := cli.List(context.TODO(), &activitytypecomm.ListActivityTypesRequest{
 				FilterIds: listIds,
 			})
 			if err != nil {

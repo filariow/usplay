@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/FrancescoIlario/usplay/internal/services/activitytype/storage"
-	"github.com/FrancescoIlario/usplay/pkg/services/activitytype/comm"
+	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -15,13 +15,13 @@ type activityTypeServer struct {
 }
 
 // NewActivityTypeServer returns the default implementation of ActivityTypeSvcServer
-func NewActivityTypeServer() comm.ActivityTypeSvcServer {
+func NewActivityTypeServer() activitytypecomm.ActivityTypeSvcServer {
 	return &activityTypeServer{
 		repo: storage.NewInMemoryStore(),
 	}
 }
 
-func (s *activityTypeServer) Create(ctx context.Context, req *comm.CreateActivityTypeRequest) (*comm.CreateActivityTypeReply, error) {
+func (s *activityTypeServer) Create(ctx context.Context, req *activitytypecomm.CreateActivityTypeRequest) (*activitytypecomm.CreateActivityTypeReply, error) {
 	act := storage.ActivityType{
 		Name: req.GetName(),
 		Code: req.GetCode(),
@@ -32,12 +32,12 @@ func (s *activityTypeServer) Create(ctx context.Context, req *comm.CreateActivit
 		return nil, status.Errorf(codes.Internal, "error creating ActivityType: %v", err)
 	}
 
-	return &comm.CreateActivityTypeReply{
+	return &activitytypecomm.CreateActivityTypeReply{
 		Id: id.String(),
 	}, nil
 }
 
-func (s *activityTypeServer) Read(ctx context.Context, req *comm.ReadActivityTypeRequest) (*comm.ReadActivityTypeReply, error) {
+func (s *activityTypeServer) Read(ctx context.Context, req *activitytypecomm.ReadActivityTypeRequest) (*activitytypecomm.ReadActivityTypeReply, error) {
 	id := req.GetId()
 	uid, err := uuid.Parse(id)
 	if err != nil {
@@ -49,8 +49,8 @@ func (s *activityTypeServer) Read(ctx context.Context, req *comm.ReadActivityTyp
 		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", id)
 	}
 
-	return &comm.ReadActivityTypeReply{
-		ActivityType: &comm.ActivityType{
+	return &activitytypecomm.ReadActivityTypeReply{
+		ActivityType: &activitytypecomm.ActivityType{
 			Code: act.Code,
 			Name: act.Name,
 			Id:   act.ID.String(),
@@ -58,7 +58,7 @@ func (s *activityTypeServer) Read(ctx context.Context, req *comm.ReadActivityTyp
 	}, nil
 }
 
-func (s *activityTypeServer) Delete(ctx context.Context, req *comm.DeleteActivityTypeRequest) (*comm.DeleteActivityTypeReply, error) {
+func (s *activityTypeServer) Delete(ctx context.Context, req *activitytypecomm.DeleteActivityTypeRequest) (*activitytypecomm.DeleteActivityTypeReply, error) {
 	id := req.GetId()
 	uid, err := uuid.Parse(id)
 	if err != nil {
@@ -70,8 +70,8 @@ func (s *activityTypeServer) Delete(ctx context.Context, req *comm.DeleteActivit
 		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", id)
 	}
 
-	return &comm.DeleteActivityTypeReply{
-		ActivityType: &comm.ActivityType{
+	return &activitytypecomm.DeleteActivityTypeReply{
+		ActivityType: &activitytypecomm.ActivityType{
 			Code: act.Code,
 			Name: act.Name,
 			Id:   act.ID.String(),
@@ -79,7 +79,7 @@ func (s *activityTypeServer) Delete(ctx context.Context, req *comm.DeleteActivit
 	}, nil
 }
 
-func (s *activityTypeServer) Update(ctx context.Context, req *comm.UpdateActivityTypeRequest) (*comm.UpdateActivityTypeReply, error) {
+func (s *activityTypeServer) Update(ctx context.Context, req *activitytypecomm.UpdateActivityTypeRequest) (*activitytypecomm.UpdateActivityTypeReply, error) {
 	act := storage.ActivityType{
 		Name: req.GetName(),
 		Code: req.GetCode(),
@@ -90,8 +90,8 @@ func (s *activityTypeServer) Update(ctx context.Context, req *comm.UpdateActivit
 		return nil, status.Errorf(codes.Internal, "error creating ActivityType: %v", err)
 	}
 
-	return &comm.UpdateActivityTypeReply{
-		ActivityType: &comm.ActivityType{
+	return &activitytypecomm.UpdateActivityTypeReply{
+		ActivityType: &activitytypecomm.ActivityType{
 			Code: uact.Code,
 			Name: uact.Name,
 			Id:   uact.ID.String(),
@@ -99,7 +99,7 @@ func (s *activityTypeServer) Update(ctx context.Context, req *comm.UpdateActivit
 	}, nil
 }
 
-func (s *activityTypeServer) List(ctx context.Context, req *comm.ListActivityTypesRequest) (*comm.ListActivityTypesReply, error) {
+func (s *activityTypeServer) List(ctx context.Context, req *activitytypecomm.ListActivityTypesRequest) (*activitytypecomm.ListActivityTypesReply, error) {
 	ids := make([]uuid.UUID, len(req.FilterIds))
 	for idx, i := range req.FilterIds {
 		id, err := uuid.Parse(i)
@@ -114,21 +114,21 @@ func (s *activityTypeServer) List(ctx context.Context, req *comm.ListActivityTyp
 		return nil, status.Errorf(codes.Internal, "error retrieving the list of ActivityTypes: %v", err)
 	}
 
-	activityTypes := []*comm.ActivityType{}
+	activityTypes := []*activitytypecomm.ActivityType{}
 	for _, v := range acts {
-		activityTypes = append(activityTypes, &comm.ActivityType{
+		activityTypes = append(activityTypes, &activitytypecomm.ActivityType{
 			Code: v.Code,
 			Name: v.Name,
 			Id:   v.ID.String(),
 		})
 	}
 
-	return &comm.ListActivityTypesReply{
+	return &activitytypecomm.ListActivityTypesReply{
 		ActivityTypes: activityTypes,
 	}, nil
 }
 
-func (s *activityTypeServer) Exist(ctx context.Context, req *comm.ExistActivityTypeRequest) (*comm.ExistActivityTypeReply, error) {
+func (s *activityTypeServer) Exist(ctx context.Context, req *activitytypecomm.ExistActivityTypeRequest) (*activitytypecomm.ExistActivityTypeReply, error) {
 	id := req.GetId()
 	uid, err := uuid.Parse(id)
 	if err != nil {
@@ -140,5 +140,5 @@ func (s *activityTypeServer) Exist(ctx context.Context, req *comm.ExistActivityT
 		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", id)
 	}
 
-	return &comm.ExistActivityTypeReply{Exists: exists}, nil
+	return &activitytypecomm.ExistActivityTypeReply{Exists: exists}, nil
 }

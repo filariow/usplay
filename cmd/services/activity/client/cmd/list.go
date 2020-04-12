@@ -4,8 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/FrancescoIlario/usplay/pkg/services/activity/comm"
-
+	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )
@@ -21,8 +20,8 @@ var (
 			}
 			defer conn.Close()
 
-			cli := comm.NewActivitySvcClient(conn)
-			resp, err := cli.List(context.TODO(), &comm.ListActivitiesRequest{})
+			cli := activitycomm.NewActivitySvcClient(conn)
+			resp, err := cli.List(context.TODO(), &activitycomm.ListActivitiesRequest{})
 			if err != nil {
 				log.Fatalf("error calling list: %v", err)
 			}
