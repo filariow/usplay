@@ -30,23 +30,6 @@ func NewActivityServer(
 	}
 }
 
-func (s *activityServer) Create(ctx context.Context, req *activitycomm.CreateActivityRequest) (*activitycomm.CreateActivityReply, error) {
-	act := storage.Activity{
-		Name:        req.GetName(),
-		Code:        req.GetCode(),
-		Description: req.GetDescription(),
-	}
-
-	id, err := s.repo.Create(ctx, act)
-	if err != nil {
-		return nil, status.Errorf(codes.Internal, "error creating activity: %v", err)
-	}
-
-	return &activitycomm.CreateActivityReply{
-		Id: id.String(),
-	}, nil
-}
-
 func (s *activityServer) Delete(ctx context.Context, req *activitycomm.DeleteActivityRequest) (*activitycomm.DeleteActivityReply, error) {
 	id := req.GetId()
 	uid, err := uuid.Parse(id)
