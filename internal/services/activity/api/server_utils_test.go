@@ -2,7 +2,6 @@ package api_test
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
@@ -17,6 +16,9 @@ import (
 type activityTestRepo struct {
 	CreateResult struct {
 		ID  uuid.UUID
+		Err error
+	}
+	DeleteResult struct {
 		Err error
 	}
 	ReadResult struct {
@@ -51,7 +53,7 @@ func (r *activityTestRepo) Update(context.Context, storage.Activity) error {
 
 // Delete
 func (r *activityTestRepo) Delete(context.Context, uuid.UUID) error {
-	return fmt.Errorf("Not implemented")
+	return r.DeleteResult.Err
 }
 
 // List
