@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 
+	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
 	"github.com/google/uuid"
@@ -21,41 +22,28 @@ func (s *activityServer) Read(ctx context.Context, req *activitycomm.ReadActivit
 }
 
 func (s *activityServer) read(ctx context.Context, uid uuid.UUID) (*activitycomm.ReadActivityReply, error) {
-	bgCtx, bgCancFunc := context.WithTimeout(ctx, s.waitTime)
-	cat := make(chan activitytypecomm.ActivityType)
-	ca := make(chan activitycomm.Activity)
-
-	go func() {
-		if act, err := s.getActivityType(bgCtx, uid); err != nil {
-			bgCancFunc()
-		} else {
-			cat <- *act
-		}
-	}()
-
-	go func() {
-		if at, err := s.readFromRepo(bgCtx, uid); err != nil {
-			bgCancFunc()
-		} else {
-			ca <- *at
-		}
-	}()
-
-	var act activitycomm.Activity
-	select {
-	case act = <-ca:
-		select {
-		case acttype := <-cat:
-			act.ActType = &acttype
-			return &activitycomm.ReadActivityReply{
-				Activity: &act,
-			}, nil
-		case <-bgCtx.Done():
-			return nil, bgCtx.Err()
-		}
-	case <-bgCtx.Done():
-		return nil, bgCtx.Err()
+	at, err := s.readFromRepo(ctx, uid)
+	if err != nil {
+		return nil, err
 	}
+	act, err := s.getActivityType(ctx, at.ActivityTypeID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &activitycomm.ReadActivityReply{
+		Activity: &activitycomm.Activity{
+			Code:        at.Code,
+			Description: at.Description,
+			Id:          at.ID.String(),
+			Name:        at.Name,
+			ActType: &activitytypecomm.ActivityType{
+				Id:   act.Id,
+				Name: act.Name,
+				Code: act.Code,
+			},
+		},
+	}, nil
 }
 
 func (s *activityServer) getActivityType(ctx context.Context, uid uuid.UUID) (*activitytypecomm.ActivityType, error) {
@@ -63,15 +51,10 @@ func (s *activityServer) getActivityType(ctx context.Context, uid uuid.UUID) (*a
 	return resp.GetActivityType(), err
 }
 
-func (s *activityServer) readFromRepo(ctx context.Context, uid uuid.UUID) (*activitycomm.Activity, error) {
+func (s *activityServer) readFromRepo(ctx context.Context, uid uuid.UUID) (*storage.Activity, error) {
 	act, err := s.repo.Read(ctx, uid)
 	if err != nil {
 		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", uid.String())
 	}
-	return &activitycomm.Activity{
-		Code:        act.Code,
-		Description: act.Description,
-		Name:        act.Name,
-		Id:          act.ID.String(),
-	}, nil
+	return &act, nil
 }

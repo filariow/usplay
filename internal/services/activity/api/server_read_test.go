@@ -83,50 +83,6 @@ func TestReadHappyPath(t *testing.T) {
 	assertEqActivityType(t, &activityType, act.GetActType())
 }
 
-func Test_ReadTimeout(t *testing.T) {
-	// arrange
-	actID := uuid.New()
-	store := &activityTestRepo{
-		ReadResult: struct {
-			Activity storage.Activity
-			Err      error
-		}{
-			Activity: storage.Activity{
-				ID:          actID,
-				Code:        "Activity Code",
-				Description: "Activity Description",
-				Name:        "Activity Name",
-			},
-			Err: nil,
-		},
-	}
-	svr := api.NewActivityServer(store,
-		&actTestClient{
-			WaitTime: 200 * time.Millisecond,
-			ReadResult: struct {
-				Err   error
-				Reply activitytypecomm.ReadActivityTypeReply
-			}{
-				Err: nil,
-				Reply: activitytypecomm.ReadActivityTypeReply{
-					ActivityType: &activitytypecomm.ActivityType{
-						Id:   uuid.New().String(),
-						Code: 1,
-						Name: "Test ActivityType",
-					},
-				},
-			},
-		},
-		100*time.Millisecond,
-	)
-
-	ctx := context.Background()
-	// act
-	if _, err := svr.Read(ctx, &activitycomm.ReadActivityRequest{Id: actID.String()}); err == nil {
-		t.Fatalf("no error even with client in timeout")
-	}
-}
-
 func assertNil(t *testing.T, expected, provided interface{}) bool {
 	if expected == nil && provided == nil {
 		return false
