@@ -11,13 +11,15 @@ import (
 )
 
 type activityServer struct {
-	repo storage.Repository
+	repo        storage.Repository
+	acttypehost string
 }
 
 // NewActivityServer returns the default implementation of ActivitySvcServer
-func NewActivityServer() activitycomm.ActivitySvcServer {
+func NewActivityServer(actTypeHost string) activitycomm.ActivitySvcServer {
 	return &activityServer{
-		repo: storage.NewInMemoryStore(),
+		repo:        storage.NewInMemoryStore(),
+		acttypehost: actTypeHost,
 	}
 }
 
@@ -35,28 +37,6 @@ func (s *activityServer) Create(ctx context.Context, req *activitycomm.CreateAct
 
 	return &activitycomm.CreateActivityReply{
 		Id: id.String(),
-	}, nil
-}
-
-func (s *activityServer) Read(ctx context.Context, req *activitycomm.ReadActivityRequest) (*activitycomm.ReadActivityReply, error) {
-	id := req.GetId()
-	uid, err := uuid.Parse(id)
-	if err != nil {
-		return nil, status.Errorf(codes.InvalidArgument, "Invalid id provided (%s): %v", id, err)
-	}
-
-	act, err := s.repo.Read(ctx, uid)
-	if err != nil {
-		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", id)
-	}
-
-	return &activitycomm.ReadActivityReply{
-		Activity: &activitycomm.Activity{
-			Code:        act.Code,
-			Description: act.Description,
-			Name:        act.Name,
-			Id:          act.ID.String(),
-		},
 	}, nil
 }
 

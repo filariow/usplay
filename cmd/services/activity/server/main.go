@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net"
+	"os"
 
 	"github.com/FrancescoIlario/usplay/internal/services/activity/api"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
@@ -10,10 +11,16 @@ import (
 	"google.golang.org/grpc"
 )
 
-const address = "localhost:8080"
+const (
+	actTypeHostKey = "ACTTYPE_HOST"
+	address        = "localhost:8080"
+)
 
 func main() {
-	log.Println("Hello world!")
+	actTypeHost := os.Getenv(actTypeHostKey)
+	if actTypeHost == "" {
+		log.Fatalf("ActivityType Host address environment variable is empty %s", actTypeHostKey)
+	}
 
 	ls, err := net.Listen("tcp", address)
 	if err != nil {
@@ -21,7 +28,7 @@ func main() {
 	}
 	log.Printf("acquired address %v", address)
 
-	actServer := api.NewActivityServer()
+	actServer := api.NewActivityServer(actTypeHost)
 	grpcServer := grpc.NewServer()
 	activitycomm.RegisterActivitySvcServer(grpcServer, actServer)
 

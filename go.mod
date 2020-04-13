@@ -11,4 +11,5 @@ require (
 	github.com/gorilla/mux v1.7.4
 	github.com/spf13/cobra v1.0.0
 	google.golang.org/grpc v1.28.1
+	grpc.go4.org v0.0.0-20170609214715-11d0a25b4919
 )
