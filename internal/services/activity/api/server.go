@@ -44,20 +44,6 @@ func (s *activityServer) Delete(ctx context.Context, req *activitycomm.DeleteAct
 	return &activitycomm.DeleteActivityReply{}, nil
 }
 
-func (s *activityServer) Update(ctx context.Context, req *activitycomm.UpdateActivityRequest) (*activitycomm.UpdateActivityReply, error) {
-	act := storage.Activity{
-		Name:        req.GetName(),
-		Code:        req.GetCode(),
-		Description: req.GetDescription(),
-	}
-
-	if err := s.repo.Update(ctx, act); err != nil {
-		return nil, status.Errorf(codes.Internal, "error creating activity: %v", err)
-	}
-
-	return &activitycomm.UpdateActivityReply{}, nil
-}
-
 func (s *activityServer) List(ctx context.Context, req *activitycomm.ListActivitiesRequest) (*activitycomm.ListActivitiesReply, error) {
 	acts, err := s.repo.List(ctx)
 	if err != nil {
