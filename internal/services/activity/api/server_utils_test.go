@@ -23,6 +23,10 @@ type activityTestRepo struct {
 		Activity storage.Activity
 		Err      error
 	}
+	ListResult struct {
+		Activities []storage.Activity
+		Err        error
+	}
 	UpdateResult struct {
 		Err error
 	}
@@ -52,7 +56,7 @@ func (r *activityTestRepo) Delete(context.Context, uuid.UUID) error {
 
 // List
 func (r *activityTestRepo) List(context.Context) (storage.Activities, error) {
-	return nil, fmt.Errorf("Not implemented")
+	return r.ListResult.Activities, r.ListResult.Err
 }
 
 // ActivityType Test Client
@@ -61,6 +65,10 @@ type actTestClient struct {
 	ReadResult struct {
 		Err   error
 		Reply activitytypecomm.ReadActivityTypeReply
+	}
+	ListResult struct {
+		Err   error
+		Reply activitytypecomm.ListActivityTypesReply
 	}
 	ExistResult struct {
 		Err   error
@@ -98,5 +106,5 @@ func (c *actTestClient) Update(ctx context.Context, in *activitytypecomm.UpdateA
 
 // List an ActivityType
 func (c *actTestClient) List(ctx context.Context, in *activitytypecomm.ListActivityTypesRequest, opts ...grpc.CallOption) (*activitytypecomm.ListActivityTypesReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "List method is not implemented")
+	return &c.ListResult.Reply, c.ListResult.Err
 }

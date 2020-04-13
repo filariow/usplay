@@ -43,24 +43,3 @@ func (s *activityServer) Delete(ctx context.Context, req *activitycomm.DeleteAct
 
 	return &activitycomm.DeleteActivityReply{}, nil
 }
-
-func (s *activityServer) List(ctx context.Context, req *activitycomm.ListActivitiesRequest) (*activitycomm.ListActivitiesReply, error) {
-	acts, err := s.repo.List(ctx)
-	if err != nil {
-		return nil, status.Errorf(codes.Internal, "error retrieving the list of activities: %v", err)
-	}
-
-	activities := []*activitycomm.Activity{}
-	for _, v := range acts {
-		activities = append(activities, &activitycomm.Activity{
-			Code:        v.Code,
-			Description: v.Description,
-			Name:        v.Name,
-			Id:          v.ID.String(),
-		})
-	}
-
-	return &activitycomm.ListActivitiesReply{
-		Activities: activities,
-	}, nil
-}
