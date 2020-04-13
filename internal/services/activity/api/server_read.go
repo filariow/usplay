@@ -2,13 +2,10 @@ package api
 
 import (
 	"context"
-	"log"
-	"time"
 
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
 	"github.com/google/uuid"
-	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -24,7 +21,7 @@ func (s *activityServer) Read(ctx context.Context, req *activitycomm.ReadActivit
 }
 
 func (s *activityServer) read(ctx context.Context, uid uuid.UUID) (*activitycomm.ReadActivityReply, error) {
-	bgCtx, bgCancFunc := context.WithTimeout(ctx, 1*time.Second)
+	bgCtx, bgCancFunc := context.WithTimeout(ctx, s.waitTime)
 	cat := make(chan activitytypecomm.ActivityType)
 	ca := make(chan activitycomm.Activity)
 
@@ -47,25 +44,22 @@ func (s *activityServer) read(ctx context.Context, uid uuid.UUID) (*activitycomm
 	var act activitycomm.Activity
 	select {
 	case act = <-ca:
-		acttype := <-cat
-		act.ActType = &acttype
-		return &activitycomm.ReadActivityReply{
-			Activity: &act,
-		}, nil
+		select {
+		case acttype := <-cat:
+			act.ActType = &acttype
+			return &activitycomm.ReadActivityReply{
+				Activity: &act,
+			}, nil
+		case <-bgCtx.Done():
+			return nil, bgCtx.Err()
+		}
 	case <-bgCtx.Done():
 		return nil, bgCtx.Err()
 	}
 }
 
 func (s *activityServer) getActivityType(ctx context.Context, uid uuid.UUID) (*activitytypecomm.ActivityType, error) {
-	conn, err := grpc.Dial(s.acttypehost, grpc.WithInsecure())
-	if err != nil {
-		log.Fatalf("cannot connect to %s: %v", s.acttypehost, err)
-	}
-	defer conn.Close()
-
-	cli := activitytypecomm.NewActivityTypeSvcClient(conn)
-	resp, err := cli.Read(ctx, &activitytypecomm.ReadActivityTypeRequest{Id: uid.String()})
+	resp, err := s.actTypeCli.Read(ctx, &activitytypecomm.ReadActivityTypeRequest{Id: uid.String()})
 	return resp.GetActivityType(), err
 }
 

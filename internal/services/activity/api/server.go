@@ -2,24 +2,31 @@ package api
 
 import (
 	"context"
+	"time"
 
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
 type activityServer struct {
-	repo        storage.Repository
-	acttypehost string
+	waitTime   time.Duration
+	repo       storage.Repository
+	actTypeCli activitytypecomm.ActivityTypeSvcClient
 }
 
 // NewActivityServer returns the default implementation of ActivitySvcServer
-func NewActivityServer(actTypeHost string) activitycomm.ActivitySvcServer {
+func NewActivityServer(
+	repo storage.Repository,
+	actTypeCli activitytypecomm.ActivityTypeSvcClient,
+	waitTime time.Duration) activitycomm.ActivitySvcServer {
 	return &activityServer{
-		repo:        storage.NewInMemoryStore(),
-		acttypehost: actTypeHost,
+		waitTime:   waitTime,
+		repo:       repo,
+		actTypeCli: actTypeCli,
 	}
 }
 
