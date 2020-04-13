@@ -37,19 +37,11 @@ func (s *activityServer) Delete(ctx context.Context, req *activitycomm.DeleteAct
 		return nil, status.Errorf(codes.InvalidArgument, "Invalid id provided (%s): %v", id, err)
 	}
 
-	act, err := s.repo.Delete(ctx, uid)
-	if err != nil {
+	if err := s.repo.Delete(ctx, uid); err != nil {
 		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", id)
 	}
 
-	return &activitycomm.DeleteActivityReply{
-		Activity: &activitycomm.Activity{
-			Code:        act.Code,
-			Description: act.Description,
-			Name:        act.Name,
-			Id:          act.ID.String(),
-		},
-	}, nil
+	return &activitycomm.DeleteActivityReply{}, nil
 }
 
 func (s *activityServer) Update(ctx context.Context, req *activitycomm.UpdateActivityRequest) (*activitycomm.UpdateActivityReply, error) {
@@ -59,19 +51,11 @@ func (s *activityServer) Update(ctx context.Context, req *activitycomm.UpdateAct
 		Description: req.GetDescription(),
 	}
 
-	uact, err := s.repo.Update(ctx, act)
-	if err != nil {
+	if err := s.repo.Update(ctx, act); err != nil {
 		return nil, status.Errorf(codes.Internal, "error creating activity: %v", err)
 	}
 
-	return &activitycomm.UpdateActivityReply{
-		Activity: &activitycomm.Activity{
-			Code:        uact.Code,
-			Description: uact.Description,
-			Name:        uact.Name,
-			Id:          uact.ID.String(),
-		},
-	}, nil
+	return &activitycomm.UpdateActivityReply{}, nil
 }
 
 func (s *activityServer) List(ctx context.Context, req *activitycomm.ListActivitiesRequest) (*activitycomm.ListActivitiesReply, error) {

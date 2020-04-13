@@ -21,19 +21,11 @@ var (
 			defer conn.Close()
 
 			cli := activitycomm.NewActivitySvcClient(conn)
-			resp, err := cli.Delete(context.TODO(), &activitycomm.DeleteActivityRequest{
-				Id: id,
-			})
-			if err != nil {
+			if _, err := cli.Delete(context.TODO(), &activitycomm.DeleteActivityRequest{Id: id}); err != nil {
 				log.Fatalf("error calling delete: %v", err)
 			}
 
-			log.Printf(
-				"deleted activity:\n\tid: %s\n\tcode: %s\n\tdescription: %s\n\tname: %s",
-				resp.Activity.Id,
-				resp.Activity.Code,
-				resp.Activity.Description,
-				resp.Activity.Name)
+			log.Printf("deleted activity %s", id)
 		},
 	}
 )

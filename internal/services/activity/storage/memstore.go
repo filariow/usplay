@@ -40,25 +40,15 @@ func (s *memoryStore) Read(ctx context.Context, id uuid.UUID) (Activity, error) 
 }
 
 // Update updates an activity in the store if present
-func (s *memoryStore) Update(ctx context.Context, a Activity) (Activity, error) {
-	act, err := s.Read(ctx, a.ID)
-	if err != nil {
-		return act, err
-	}
-
+func (s *memoryStore) Update(ctx context.Context, a Activity) error {
 	s.data[a.ID] = a
-	return act, nil
+	return nil
 }
 
 // Delete removes an activity from the store if present
-func (s *memoryStore) Delete(ctx context.Context, id uuid.UUID) (Activity, error) {
-	act, err := s.Read(ctx, id)
-	if err != nil {
-		return act, err
-	}
-
+func (s *memoryStore) Delete(ctx context.Context, id uuid.UUID) error {
 	delete(s.data, id)
-	return act, nil
+	return nil
 }
 
 // List returns all the activities in the store

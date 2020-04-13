@@ -155,13 +155,13 @@ func (r *activityTestRepo) Read(ctx context.Context, id uuid.UUID) (storage.Acti
 }
 
 // Update
-func (r *activityTestRepo) Update(context.Context, storage.Activity) (storage.Activity, error) {
-	return storage.Activity{}, fmt.Errorf("Not implemented")
+func (r *activityTestRepo) Update(context.Context, storage.Activity) error {
+	return fmt.Errorf("Not implemented")
 }
 
 // Delete
-func (r *activityTestRepo) Delete(context.Context, uuid.UUID) (storage.Activity, error) {
-	return storage.Activity{}, fmt.Errorf("Not implemented")
+func (r *activityTestRepo) Delete(context.Context, uuid.UUID) error {
+	return fmt.Errorf("Not implemented")
 }
 
 // List

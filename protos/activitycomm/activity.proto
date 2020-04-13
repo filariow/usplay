@@ -50,9 +50,7 @@ message DeleteActivityRequest {
 }
 
 // The response message to the delete request
-message DeleteActivityReply {
-    Activity activity = 1;
-}
+message DeleteActivityReply { }
 
 // The request message for the update request
 message UpdateActivityRequest {
@@ -65,9 +63,7 @@ message UpdateActivityRequest {
 
 // The response message to the update request.
 // Returns the old values for the Activity
-message UpdateActivityReply {
-    Activity activity = 1;
-}
+message UpdateActivityReply {}
 
 // The request message for the list activities request
 message ListActivitiesRequest { }
