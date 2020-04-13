@@ -16,7 +16,7 @@ func (s *activityServer) Create(ctx context.Context, req *activitycomm.CreateAct
 	actTypeIDStr := req.GetActTypeID()
 	actTypeID, err := uuid.Parse(actTypeIDStr)
 	if err != nil {
-		return nil, status.Errorf(codes.Internal, "error creating activity, ActivityType ID is invalid: %v", err)
+		return nil, status.Errorf(codes.InvalidArgument, "error creating activity, ActivityType ID is invalid: %v", err)
 	}
 
 	// validate inputs

@@ -5,6 +5,7 @@ import (
 
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -22,6 +23,15 @@ func (s *activityServer) Update(ctx context.Context, req *activitycomm.UpdateAct
 	actTypeID, err := uuid.Parse(actTypeIDStr)
 	if err != nil {
 		return nil, status.Errorf(codes.InvalidArgument, "error updating activity: ActivityType ID (%s) is invalid: %v", actTypeID, err)
+	}
+
+	// validate inputs
+	rpl, err := s.actTypeCli.Exist(ctx, &activitytypecomm.ExistActivityTypeRequest{Id: actTypeIDStr})
+	if err != nil {
+		return nil, status.Errorf(codes.Unavailable, "error contacting ActivityType service: %v", err)
+	}
+	if !rpl.Exists {
+		return nil, status.Errorf(codes.NotFound, "ActivityType with id %v do not exists", actTypeIDStr)
 	}
 
 	// build storage payload

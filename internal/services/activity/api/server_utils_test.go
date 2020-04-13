@@ -15,6 +15,10 @@ import (
 
 // Activity Test repository
 type activityTestRepo struct {
+	CreateResult struct {
+		ID  uuid.UUID
+		Err error
+	}
 	ReadResult struct {
 		Activity storage.Activity
 		Err      error
@@ -26,7 +30,7 @@ type activityTestRepo struct {
 
 // Create
 func (r *activityTestRepo) Create(context.Context, storage.Activity) (uuid.UUID, error) {
-	return uuid.Nil, fmt.Errorf("Not implemented")
+	return r.CreateResult.ID, r.CreateResult.Err
 }
 
 // Read
@@ -70,7 +74,7 @@ func (c *actTestClient) Create(ctx context.Context, in *activitytypecomm.CreateA
 
 // Exists an activity
 func (c *actTestClient) Exist(ctx context.Context, in *activitytypecomm.ExistActivityTypeRequest, opts ...grpc.CallOption) (*activitytypecomm.ExistActivityTypeReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "Exist method is not implemented")
+	return &c.ExistResult.Reply, c.ExistResult.Err
 }
 
 // Reads an ActivityType

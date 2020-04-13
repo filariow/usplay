@@ -14,18 +14,20 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func Test_UpdateHappyPath(t *testing.T) {
+func Test_CreateHappyPath(t *testing.T) {
 	// arrange
 	activity := storage.Activity{
-		ID:          uuid.New(),
-		Code:        "Activity Code",
-		Description: "Activity Description",
-		Name:        "Activity Name",
+		ActivityTypeID: uuid.New(),
+		Code:           "Activity Code",
+		Description:    "Activity Description",
+		Name:           "Activity Name",
 	}
 	store := &activityTestRepo{
-		UpdateResult: struct {
+		CreateResult: struct {
+			ID  uuid.UUID
 			Err error
 		}{
+			ID:  activity.ID,
 			Err: nil,
 		},
 	}
@@ -48,8 +50,7 @@ func Test_UpdateHappyPath(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	_, err := svr.Update(ctx, &activitycomm.UpdateActivityRequest{
-		Id:          activity.ID.String(),
+	_, err := svr.Create(ctx, &activitycomm.CreateActivityRequest{
 		ActTypeID:   activity.ActivityTypeID.String(),
 		Code:        activity.Code,
 		Description: activity.Description,
@@ -62,64 +63,7 @@ func Test_UpdateHappyPath(t *testing.T) {
 	}
 }
 
-func Test_UpdateInvalidActivityID(t *testing.T) {
-	// arrange
-	activity := storage.Activity{
-		Code:           "Activity Code",
-		Description:    "Activity Description",
-		Name:           "Activity Name",
-		ActivityTypeID: uuid.New(),
-	}
-	store := &activityTestRepo{
-		UpdateResult: struct {
-			Err error
-		}{
-			Err: nil,
-		},
-	}
-	svr := api.NewActivityServer(
-		store,
-		&actTestClient{
-			WaitTime: time.Duration(0),
-			ExistResult: struct {
-				Err   error
-				Reply activitytypecomm.ExistActivityTypeReply
-			}{
-				Err: nil,
-				Reply: activitytypecomm.ExistActivityTypeReply{
-					Exists: true,
-				},
-			},
-		},
-		1*time.Second,
-	)
-	ctx := context.Background()
-
-	// act
-	_, err := svr.Update(ctx, &activitycomm.UpdateActivityRequest{
-		Id:          "",
-		ActTypeID:   activity.ActivityTypeID.String(),
-		Code:        activity.Code,
-		Description: activity.Description,
-		Name:        activity.Name,
-	})
-
-	// assert
-	if err == nil {
-		t.Fatalf("expected error invoking update with no id is not provided")
-	}
-
-	statusErr := status.Convert(err)
-	if statusErr == nil {
-		t.Fatalf("provided error is not a status.Status error: %v", err)
-	}
-
-	if statusErr.Code() != codes.InvalidArgument {
-		t.Errorf("provided error do not present the InvalidArgument code as expected, but instead presents %s", statusErr.Code().String())
-	}
-}
-
-func Test_UpdateInvalidActivityTypeID(t *testing.T) {
+func Test_CreateInvalidActivityTypeID(t *testing.T) {
 	// arrange
 	activity := storage.Activity{
 		ID:          uuid.New(),
@@ -128,9 +72,11 @@ func Test_UpdateInvalidActivityTypeID(t *testing.T) {
 		Name:        "Activity Name",
 	}
 	store := &activityTestRepo{
-		UpdateResult: struct {
+		CreateResult: struct {
+			ID  uuid.UUID
 			Err error
 		}{
+			ID:  activity.ID,
 			Err: nil,
 		},
 	}
@@ -153,8 +99,7 @@ func Test_UpdateInvalidActivityTypeID(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	_, err := svr.Update(ctx, &activitycomm.UpdateActivityRequest{
-		Id:          activity.ID.String(),
+	_, err := svr.Create(ctx, &activitycomm.CreateActivityRequest{
 		ActTypeID:   "",
 		Code:        activity.Code,
 		Description: activity.Description,
@@ -163,7 +108,7 @@ func Test_UpdateInvalidActivityTypeID(t *testing.T) {
 
 	// assert
 	if err == nil {
-		t.Fatalf("expected error invoking update with no id is not provided")
+		t.Fatalf("expected error invoking create with no id is not provided")
 	}
 
 	statusErr := status.Convert(err)
@@ -176,19 +121,20 @@ func Test_UpdateInvalidActivityTypeID(t *testing.T) {
 	}
 }
 
-func Test_UpdateNotExistingActivityTypeID(t *testing.T) {
+func Test_CreateNotExistingActivityTypeID(t *testing.T) {
 	// arrange
 	activity := storage.Activity{
-		ID:             uuid.New(),
 		ActivityTypeID: uuid.New(),
 		Code:           "Activity Code",
 		Description:    "Activity Description",
 		Name:           "Activity Name",
 	}
 	store := &activityTestRepo{
-		UpdateResult: struct {
+		CreateResult: struct {
+			ID  uuid.UUID
 			Err error
 		}{
+			ID:  activity.ID,
 			Err: nil,
 		},
 	}
@@ -211,8 +157,7 @@ func Test_UpdateNotExistingActivityTypeID(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	_, err := svr.Update(ctx, &activitycomm.UpdateActivityRequest{
-		Id:          activity.ID.String(),
+	_, err := svr.Create(ctx, &activitycomm.CreateActivityRequest{
 		ActTypeID:   activity.ActivityTypeID.String(),
 		Code:        activity.Code,
 		Description: activity.Description,
@@ -221,7 +166,7 @@ func Test_UpdateNotExistingActivityTypeID(t *testing.T) {
 
 	// assert
 	if err == nil {
-		t.Fatalf("expected error invoking create with non-existing activitytype id provided")
+		t.Fatalf("expected error invoking create with non-existing id provided")
 	}
 
 	statusErr := status.Convert(err)
