@@ -166,7 +166,7 @@ func Test_CreateNotExistingActivityTypeID(t *testing.T) {
 
 	// assert
 	if err == nil {
-		t.Fatalf("expected error invoking create with non-existing id provided")
+		t.Fatalf("expected error invoking create with non-existing activitytype id provided")
 	}
 
 	statusErr := status.Convert(err)
