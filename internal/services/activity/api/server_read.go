@@ -6,6 +6,7 @@ import (
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
+	"github.com/golang/protobuf/ptypes"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -31,6 +32,11 @@ func (s *activityServer) read(ctx context.Context, uid uuid.UUID) (*activitycomm
 		return nil, err
 	}
 
+	creationTime, err := ptypes.TimestampProto(at.CreationTime)
+	if err != nil {
+		return nil, err
+	}
+
 	return &activitycomm.ReadActivityReply{
 		Activity: &activitycomm.Activity{
 			Code:        at.Code,
@@ -42,6 +48,7 @@ func (s *activityServer) read(ctx context.Context, uid uuid.UUID) (*activitycomm
 				Name: act.Name,
 				Code: act.Code,
 			},
+			CreationTime: creationTime,
 		},
 	}, nil
 }
