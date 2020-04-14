@@ -1,13 +1,9 @@
 SHELL := /bin/bash
 
-.PHONY: clean
+.PHONY: clean protos container bin
 
 clean:
 	rm -rf ./bin/
-
-.PHONY: protos container bin
-
-PROJECTS := activity report order
 
 protos:
 ifndef PRJ_TARGET

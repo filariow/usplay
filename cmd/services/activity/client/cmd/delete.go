@@ -4,8 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/FrancescoIlario/usplay/pkg/services/activity/comm"
-
+	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )
@@ -21,20 +20,12 @@ var (
 			}
 			defer conn.Close()
 
-			cli := comm.NewActivitySvcClient(conn)
-			resp, err := cli.Delete(context.TODO(), &comm.DeleteActivityRequest{
-				Id: id,
-			})
-			if err != nil {
+			cli := activitycomm.NewActivitySvcClient(conn)
+			if _, err := cli.Delete(context.TODO(), &activitycomm.DeleteActivityRequest{Id: id}); err != nil {
 				log.Fatalf("error calling delete: %v", err)
 			}
 
-			log.Printf(
-				"deleted activity:\n\tid: %s\n\tcode: %s\n\tdescription: %s\n\tname: %s",
-				resp.Activity.Id,
-				resp.Activity.Code,
-				resp.Activity.Description,
-				resp.Activity.Name)
+			log.Printf("deleted activity %s", id)
 		},
 	}
 )

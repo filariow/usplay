@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/FrancescoIlario/usplay/internal/services/report/storage"
-	"github.com/FrancescoIlario/usplay/pkg/services/report/comm"
+	"github.com/FrancescoIlario/usplay/pkg/services/reportcomm"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -15,13 +15,13 @@ type reportServer struct {
 }
 
 // NewReportServer returns the default implementation of ReportSvcServer
-func NewReportServer() comm.ReportSvcServer {
+func NewReportServer() reportcomm.ReportSvcServer {
 	return &reportServer{
 		repo: storage.NewInMemoryStore(),
 	}
 }
 
-func (s *reportServer) Read(ctx context.Context, req *comm.ReadReportRequest) (*comm.ReadReportReply, error) {
+func (s *reportServer) Read(ctx context.Context, req *reportcomm.ReadReportRequest) (*reportcomm.ReadReportReply, error) {
 	id := req.GetId()
 	uid, err := uuid.Parse(id)
 	if err != nil {
@@ -33,15 +33,15 @@ func (s *reportServer) Read(ctx context.Context, req *comm.ReadReportRequest) (*
 		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", id)
 	}
 
-	return &comm.ReadReportReply{
-		Report: &comm.Report{
+	return &reportcomm.ReadReportReply{
+		Report: &reportcomm.Report{
 			Name: report.Name,
 			Id:   report.ID.String(),
 		},
 	}, nil
 }
 
-func (s *reportServer) Delete(ctx context.Context, req *comm.DeleteReportRequest) (*comm.DeleteReportReply, error) {
+func (s *reportServer) Delete(ctx context.Context, req *reportcomm.DeleteReportRequest) (*reportcomm.DeleteReportReply, error) {
 	id := req.GetId()
 	uid, err := uuid.Parse(id)
 	if err != nil {
@@ -53,15 +53,15 @@ func (s *reportServer) Delete(ctx context.Context, req *comm.DeleteReportRequest
 		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", id)
 	}
 
-	return &comm.DeleteReportReply{
-		Report: &comm.Report{
+	return &reportcomm.DeleteReportReply{
+		Report: &reportcomm.Report{
 			Name: report.Name,
 			Id:   report.ID.String(),
 		},
 	}, nil
 }
 
-func (s *reportServer) Update(ctx context.Context, req *comm.UpdateReportRequest) (*comm.UpdateReportReply, error) {
+func (s *reportServer) Update(ctx context.Context, req *reportcomm.UpdateReportRequest) (*reportcomm.UpdateReportReply, error) {
 	report := storage.Report{
 		Name:        req.GetName(),
 		Code:        req.GetCode(),
@@ -73,29 +73,29 @@ func (s *reportServer) Update(ctx context.Context, req *comm.UpdateReportRequest
 		return nil, status.Errorf(codes.Internal, "error creating report: %v", err)
 	}
 
-	return &comm.UpdateReportReply{
-		Report: &comm.Report{
+	return &reportcomm.UpdateReportReply{
+		Report: &reportcomm.Report{
 			Name: uact.Name,
 			Id:   uact.ID.String(),
 		},
 	}, nil
 }
 
-func (s *reportServer) List(ctx context.Context, req *comm.ListReportsRequest) (*comm.ListReportsReply, error) {
+func (s *reportServer) List(ctx context.Context, req *reportcomm.ListReportsRequest) (*reportcomm.ListReportsReply, error) {
 	sReports, err := s.repo.List(ctx)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "error retrieving the list of reports: %v", err)
 	}
 
-	reports := []*comm.Report{}
+	reports := []*reportcomm.Report{}
 	for _, v := range sReports {
-		reports = append(reports, &comm.Report{
+		reports = append(reports, &reportcomm.Report{
 			Name: v.Name,
 			Id:   v.ID.String(),
 		})
 	}
 
-	return &comm.ListReportsReply{
+	return &reportcomm.ListReportsReply{
 		Reports: reports,
 	}, nil
 }

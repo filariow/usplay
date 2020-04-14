@@ -4,8 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/FrancescoIlario/usplay/pkg/services/activity/comm"
-
+	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )
@@ -21,17 +20,16 @@ var (
 			}
 			defer conn.Close()
 
-			cli := comm.NewActivitySvcClient(conn)
-			resp, err := cli.Update(context.TODO(), &comm.UpdateActivityRequest{
+			cli := activitycomm.NewActivitySvcClient(conn)
+			if _, err = cli.Update(context.TODO(), &activitycomm.UpdateActivityRequest{
 				Code:        code,
 				Description: desc,
 				Name:        name,
-			})
-			if err != nil {
+			}); err != nil {
 				log.Fatalf("error calling update: %v", err)
 			}
 
-			log.Printf("updated activity: %s", resp.Activity.Id)
+			log.Printf("updated activity %s", id)
 		},
 	}
 )

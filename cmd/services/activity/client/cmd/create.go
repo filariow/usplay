@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/FrancescoIlario/usplay/pkg/services/activity/comm"
+	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )
@@ -20,8 +20,8 @@ var (
 			}
 			defer conn.Close()
 
-			cli := comm.NewActivitySvcClient(conn)
-			resp, err := cli.Create(context.TODO(), &comm.CreateActivityRequest{
+			cli := activitycomm.NewActivitySvcClient(conn)
+			resp, err := cli.Create(context.TODO(), &activitycomm.CreateActivityRequest{
 				Code:        code,
 				Description: desc,
 				Name:        name,

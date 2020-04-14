@@ -5,7 +5,7 @@ import (
 	"net"
 
 	"github.com/FrancescoIlario/usplay/internal/services/order/api"
-	"github.com/FrancescoIlario/usplay/pkg/services/order/comm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
 
 	"google.golang.org/grpc"
 )
@@ -23,7 +23,7 @@ func main() {
 
 	actServer := api.NewOrderServer()
 	grpcServer := grpc.NewServer()
-	comm.RegisterOrderSvcServer(grpcServer, actServer)
+	ordercomm.RegisterOrderSvcServer(grpcServer, actServer)
 
 	log.Printf("starting server at %v", address)
 	if err := grpcServer.Serve(ls); err != nil {

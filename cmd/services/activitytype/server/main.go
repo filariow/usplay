@@ -5,7 +5,7 @@ import (
 	"net"
 
 	"github.com/FrancescoIlario/usplay/internal/services/activitytype/api"
-	"github.com/FrancescoIlario/usplay/pkg/services/activitytype/comm"
+	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
 
 	"google.golang.org/grpc"
 )
@@ -23,7 +23,7 @@ func main() {
 
 	actServer := api.NewActivityTypeServer()
 	grpcServer := grpc.NewServer()
-	comm.RegisterActivityTypeSvcServer(grpcServer, actServer)
+	activitytypecomm.RegisterActivityTypeSvcServer(grpcServer, actServer)
 
 	log.Printf("starting server at %v", address)
 	if err := grpcServer.Serve(ls); err != nil {

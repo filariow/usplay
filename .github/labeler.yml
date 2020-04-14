@@ -4,13 +4,20 @@ repo:
   
 # Add '@domain/core' label to any change within the 'core' package
 services:
-  - services/**/*
+  - pkg/services/**
+  - internal/services/**
+  - cmd/services/**
 
-todo:
-  - services/todo/*
+protos:
+  - build/protos/**
+  - protos/**
 
 k8s:
-  - manifest/**/*
+  - build/manifest/**/*
 
 docker:
   - /**/*.Dockerfile
+
+test:
+  - test/**
+  - /**/*_test.go

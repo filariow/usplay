@@ -4,8 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/FrancescoIlario/usplay/pkg/services/activitytype/comm"
-
+	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )
@@ -21,9 +20,9 @@ var (
 			}
 			defer conn.Close()
 
-			cli := comm.NewActivityTypeSvcClient(conn)
+			cli := activitytypecomm.NewActivityTypeSvcClient(conn)
 			resp, err := cli.Update(context.TODO(),
-				&comm.UpdateActivityTypeRequest{Code: code, Name: name})
+				&activitytypecomm.UpdateActivityTypeRequest{Code: code, Name: name})
 			if err != nil {
 				log.Fatalf("error calling update: %v", err)
 			}

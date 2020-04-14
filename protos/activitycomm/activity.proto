@@ -1,7 +1,11 @@
 syntax = "proto3";
-package comm;
+package activitycomm;
 
 option optimize_for = LITE_RUNTIME;
+option go_package = "github.com/FrancescoIlario/usplay/pkg/services/activitycomm";
+// option go_package = "activitycomm";
+
+import "activitytypecomm/activitytype.proto";
 
 // The Activity service definition.
 service ActivitySvc {
@@ -22,6 +26,7 @@ message CreateActivityRequest {
     string Name = 1;
     string Code = 2;
     string Description = 3;
+    string ActTypeID = 4;
 }
 
 // The response message containing the id of the activity
@@ -45,9 +50,7 @@ message DeleteActivityRequest {
 }
 
 // The response message to the delete request
-message DeleteActivityReply {
-    Activity activity = 1;
-}
+message DeleteActivityReply { }
 
 // The request message for the update request
 message UpdateActivityRequest {
@@ -55,13 +58,12 @@ message UpdateActivityRequest {
     string Name = 2;
     string Code = 3;
     string Description = 4;
+    string ActTypeID = 5;
 }
 
 // The response message to the update request.
 // Returns the old values for the Activity
-message UpdateActivityReply {
-    Activity activity = 1;
-}
+message UpdateActivityReply {}
 
 // The request message for the list activities request
 message ListActivitiesRequest { }
@@ -76,4 +78,5 @@ message Activity {
     string Name = 2;
     string Code = 3;
     string Description = 4;
+    activitytypecomm.ActivityType ActType = 5;
 }
