@@ -16,7 +16,7 @@ service OrderSvc {
     // Update an order
     rpc Update (UpdateOrderRequest) returns (UpdateOrderReply) {}
     // List an order
-    rpc List (ListActivitiesRequest) returns (ListActivitiesReply) {}
+    rpc List (ListOrdersRequest) returns (ListOrdersReply) {}
 }
 
 // The request message containing the order details
@@ -65,12 +65,12 @@ message UpdateOrderReply {
     Order order = 1;
 }
 
-// The request message for the list activities request
-message ListActivitiesRequest { }
+// The request message for the list orders request
+message ListOrdersRequest { }
 
-// The response message to the list activities request.
-message ListActivitiesReply {
-    repeated Order activities = 1;
+// The response message to the list orders request.
+message ListOrdersReply {
+    repeated Order orders = 1;
 }
 
 message Order {
