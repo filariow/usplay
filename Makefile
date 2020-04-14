@@ -1,6 +1,7 @@
 SHELL := /bin/bash
+GOCMD := go
 
-.PHONY: clean protos container bin
+.PHONY: clean protos container bin test
 
 clean:
 	rm -rf ./bin/
@@ -22,3 +23,6 @@ ifndef TARGET
 	TARGET=all
 endif
 	$(MAKE) -f build/bin/Makefile $(TARGET) PRJ_TARGET=$(PRJ_TARGET)
+
+test:
+	bash test/testallgo.sh
