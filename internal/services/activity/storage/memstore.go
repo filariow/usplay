@@ -3,6 +3,7 @@ package storage
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -26,6 +27,8 @@ func (s *memoryStore) Create(ctx context.Context, a Activity) (uuid.UUID, error)
 	}
 
 	a.ID = id
+	a.CreationTime = time.Now()
+
 	s.data[id] = a
 	return id, nil
 }

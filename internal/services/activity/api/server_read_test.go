@@ -9,16 +9,21 @@ import (
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
+	"github.com/golang/protobuf/ptypes"
 	"github.com/google/uuid"
 )
 
 func TestReadHappyPath(t *testing.T) {
 	// arrange
+	ctime := time.Now()
+	ptime, _ := ptypes.TimestampProto(ctime)
+
 	activity := storage.Activity{
-		ID:          uuid.New(),
-		Code:        "Activity Code",
-		Description: "Activity Description",
-		Name:        "Activity Name",
+		ID:           uuid.New(),
+		Code:         "Activity Code",
+		Description:  "Activity Description",
+		Name:         "Activity Name",
+		CreationTime: ctime,
 	}
 	activityType := activitytypecomm.ActivityType{
 		Id:   uuid.New().String(),
@@ -26,11 +31,12 @@ func TestReadHappyPath(t *testing.T) {
 		Name: "Test ActivityType",
 	}
 	expectedActivity := activitycomm.Activity{
-		Code:        activity.Code,
-		Id:          activity.ID.String(),
-		ActType:     &activityType,
-		Description: activity.Description,
-		Name:        activity.Name,
+		Code:         activity.Code,
+		Id:           activity.ID.String(),
+		ActType:      &activityType,
+		Description:  activity.Description,
+		Name:         activity.Name,
+		CreationTime: ptime,
 	}
 
 	store := &activityTestRepo{

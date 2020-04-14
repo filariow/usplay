@@ -1,6 +1,10 @@
 package storage
 
-import "github.com/google/uuid"
+import (
+	"time"
+
+	"github.com/google/uuid"
+)
 
 // Activity activity model for storage
 type Activity struct {
@@ -9,6 +13,7 @@ type Activity struct {
 	Description    string
 	Code           string
 	Name           string
+	CreationTime   time.Time
 }
 
 // Activities list of activities

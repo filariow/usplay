@@ -5,6 +5,7 @@ option optimize_for = LITE_RUNTIME;
 option go_package = "github.com/FrancescoIlario/usplay/pkg/services/activitycomm";
 // option go_package = "activitycomm";
 
+import "google/protobuf/timestamp.proto";
 import "activitytypecomm/activitytype.proto";
 
 // The Activity service definition.
@@ -79,4 +80,5 @@ message Activity {
     string Code = 3;
     string Description = 4;
     activitytypecomm.ActivityType ActType = 5;
+    google.protobuf.Timestamp CreationTime = 6;
 }
