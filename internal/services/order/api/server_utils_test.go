@@ -16,6 +16,10 @@ type orderTestRepo struct {
 	DeleteResult struct {
 		Err error
 	}
+	ExistResult struct {
+		Exist bool
+		Err   error
+	}
 	ReadResult struct {
 		Order storage.Order
 		Err   error
@@ -32,6 +36,11 @@ type orderTestRepo struct {
 // Create
 func (r *orderTestRepo) Create(context.Context, storage.Order) (uuid.UUID, error) {
 	return r.CreateResult.ID, r.CreateResult.Err
+}
+
+// Exist
+func (r *orderTestRepo) Exist(ctx context.Context, id uuid.UUID) (bool, error) {
+	return r.ExistResult.Exist, r.ExistResult.Err
 }
 
 // Read

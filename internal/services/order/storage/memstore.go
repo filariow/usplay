@@ -39,6 +39,12 @@ func (s *memoryStore) Read(ctx context.Context, id uuid.UUID) (Order, error) {
 	return act, nil
 }
 
+// Exist get an order by id
+func (s *memoryStore) Exist(ctx context.Context, id uuid.UUID) (bool, error) {
+	_, ok := s.data[id]
+	return ok, nil
+}
+
 // Update updates an order in the store if present
 func (s *memoryStore) Update(ctx context.Context, a Order) error {
 	if _, err := s.Read(ctx, a.ID); err != nil {

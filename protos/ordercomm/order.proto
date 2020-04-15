@@ -11,6 +11,8 @@ service OrderSvc {
     rpc Create (CreateOrderRequest) returns (CreateOrderReply) {}
     // Reads an order
     rpc Read (ReadOrderRequest) returns (ReadOrderReply) {}
+    // Exists an order
+    rpc Exist (ExistOrderRequest) returns (ExistOrderReply) {}
     // Delete an order
     rpc Delete (DeleteOrderRequest) returns (DeleteOrderReply) {}
     // Update an order
@@ -40,6 +42,17 @@ message ReadOrderRequest {
 message ReadOrderReply {
     Order order = 1;
 }
+
+// The request message for the exists request
+message ExistOrderRequest {
+    string Id = 1;
+}
+
+// The response message to the exists request
+message ExistOrderReply {
+    bool exists = 1;
+}
+
 
 // The request message for the delete request
 message DeleteOrderRequest {
