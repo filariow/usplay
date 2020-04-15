@@ -1,8 +1,8 @@
 syntax = "proto3";
 package ordercomm;
 
-// option go_package = "github.com/FrancescoIlario/usplay/pkg/services/ordercomm";
-option go_package = "ordercomm";
+option go_package = "github.com/FrancescoIlario/usplay/pkg/services/ordercomm";
+
 option optimize_for = LITE_RUNTIME;
 
 // The Order service definition.
