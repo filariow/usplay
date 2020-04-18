@@ -65,18 +65,11 @@ func (s *activityTypeServer) Delete(ctx context.Context, req *activitytypecomm.D
 		return nil, status.Errorf(codes.InvalidArgument, "Invalid id provided (%s): %v", id, err)
 	}
 
-	act, err := s.repo.Delete(ctx, uid)
-	if err != nil {
+	if err := s.repo.Delete(ctx, uid); err != nil {
 		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", id)
 	}
 
-	return &activitytypecomm.DeleteActivityTypeReply{
-		ActivityType: &activitytypecomm.ActivityType{
-			Code: act.Code,
-			Name: act.Name,
-			Id:   act.ID.String(),
-		},
-	}, nil
+	return &activitytypecomm.DeleteActivityTypeReply{}, nil
 }
 
 func (s *activityTypeServer) Update(ctx context.Context, req *activitytypecomm.UpdateActivityTypeRequest) (*activitytypecomm.UpdateActivityTypeReply, error) {
@@ -85,18 +78,12 @@ func (s *activityTypeServer) Update(ctx context.Context, req *activitytypecomm.U
 		Code: req.GetCode(),
 	}
 
-	uact, err := s.repo.Update(ctx, act)
+	err := s.repo.Update(ctx, act)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "error creating ActivityType: %v", err)
 	}
 
-	return &activitytypecomm.UpdateActivityTypeReply{
-		ActivityType: &activitytypecomm.ActivityType{
-			Code: uact.Code,
-			Name: uact.Name,
-			Id:   uact.ID.String(),
-		},
-	}, nil
+	return &activitytypecomm.UpdateActivityTypeReply{}, nil
 }
 
 func (s *activityTypeServer) List(ctx context.Context, req *activitytypecomm.ListActivityTypesRequest) (*activitytypecomm.ListActivityTypesReply, error) {
@@ -140,5 +127,5 @@ func (s *activityTypeServer) Exist(ctx context.Context, req *activitytypecomm.Ex
 		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", id)
 	}
 
-	return &activitytypecomm.ExistActivityTypeReply{Exists: exists}, nil
+	return &activitytypecomm.ExistActivityTypeReply{Exists: *exists}, nil
 }

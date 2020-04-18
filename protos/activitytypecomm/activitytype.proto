@@ -58,9 +58,7 @@ message DeleteActivityTypeRequest {
 }
 
 // The response message to the delete request
-message DeleteActivityTypeReply {
-    ActivityType ActivityType = 1;
-}
+message DeleteActivityTypeReply {}
 
 // The request message for the update request
 message UpdateActivityTypeRequest {
@@ -69,10 +67,8 @@ message UpdateActivityTypeRequest {
     string Name = 3;
 }
 
-// The response message to the update request.
-// Returns the old values for the ActivityType
+// The response message to the update requests
 message UpdateActivityTypeReply {
-    ActivityType ActivityType = 1;
 }
 
 // The request message for the list ActivityTypes request
