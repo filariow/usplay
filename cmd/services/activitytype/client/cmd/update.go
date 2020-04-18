@@ -21,13 +21,15 @@ var (
 			defer conn.Close()
 
 			cli := activitytypecomm.NewActivityTypeSvcClient(conn)
-			resp, err := cli.Update(context.TODO(),
-				&activitytypecomm.UpdateActivityTypeRequest{Code: code, Name: name})
-			if err != nil {
+
+			if _, err := cli.Update(context.TODO(),
+				&activitytypecomm.UpdateActivityTypeRequest{
+					Code: code,
+					Name: name}); err != nil {
 				log.Fatalf("error calling update: %v", err)
 			}
 
-			log.Printf("updated ActivityType: %s", resp.ActivityType.Id)
+			log.Printf("updated ActivityType: %s", id)
 		},
 	}
 )
