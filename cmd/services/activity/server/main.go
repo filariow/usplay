@@ -10,6 +10,7 @@ import (
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
 
 	"google.golang.org/grpc"
 )
@@ -38,8 +39,9 @@ func main() {
 		log.Fatalf("cannot connect to %s: %v", actTypeHost, err)
 	}
 	actTypeCli := activitytypecomm.NewActivityTypeSvcClient(conn)
+	orderCli := ordercomm.NewOrderSvcClient(conn)
 
-	actServer := api.NewActivityServer(store, actTypeCli, 1*time.Second)
+	actServer := api.NewActivityServer(store, actTypeCli, orderCli, 1*time.Second)
 	grpcServer := grpc.NewServer()
 	activitycomm.RegisterActivitySvcServer(grpcServer, actServer)
 

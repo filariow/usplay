@@ -200,6 +200,86 @@ func (m *ReadOrderReply) GetOrder() *Order {
 	return nil
 }
 
+// The request message for the exists request
+type ExistOrderRequest struct {
+	Id                   string   `protobuf:"bytes,1,opt,name=Id,proto3" json:"Id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ExistOrderRequest) Reset()         { *m = ExistOrderRequest{} }
+func (m *ExistOrderRequest) String() string { return proto.CompactTextString(m) }
+func (*ExistOrderRequest) ProtoMessage()    {}
+func (*ExistOrderRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_972d9d7dd8a32892, []int{4}
+}
+
+func (m *ExistOrderRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ExistOrderRequest.Unmarshal(m, b)
+}
+func (m *ExistOrderRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ExistOrderRequest.Marshal(b, m, deterministic)
+}
+func (m *ExistOrderRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ExistOrderRequest.Merge(m, src)
+}
+func (m *ExistOrderRequest) XXX_Size() int {
+	return xxx_messageInfo_ExistOrderRequest.Size(m)
+}
+func (m *ExistOrderRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ExistOrderRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ExistOrderRequest proto.InternalMessageInfo
+
+func (m *ExistOrderRequest) GetId() string {
+	if m != nil {
+		return m.Id
+	}
+	return ""
+}
+
+// The response message to the exists request
+type ExistOrderReply struct {
+	Exists               bool     `protobuf:"varint,1,opt,name=exists,proto3" json:"exists,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ExistOrderReply) Reset()         { *m = ExistOrderReply{} }
+func (m *ExistOrderReply) String() string { return proto.CompactTextString(m) }
+func (*ExistOrderReply) ProtoMessage()    {}
+func (*ExistOrderReply) Descriptor() ([]byte, []int) {
+	return fileDescriptor_972d9d7dd8a32892, []int{5}
+}
+
+func (m *ExistOrderReply) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ExistOrderReply.Unmarshal(m, b)
+}
+func (m *ExistOrderReply) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ExistOrderReply.Marshal(b, m, deterministic)
+}
+func (m *ExistOrderReply) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ExistOrderReply.Merge(m, src)
+}
+func (m *ExistOrderReply) XXX_Size() int {
+	return xxx_messageInfo_ExistOrderReply.Size(m)
+}
+func (m *ExistOrderReply) XXX_DiscardUnknown() {
+	xxx_messageInfo_ExistOrderReply.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ExistOrderReply proto.InternalMessageInfo
+
+func (m *ExistOrderReply) GetExists() bool {
+	if m != nil {
+		return m.Exists
+	}
+	return false
+}
+
 // The request message for the delete request
 type DeleteOrderRequest struct {
 	Id                   string   `protobuf:"bytes,1,opt,name=Id,proto3" json:"Id,omitempty"`
@@ -212,7 +292,7 @@ func (m *DeleteOrderRequest) Reset()         { *m = DeleteOrderRequest{} }
 func (m *DeleteOrderRequest) String() string { return proto.CompactTextString(m) }
 func (*DeleteOrderRequest) ProtoMessage()    {}
 func (*DeleteOrderRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_972d9d7dd8a32892, []int{4}
+	return fileDescriptor_972d9d7dd8a32892, []int{6}
 }
 
 func (m *DeleteOrderRequest) XXX_Unmarshal(b []byte) error {
@@ -252,7 +332,7 @@ func (m *DeleteOrderReply) Reset()         { *m = DeleteOrderReply{} }
 func (m *DeleteOrderReply) String() string { return proto.CompactTextString(m) }
 func (*DeleteOrderReply) ProtoMessage()    {}
 func (*DeleteOrderReply) Descriptor() ([]byte, []int) {
-	return fileDescriptor_972d9d7dd8a32892, []int{5}
+	return fileDescriptor_972d9d7dd8a32892, []int{7}
 }
 
 func (m *DeleteOrderReply) XXX_Unmarshal(b []byte) error {
@@ -295,7 +375,7 @@ func (m *UpdateOrderRequest) Reset()         { *m = UpdateOrderRequest{} }
 func (m *UpdateOrderRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateOrderRequest) ProtoMessage()    {}
 func (*UpdateOrderRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_972d9d7dd8a32892, []int{6}
+	return fileDescriptor_972d9d7dd8a32892, []int{8}
 }
 
 func (m *UpdateOrderRequest) XXX_Unmarshal(b []byte) error {
@@ -357,7 +437,7 @@ func (m *UpdateOrderReply) Reset()         { *m = UpdateOrderReply{} }
 func (m *UpdateOrderReply) String() string { return proto.CompactTextString(m) }
 func (*UpdateOrderReply) ProtoMessage()    {}
 func (*UpdateOrderReply) Descriptor() ([]byte, []int) {
-	return fileDescriptor_972d9d7dd8a32892, []int{7}
+	return fileDescriptor_972d9d7dd8a32892, []int{9}
 }
 
 func (m *UpdateOrderReply) XXX_Unmarshal(b []byte) error {
@@ -385,74 +465,74 @@ func (m *UpdateOrderReply) GetOrder() *Order {
 	return nil
 }
 
-// The request message for the list activities request
-type ListActivitiesRequest struct {
+// The request message for the list orders request
+type ListOrdersRequest struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ListActivitiesRequest) Reset()         { *m = ListActivitiesRequest{} }
-func (m *ListActivitiesRequest) String() string { return proto.CompactTextString(m) }
-func (*ListActivitiesRequest) ProtoMessage()    {}
-func (*ListActivitiesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_972d9d7dd8a32892, []int{8}
+func (m *ListOrdersRequest) Reset()         { *m = ListOrdersRequest{} }
+func (m *ListOrdersRequest) String() string { return proto.CompactTextString(m) }
+func (*ListOrdersRequest) ProtoMessage()    {}
+func (*ListOrdersRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_972d9d7dd8a32892, []int{10}
 }
 
-func (m *ListActivitiesRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ListActivitiesRequest.Unmarshal(m, b)
+func (m *ListOrdersRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListOrdersRequest.Unmarshal(m, b)
 }
-func (m *ListActivitiesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ListActivitiesRequest.Marshal(b, m, deterministic)
+func (m *ListOrdersRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListOrdersRequest.Marshal(b, m, deterministic)
 }
-func (m *ListActivitiesRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ListActivitiesRequest.Merge(m, src)
+func (m *ListOrdersRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListOrdersRequest.Merge(m, src)
 }
-func (m *ListActivitiesRequest) XXX_Size() int {
-	return xxx_messageInfo_ListActivitiesRequest.Size(m)
+func (m *ListOrdersRequest) XXX_Size() int {
+	return xxx_messageInfo_ListOrdersRequest.Size(m)
 }
-func (m *ListActivitiesRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_ListActivitiesRequest.DiscardUnknown(m)
+func (m *ListOrdersRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListOrdersRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ListActivitiesRequest proto.InternalMessageInfo
+var xxx_messageInfo_ListOrdersRequest proto.InternalMessageInfo
 
-// The response message to the list activities request.
-type ListActivitiesReply struct {
-	Activities           []*Order `protobuf:"bytes,1,rep,name=activities,proto3" json:"activities,omitempty"`
+// The response message to the list orders request.
+type ListOrdersReply struct {
+	Orders               []*Order `protobuf:"bytes,1,rep,name=orders,proto3" json:"orders,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ListActivitiesReply) Reset()         { *m = ListActivitiesReply{} }
-func (m *ListActivitiesReply) String() string { return proto.CompactTextString(m) }
-func (*ListActivitiesReply) ProtoMessage()    {}
-func (*ListActivitiesReply) Descriptor() ([]byte, []int) {
-	return fileDescriptor_972d9d7dd8a32892, []int{9}
+func (m *ListOrdersReply) Reset()         { *m = ListOrdersReply{} }
+func (m *ListOrdersReply) String() string { return proto.CompactTextString(m) }
+func (*ListOrdersReply) ProtoMessage()    {}
+func (*ListOrdersReply) Descriptor() ([]byte, []int) {
+	return fileDescriptor_972d9d7dd8a32892, []int{11}
 }
 
-func (m *ListActivitiesReply) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ListActivitiesReply.Unmarshal(m, b)
+func (m *ListOrdersReply) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListOrdersReply.Unmarshal(m, b)
 }
-func (m *ListActivitiesReply) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ListActivitiesReply.Marshal(b, m, deterministic)
+func (m *ListOrdersReply) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListOrdersReply.Marshal(b, m, deterministic)
 }
-func (m *ListActivitiesReply) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ListActivitiesReply.Merge(m, src)
+func (m *ListOrdersReply) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListOrdersReply.Merge(m, src)
 }
-func (m *ListActivitiesReply) XXX_Size() int {
-	return xxx_messageInfo_ListActivitiesReply.Size(m)
+func (m *ListOrdersReply) XXX_Size() int {
+	return xxx_messageInfo_ListOrdersReply.Size(m)
 }
-func (m *ListActivitiesReply) XXX_DiscardUnknown() {
-	xxx_messageInfo_ListActivitiesReply.DiscardUnknown(m)
+func (m *ListOrdersReply) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListOrdersReply.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ListActivitiesReply proto.InternalMessageInfo
+var xxx_messageInfo_ListOrdersReply proto.InternalMessageInfo
 
-func (m *ListActivitiesReply) GetActivities() []*Order {
+func (m *ListOrdersReply) GetOrders() []*Order {
 	if m != nil {
-		return m.Activities
+		return m.Orders
 	}
 	return nil
 }
@@ -471,7 +551,7 @@ func (m *Order) Reset()         { *m = Order{} }
 func (m *Order) String() string { return proto.CompactTextString(m) }
 func (*Order) ProtoMessage()    {}
 func (*Order) Descriptor() ([]byte, []int) {
-	return fileDescriptor_972d9d7dd8a32892, []int{10}
+	return fileDescriptor_972d9d7dd8a32892, []int{12}
 }
 
 func (m *Order) XXX_Unmarshal(b []byte) error {
@@ -525,52 +605,58 @@ func init() {
 	proto.RegisterType((*CreateOrderReply)(nil), "ordercomm.CreateOrderReply")
 	proto.RegisterType((*ReadOrderRequest)(nil), "ordercomm.ReadOrderRequest")
 	proto.RegisterType((*ReadOrderReply)(nil), "ordercomm.ReadOrderReply")
+	proto.RegisterType((*ExistOrderRequest)(nil), "ordercomm.ExistOrderRequest")
+	proto.RegisterType((*ExistOrderReply)(nil), "ordercomm.ExistOrderReply")
 	proto.RegisterType((*DeleteOrderRequest)(nil), "ordercomm.DeleteOrderRequest")
 	proto.RegisterType((*DeleteOrderReply)(nil), "ordercomm.DeleteOrderReply")
 	proto.RegisterType((*UpdateOrderRequest)(nil), "ordercomm.UpdateOrderRequest")
 	proto.RegisterType((*UpdateOrderReply)(nil), "ordercomm.UpdateOrderReply")
-	proto.RegisterType((*ListActivitiesRequest)(nil), "ordercomm.ListActivitiesRequest")
-	proto.RegisterType((*ListActivitiesReply)(nil), "ordercomm.ListActivitiesReply")
+	proto.RegisterType((*ListOrdersRequest)(nil), "ordercomm.ListOrdersRequest")
+	proto.RegisterType((*ListOrdersReply)(nil), "ordercomm.ListOrdersReply")
 	proto.RegisterType((*Order)(nil), "ordercomm.Order")
 }
 
-func init() { proto.RegisterFile("ordercomm/order.proto", fileDescriptor_972d9d7dd8a32892) }
+func init() {
+	proto.RegisterFile("ordercomm/order.proto", fileDescriptor_972d9d7dd8a32892)
+}
 
 var fileDescriptor_972d9d7dd8a32892 = []byte{
-	// 377 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x54, 0x41, 0x4b, 0xf3, 0x40,
-	0x10, 0x6d, 0x93, 0xb4, 0x7c, 0x9d, 0xf2, 0x95, 0x30, 0x52, 0x8c, 0x15, 0x25, 0x2c, 0x22, 0x9e,
-	0xaa, 0xd4, 0x8b, 0xf4, 0xa4, 0xb6, 0x54, 0x2b, 0xa2, 0x50, 0xf1, 0xe2, 0x41, 0x88, 0xc9, 0x1e,
-	0x02, 0x4d, 0x13, 0x93, 0xb5, 0xd0, 0x7f, 0xed, 0x4f, 0x90, 0xdd, 0x2d, 0x31, 0xbb, 0x49, 0x0b,
-	0x3d, 0x78, 0x5b, 0xde, 0x3c, 0xde, 0xbc, 0x99, 0x79, 0x2c, 0x74, 0xe3, 0x34, 0xa0, 0xa9, 0x1f,
-	0x47, 0xd1, 0xb9, 0x78, 0xf5, 0x93, 0x34, 0x66, 0x31, 0xb6, 0x72, 0x98, 0xbc, 0x03, 0x8e, 0x52,
-	0xea, 0x31, 0xfa, 0xcc, 0xa1, 0x19, 0xfd, 0xfc, 0xa2, 0x19, 0x43, 0x04, 0xeb, 0xc9, 0x8b, 0xa8,
-	0x53, 0x77, 0xeb, 0x67, 0xad, 0x99, 0x78, 0x73, 0x6c, 0x14, 0x07, 0xd4, 0x31, 0x24, 0xc6, 0xdf,
-	0xe8, 0x42, 0x7b, 0x4c, 0x33, 0x3f, 0x0d, 0x13, 0x16, 0xc6, 0x0b, 0xc7, 0x14, 0xa5, 0x22, 0x44,
-	0x08, 0xd8, 0x8a, 0x7e, 0x32, 0x5f, 0x61, 0x07, 0x8c, 0x69, 0xb0, 0xd6, 0x36, 0xa6, 0x01, 0xe7,
-	0xcc, 0xa8, 0x17, 0x28, 0x0e, 0x74, 0xce, 0x15, 0x74, 0x0a, 0x1c, 0xae, 0x72, 0x0a, 0x0d, 0x31,
-	0x86, 0x20, 0xb5, 0x07, 0x76, 0x3f, 0x1f, 0xaa, 0x2f, 0x59, 0xb2, 0x4c, 0x4e, 0x00, 0xc7, 0x74,
-	0x4e, 0xb5, 0x09, 0x75, 0xfd, 0x21, 0xd8, 0x0a, 0x6b, 0x97, 0x0e, 0x0b, 0xc0, 0xd7, 0x24, 0xf0,
-	0xb6, 0x77, 0xc8, 0x77, 0x6a, 0x54, 0xec, 0xd4, 0xdc, 0xbc, 0x53, 0xab, 0xbc, 0xd3, 0x21, 0xd8,
-	0x4a, 0xbf, 0x5d, 0xbc, 0xee, 0x43, 0xf7, 0x31, 0xcc, 0xd8, 0x8d, 0xcf, 0xc2, 0x65, 0xc8, 0x42,
-	0x9a, 0xad, 0xed, 0x92, 0x3b, 0xd8, 0xd3, 0x0b, 0x5c, 0xf7, 0x02, 0xc0, 0xcb, 0x21, 0xa7, 0xee,
-	0x9a, 0x95, 0xe2, 0x05, 0x0e, 0xf1, 0xa0, 0x21, 0xc0, 0xbf, 0x5b, 0xc0, 0xe0, 0xdb, 0x80, 0x7f,
-	0xa2, 0xc7, 0xcb, 0xd2, 0xc7, 0x09, 0x34, 0x65, 0xc2, 0xf0, 0xa8, 0xe0, 0xab, 0x1c, 0xea, 0xde,
-	0xe1, 0xa6, 0x72, 0x32, 0x5f, 0x91, 0x1a, 0x5e, 0x83, 0xc5, 0x13, 0x86, 0x45, 0x9a, 0x1e, 0xcb,
-	0xde, 0x41, 0x75, 0x51, 0x2a, 0x4c, 0xa0, 0x29, 0x33, 0xa4, 0x38, 0x29, 0x87, 0x4f, 0x71, 0xa2,
-	0xa7, 0x4e, 0xea, 0xc8, 0xfb, 0x2a, 0x3a, 0xe5, 0x88, 0x29, 0x3a, 0x7a, 0x22, 0x48, 0x0d, 0x1f,
-	0xc0, 0xe2, 0x27, 0x45, 0xb7, 0x40, 0xab, 0x3c, 0x7e, 0xef, 0x78, 0x0b, 0x43, 0x68, 0xdd, 0xfe,
-	0xbf, 0x37, 0xdf, 0x7e, 0xbf, 0x8d, 0x8f, 0xa6, 0xf8, 0x48, 0x2e, 0x7f, 0x02, 0x00, 0x00, 0xff,
-	0xff, 0x65, 0x32, 0x28, 0xc0, 0x61, 0x04, 0x00, 0x00,
+	// 412 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xb4, 0x54, 0xc1, 0x4e, 0xea, 0x40,
+	0x14, 0x85, 0xb6, 0x34, 0x70, 0xc9, 0x83, 0x72, 0x5f, 0xde, 0x0b, 0xaf, 0x4f, 0x13, 0x32, 0x1a,
+	0x83, 0x1b, 0x4c, 0x70, 0x63, 0x70, 0x63, 0x00, 0x89, 0x24, 0x44, 0x93, 0x1a, 0x37, 0x2e, 0x4c,
+	0x2a, 0x9d, 0x05, 0x09, 0xd0, 0xda, 0x56, 0x23, 0x1f, 0xe5, 0x3f, 0x9a, 0x99, 0xa9, 0x38, 0x33,
+	0x05, 0x12, 0x16, 0xee, 0x86, 0x73, 0x0f, 0x67, 0xee, 0xb9, 0xf7, 0x74, 0xe0, 0x4f, 0x18, 0x07,
+	0x34, 0x9e, 0x86, 0x8b, 0xc5, 0x19, 0x3f, 0x75, 0xa2, 0x38, 0x4c, 0x43, 0xac, 0xac, 0x61, 0xf2,
+	0x04, 0x38, 0x88, 0xa9, 0x9f, 0xd2, 0x3b, 0x06, 0x79, 0xf4, 0xe5, 0x95, 0x26, 0x29, 0x22, 0x58,
+	0xb7, 0xfe, 0x82, 0x36, 0x8b, 0xad, 0x62, 0xbb, 0xe2, 0xf1, 0x33, 0xc3, 0x06, 0x61, 0x40, 0x9b,
+	0x86, 0xc0, 0xd8, 0x19, 0x5b, 0x50, 0x1d, 0xd2, 0x64, 0x1a, 0xcf, 0xa2, 0x74, 0x16, 0x2e, 0x9b,
+	0x26, 0x2f, 0xc9, 0x10, 0x21, 0xe0, 0x28, 0xfa, 0xd1, 0x7c, 0x85, 0x35, 0x30, 0xc6, 0x41, 0xa6,
+	0x6d, 0x8c, 0x03, 0xc6, 0xf1, 0xa8, 0x1f, 0x28, 0x1d, 0xe8, 0x9c, 0x0b, 0xa8, 0x49, 0x1c, 0xa6,
+	0x72, 0x02, 0x25, 0x6e, 0x83, 0x93, 0xaa, 0x5d, 0xa7, 0xb3, 0x36, 0xd5, 0x11, 0x2c, 0x51, 0x26,
+	0x47, 0xd0, 0xb8, 0x7e, 0x9f, 0x25, 0xe9, 0x4e, 0xf9, 0x53, 0xa8, 0xcb, 0x24, 0xa6, 0xff, 0x17,
+	0x6c, 0xca, 0xa0, 0x84, 0xd3, 0xca, 0x5e, 0xf6, 0x8b, 0x1c, 0x03, 0x0e, 0xe9, 0x9c, 0x6a, 0x13,
+	0xd3, 0x05, 0x7b, 0xe0, 0x28, 0xac, 0x7d, 0x3a, 0x5e, 0x02, 0x3e, 0x44, 0x81, 0xbf, 0xfb, 0x86,
+	0xf5, 0x8e, 0x8c, 0x0d, 0x3b, 0x32, 0xb7, 0xef, 0xc8, 0xca, 0xef, 0xa8, 0x07, 0x8e, 0x72, 0xdf,
+	0x3e, 0xbd, 0xfe, 0x86, 0xc6, 0xe4, 0x6b, 0x6e, 0x49, 0xd6, 0x2a, 0xb9, 0x84, 0xba, 0x0c, 0x32,
+	0xbd, 0x36, 0xd8, 0xfc, 0x0f, 0x6c, 0x9a, 0xe6, 0x46, 0xc1, 0xac, 0x4e, 0x7c, 0x28, 0x71, 0xe0,
+	0xe7, 0x0c, 0x77, 0x3f, 0x4c, 0x28, 0xf3, 0x3b, 0xee, 0xdf, 0xa6, 0x38, 0x02, 0x5b, 0x24, 0x14,
+	0x0f, 0xa5, 0x9e, 0xf2, 0x1f, 0x85, 0xfb, 0x7f, 0x5b, 0x39, 0x9a, 0xaf, 0x48, 0x01, 0xaf, 0xc0,
+	0x62, 0x09, 0x45, 0x99, 0xa6, 0xc7, 0xda, 0xfd, 0xb7, 0xb9, 0x28, 0x14, 0x06, 0x50, 0xe2, 0x21,
+	0xc4, 0x03, 0x89, 0x95, 0xcb, 0xae, 0xeb, 0x6e, 0xa9, 0x0a, 0x91, 0x11, 0xd8, 0x22, 0x78, 0x8a,
+	0x9d, 0x7c, 0x62, 0x15, 0x3b, 0x7a, 0x54, 0x85, 0x8e, 0x08, 0x85, 0xa2, 0x93, 0xcf, 0xa5, 0xa2,
+	0xa3, 0xc7, 0x88, 0x14, 0xb0, 0x0f, 0xd6, 0x44, 0xf7, 0x94, 0x4b, 0x8c, 0xe2, 0x49, 0x8b, 0x0e,
+	0x29, 0xf4, 0x7f, 0xdd, 0x98, 0x8f, 0xdf, 0x6f, 0xd6, 0xb3, 0xcd, 0x5f, 0xb1, 0xf3, 0xcf, 0x00,
+	0x00, 0x00, 0xff, 0xff, 0x29, 0x98, 0xb2, 0x02, 0xde, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ context.Context
-var _ grpc.ClientConn
+var _ grpc.ClientConnInterface
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion4
+const _ = grpc.SupportPackageIsVersion6
 
 // OrderSvcClient is the client API for OrderSvc service.
 //
@@ -580,19 +666,21 @@ type OrderSvcClient interface {
 	Create(ctx context.Context, in *CreateOrderRequest, opts ...grpc.CallOption) (*CreateOrderReply, error)
 	// Reads an order
 	Read(ctx context.Context, in *ReadOrderRequest, opts ...grpc.CallOption) (*ReadOrderReply, error)
+	// Exists an order
+	Exist(ctx context.Context, in *ExistOrderRequest, opts ...grpc.CallOption) (*ExistOrderReply, error)
 	// Delete an order
 	Delete(ctx context.Context, in *DeleteOrderRequest, opts ...grpc.CallOption) (*DeleteOrderReply, error)
 	// Update an order
 	Update(ctx context.Context, in *UpdateOrderRequest, opts ...grpc.CallOption) (*UpdateOrderReply, error)
 	// List an order
-	List(ctx context.Context, in *ListActivitiesRequest, opts ...grpc.CallOption) (*ListActivitiesReply, error)
+	List(ctx context.Context, in *ListOrdersRequest, opts ...grpc.CallOption) (*ListOrdersReply, error)
 }
 
 type orderSvcClient struct {
-	cc *grpc.ClientConn
+	cc grpc.ClientConnInterface
 }
 
-func NewOrderSvcClient(cc *grpc.ClientConn) OrderSvcClient {
+func NewOrderSvcClient(cc grpc.ClientConnInterface) OrderSvcClient {
 	return &orderSvcClient{cc}
 }
 
@@ -608,6 +696,15 @@ func (c *orderSvcClient) Create(ctx context.Context, in *CreateOrderRequest, opt
 func (c *orderSvcClient) Read(ctx context.Context, in *ReadOrderRequest, opts ...grpc.CallOption) (*ReadOrderReply, error) {
 	out := new(ReadOrderReply)
 	err := c.cc.Invoke(ctx, "/ordercomm.OrderSvc/Read", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderSvcClient) Exist(ctx context.Context, in *ExistOrderRequest, opts ...grpc.CallOption) (*ExistOrderReply, error) {
+	out := new(ExistOrderReply)
+	err := c.cc.Invoke(ctx, "/ordercomm.OrderSvc/Exist", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -632,8 +729,8 @@ func (c *orderSvcClient) Update(ctx context.Context, in *UpdateOrderRequest, opt
 	return out, nil
 }
 
-func (c *orderSvcClient) List(ctx context.Context, in *ListActivitiesRequest, opts ...grpc.CallOption) (*ListActivitiesReply, error) {
-	out := new(ListActivitiesReply)
+func (c *orderSvcClient) List(ctx context.Context, in *ListOrdersRequest, opts ...grpc.CallOption) (*ListOrdersReply, error) {
+	out := new(ListOrdersReply)
 	err := c.cc.Invoke(ctx, "/ordercomm.OrderSvc/List", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -647,12 +744,14 @@ type OrderSvcServer interface {
 	Create(context.Context, *CreateOrderRequest) (*CreateOrderReply, error)
 	// Reads an order
 	Read(context.Context, *ReadOrderRequest) (*ReadOrderReply, error)
+	// Exists an order
+	Exist(context.Context, *ExistOrderRequest) (*ExistOrderReply, error)
 	// Delete an order
 	Delete(context.Context, *DeleteOrderRequest) (*DeleteOrderReply, error)
 	// Update an order
 	Update(context.Context, *UpdateOrderRequest) (*UpdateOrderReply, error)
 	// List an order
-	List(context.Context, *ListActivitiesRequest) (*ListActivitiesReply, error)
+	List(context.Context, *ListOrdersRequest) (*ListOrdersReply, error)
 }
 
 // UnimplementedOrderSvcServer can be embedded to have forward compatible implementations.
@@ -665,13 +764,16 @@ func (*UnimplementedOrderSvcServer) Create(ctx context.Context, req *CreateOrder
 func (*UnimplementedOrderSvcServer) Read(ctx context.Context, req *ReadOrderRequest) (*ReadOrderReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Read not implemented")
 }
+func (*UnimplementedOrderSvcServer) Exist(ctx context.Context, req *ExistOrderRequest) (*ExistOrderReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Exist not implemented")
+}
 func (*UnimplementedOrderSvcServer) Delete(ctx context.Context, req *DeleteOrderRequest) (*DeleteOrderReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 func (*UnimplementedOrderSvcServer) Update(ctx context.Context, req *UpdateOrderRequest) (*UpdateOrderReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (*UnimplementedOrderSvcServer) List(ctx context.Context, req *ListActivitiesRequest) (*ListActivitiesReply, error) {
+func (*UnimplementedOrderSvcServer) List(ctx context.Context, req *ListOrdersRequest) (*ListOrdersReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method List not implemented")
 }
 
@@ -715,6 +817,24 @@ func _OrderSvc_Read_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderSvc_Exist_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ExistOrderRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderSvcServer).Exist(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ordercomm.OrderSvc/Exist",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderSvcServer).Exist(ctx, req.(*ExistOrderRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _OrderSvc_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteOrderRequest)
 	if err := dec(in); err != nil {
@@ -752,7 +872,7 @@ func _OrderSvc_Update_Handler(srv interface{}, ctx context.Context, dec func(int
 }
 
 func _OrderSvc_List_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListActivitiesRequest)
+	in := new(ListOrdersRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -764,7 +884,7 @@ func _OrderSvc_List_Handler(srv interface{}, ctx context.Context, dec func(inter
 		FullMethod: "/ordercomm.OrderSvc/List",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderSvcServer).List(ctx, req.(*ListActivitiesRequest))
+		return srv.(OrderSvcServer).List(ctx, req.(*ListOrdersRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -780,6 +900,10 @@ var _OrderSvc_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Read",
 			Handler:    _OrderSvc_Read_Handler,
+		},
+		{
+			MethodName: "Exist",
+			Handler:    _OrderSvc_Exist_Handler,
 		},
 		{
 			MethodName: "Delete",

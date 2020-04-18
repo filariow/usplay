@@ -5,10 +5,10 @@ import "github.com/google/uuid"
 // Order order model for storage
 type Order struct {
 	ID          uuid.UUID
-	Description string
 	Code        string
+	Description string
 	Name        string
 }
 
-// Activities list of activities
-type Activities []Order
+// Orders list of orders
+type Orders []Order

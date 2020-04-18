@@ -12,7 +12,7 @@ import (
 var (
 	cmdList = &cobra.Command{
 		Use:   "list",
-		Short: "Lists all the activities",
+		Short: "Lists all the orders",
 		Run: func(cmd *cobra.Command, args []string) {
 			conn, err := grpc.Dial(target, grpc.WithInsecure())
 			if err != nil {
@@ -21,12 +21,12 @@ var (
 			defer conn.Close()
 
 			cli := ordercomm.NewOrderSvcClient(conn)
-			resp, err := cli.List(context.TODO(), &ordercomm.ListActivitiesRequest{})
+			resp, err := cli.List(context.TODO(), &ordercomm.ListOrdersRequest{})
 			if err != nil {
 				log.Fatalf("error calling list: %v", err)
 			}
 
-			for _, v := range resp.GetActivities() {
+			for _, v := range resp.GetOrders() {
 				log.Printf(
 					"list order:\n\tid: %s\n\tcode: %s\n\tdescription: %s\n\tname: %s",
 					v.Id,

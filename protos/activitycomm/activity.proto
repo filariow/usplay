@@ -3,10 +3,10 @@ package activitycomm;
 
 option optimize_for = LITE_RUNTIME;
 option go_package = "github.com/FrancescoIlario/usplay/pkg/services/activitycomm";
-// option go_package = "activitycomm";
 
 import "google/protobuf/timestamp.proto";
 import "activitytypecomm/activitytype.proto";
+import "ordercomm/order.proto";
 
 // The Activity service definition.
 service ActivitySvc {
@@ -28,6 +28,7 @@ message CreateActivityRequest {
     string Code = 2;
     string Description = 3;
     string ActTypeID = 4;
+    string OrderID = 5;
 }
 
 // The response message containing the id of the activity
@@ -60,6 +61,7 @@ message UpdateActivityRequest {
     string Code = 3;
     string Description = 4;
     string ActTypeID = 5;
+    string OrderID = 6;
 }
 
 // The response message to the update request.
@@ -81,4 +83,5 @@ message Activity {
     string Description = 4;
     activitytypecomm.ActivityType ActType = 5;
     google.protobuf.Timestamp CreationTime = 6;
+    ordercomm.Order Order = 7;
 }

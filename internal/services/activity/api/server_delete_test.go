@@ -28,7 +28,7 @@ func Test_DeleteHappyPath(t *testing.T) {
 			Err: nil,
 		},
 	}
-	svr := api.NewActivityServer(store, nil, 1*time.Second)
+	svr := api.NewActivityServer(store, nil, nil, 1*time.Second)
 	ctx := context.Background()
 
 	// act
@@ -44,7 +44,7 @@ func Test_DeleteHappyPath(t *testing.T) {
 func Test_DeleteInvalidID(t *testing.T) {
 	// arrange
 	store := &activityTestRepo{}
-	svr := api.NewActivityServer(store, nil, 1*time.Second)
+	svr := api.NewActivityServer(store, nil, nil, 1*time.Second)
 
 	// act
 

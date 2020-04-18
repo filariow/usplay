@@ -2,6 +2,7 @@ package api_test
 
 import (
 	"context"
+	"fmt"
 	"testing"
 	"time"
 
@@ -9,6 +10,7 @@ import (
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -18,6 +20,7 @@ func Test_ListHappyPath(t *testing.T) {
 	// arrange
 	activities := make([]storage.Activity, 2)
 	activityTypes := make([]*activitytypecomm.ActivityType, 2)
+	orders := make([]*ordercomm.Order, 2)
 	expectedActivities := make([]activitycomm.Activity, 2)
 
 	for i := 0; i < 2; i++ {
@@ -46,6 +49,14 @@ func Test_ListHappyPath(t *testing.T) {
 			Name:        activity.Name,
 		}
 		expectedActivities[i] = expectedActivity
+
+		order := ordercomm.Order{
+			Id:          uuid.New().String(),
+			Code:        fmt.Sprintf("order code %v", i),
+			Description: fmt.Sprintf("order description %v", i),
+			Name:        fmt.Sprintf("order name %v", i),
+		}
+		orders[i] = &order
 	}
 
 	store := &activityTestRepo{
@@ -69,6 +80,15 @@ func Test_ListHappyPath(t *testing.T) {
 				Reply: activitytypecomm.ListActivityTypesReply{
 					ActivityTypes: activityTypes,
 				},
+			},
+		},
+		&orderTestClient{
+			ListResult: struct {
+				Err   error
+				Reply ordercomm.ListOrdersReply
+			}{
+				Err:   nil,
+				Reply: ordercomm.ListOrdersReply{Orders: orders},
 			},
 		},
 		1*time.Second,
@@ -98,6 +118,7 @@ func Test_ListHappyPathNoActivityTypesDetails(t *testing.T) {
 	// arrange
 	activities := make([]storage.Activity, 2)
 	expectedActivities := make([]activitycomm.Activity, 2)
+	orders := make([]*ordercomm.Order, 2)
 
 	for i := 0; i < 2; i++ {
 		activityTypeID := uuid.New()
@@ -121,6 +142,14 @@ func Test_ListHappyPathNoActivityTypesDetails(t *testing.T) {
 			Name:        activity.Name,
 		}
 		expectedActivities[i] = expectedActivity
+
+		order := ordercomm.Order{
+			Id:          uuid.New().String(),
+			Code:        fmt.Sprintf("order code %v", i),
+			Description: fmt.Sprintf("order description %v", i),
+			Name:        fmt.Sprintf("order name %v", i),
+		}
+		orders[i] = &order
 	}
 
 	store := &activityTestRepo{
@@ -143,6 +172,15 @@ func Test_ListHappyPathNoActivityTypesDetails(t *testing.T) {
 				Err: status.Errorf(codes.DeadlineExceeded,
 					"Could not retrieve details about Activity Types"),
 				Reply: activitytypecomm.ListActivityTypesReply{},
+			},
+		},
+		&orderTestClient{
+			ListResult: struct {
+				Err   error
+				Reply ordercomm.ListOrdersReply
+			}{
+				Err:   nil,
+				Reply: ordercomm.ListOrdersReply{Orders: orders},
 			},
 		},
 		1*time.Second,

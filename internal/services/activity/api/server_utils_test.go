@@ -6,6 +6,7 @@ import (
 
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
 	"github.com/google/uuid"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -92,7 +93,9 @@ func (c *actTestClient) Read(ctx context.Context, in *activitytypecomm.ReadActiv
 	time.Sleep(c.WaitTime)
 
 	reply := c.ReadResult.Reply
-	reply.ActivityType.Id = in.Id
+	if reply.GetActivityType() != nil {
+		reply.ActivityType.Id = in.Id
+	}
 	return &reply, c.ReadResult.Err
 }
 
@@ -108,5 +111,57 @@ func (c *actTestClient) Update(ctx context.Context, in *activitytypecomm.UpdateA
 
 // List an ActivityType
 func (c *actTestClient) List(ctx context.Context, in *activitytypecomm.ListActivityTypesRequest, opts ...grpc.CallOption) (*activitytypecomm.ListActivityTypesReply, error) {
+	return &c.ListResult.Reply, c.ListResult.Err
+}
+
+// Order Test Client
+type orderTestClient struct {
+	WaitTime   time.Duration
+	ReadResult struct {
+		Err   error
+		Reply ordercomm.ReadOrderReply
+	}
+	ListResult struct {
+		Err   error
+		Reply ordercomm.ListOrdersReply
+	}
+	ExistResult struct {
+		Err   error
+		Reply ordercomm.ExistOrderReply
+	}
+}
+
+func (c *orderTestClient) Create(ctx context.Context, in *ordercomm.CreateOrderRequest, opts ...grpc.CallOption) (*ordercomm.CreateOrderReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "Create method is not implemented")
+}
+
+// Exists an activity
+func (c *orderTestClient) Exist(ctx context.Context, in *ordercomm.ExistOrderRequest, opts ...grpc.CallOption) (*ordercomm.ExistOrderReply, error) {
+	return &c.ExistResult.Reply, c.ExistResult.Err
+}
+
+// Reads an Order
+func (c *orderTestClient) Read(ctx context.Context, in *ordercomm.ReadOrderRequest, opts ...grpc.CallOption) (*ordercomm.ReadOrderReply, error) {
+	time.Sleep(c.WaitTime)
+
+	reply := c.ReadResult.Reply
+	if reply.GetOrder() != nil {
+		reply.Order.Id = in.Id
+	}
+	return &reply, c.ReadResult.Err
+}
+
+// Delete an Order
+func (c *orderTestClient) Delete(ctx context.Context, in *ordercomm.DeleteOrderRequest, opts ...grpc.CallOption) (*ordercomm.DeleteOrderReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "Delete method is not implemented")
+}
+
+// Update an Order
+func (c *orderTestClient) Update(ctx context.Context, in *ordercomm.UpdateOrderRequest, opts ...grpc.CallOption) (*ordercomm.UpdateOrderReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "Update method is not implemented")
+}
+
+// List an Order
+func (c *orderTestClient) List(ctx context.Context, in *ordercomm.ListOrdersRequest, opts ...grpc.CallOption) (*ordercomm.ListOrdersReply, error) {
 	return &c.ListResult.Reply, c.ListResult.Err
 }

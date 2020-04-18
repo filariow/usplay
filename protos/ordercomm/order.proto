@@ -1,8 +1,8 @@
 syntax = "proto3";
 package ordercomm;
 
-// option go_package = "github.com/FrancescoIlario/usplay/pkg/services/ordercomm";
-option go_package = "ordercomm";
+option go_package = "github.com/FrancescoIlario/usplay/pkg/services/ordercomm";
+
 option optimize_for = LITE_RUNTIME;
 
 // The Order service definition.
@@ -11,12 +11,14 @@ service OrderSvc {
     rpc Create (CreateOrderRequest) returns (CreateOrderReply) {}
     // Reads an order
     rpc Read (ReadOrderRequest) returns (ReadOrderReply) {}
+    // Exists an order
+    rpc Exist (ExistOrderRequest) returns (ExistOrderReply) {}
     // Delete an order
     rpc Delete (DeleteOrderRequest) returns (DeleteOrderReply) {}
     // Update an order
     rpc Update (UpdateOrderRequest) returns (UpdateOrderReply) {}
     // List an order
-    rpc List (ListActivitiesRequest) returns (ListActivitiesReply) {}
+    rpc List (ListOrdersRequest) returns (ListOrdersReply) {}
 }
 
 // The request message containing the order details
@@ -40,6 +42,17 @@ message ReadOrderRequest {
 message ReadOrderReply {
     Order order = 1;
 }
+
+// The request message for the exists request
+message ExistOrderRequest {
+    string Id = 1;
+}
+
+// The response message to the exists request
+message ExistOrderReply {
+    bool exists = 1;
+}
+
 
 // The request message for the delete request
 message DeleteOrderRequest {
@@ -65,12 +78,12 @@ message UpdateOrderReply {
     Order order = 1;
 }
 
-// The request message for the list activities request
-message ListActivitiesRequest { }
+// The request message for the list orders request
+message ListOrdersRequest { }
 
-// The response message to the list activities request.
-message ListActivitiesReply {
-    repeated Order activities = 1;
+// The response message to the list orders request.
+message ListOrdersReply {
+    repeated Order orders = 1;
 }
 
 message Order {

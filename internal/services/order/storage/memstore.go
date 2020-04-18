@@ -39,30 +39,34 @@ func (s *memoryStore) Read(ctx context.Context, id uuid.UUID) (Order, error) {
 	return act, nil
 }
 
+// Exist get an order by id
+func (s *memoryStore) Exist(ctx context.Context, id uuid.UUID) (bool, error) {
+	_, ok := s.data[id]
+	return ok, nil
+}
+
 // Update updates an order in the store if present
-func (s *memoryStore) Update(ctx context.Context, a Order) (Order, error) {
-	act, err := s.Read(ctx, a.ID)
-	if err != nil {
-		return act, err
+func (s *memoryStore) Update(ctx context.Context, a Order) error {
+	if _, err := s.Read(ctx, a.ID); err != nil {
+		return err
 	}
 
 	s.data[a.ID] = a
-	return act, nil
+	return nil
 }
 
 // Delete removes an order from the store if present
-func (s *memoryStore) Delete(ctx context.Context, id uuid.UUID) (Order, error) {
-	act, err := s.Read(ctx, id)
-	if err != nil {
-		return act, err
+func (s *memoryStore) Delete(ctx context.Context, id uuid.UUID) error {
+	if _, err := s.Read(ctx, id); err != nil {
+		return err
 	}
 
 	delete(s.data, id)
-	return act, nil
+	return nil
 }
 
 // List returns all the activities in the store
-func (s *memoryStore) List(ctx context.Context) (Activities, error) {
+func (s *memoryStore) List(ctx context.Context) (Orders, error) {
 	list := make([]Order, 0, len(s.data))
 	for _, v := range s.data {
 		list = append(list, v)

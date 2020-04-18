@@ -9,6 +9,7 @@ import (
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -18,9 +19,76 @@ func Test_CreateHappyPath(t *testing.T) {
 	// arrange
 	activity := storage.Activity{
 		ActivityTypeID: uuid.New(),
+		OrderID:        uuid.New(),
 		Code:           "Activity Code",
 		Description:    "Activity Description",
 		Name:           "Activity Name",
+	}
+	store := &activityTestRepo{
+		CreateResult: struct {
+			ID  uuid.UUID
+			Err error
+		}{
+			ID:  uuid.New(),
+			Err: nil,
+		},
+	}
+	svr := api.NewActivityServer(
+		store,
+		&actTestClient{
+			WaitTime: time.Duration(0),
+			ExistResult: struct {
+				Err   error
+				Reply activitytypecomm.ExistActivityTypeReply
+			}{
+				Err: nil,
+				Reply: activitytypecomm.ExistActivityTypeReply{
+					Exists: true,
+				},
+			},
+		},
+		&orderTestClient{
+			ExistResult: struct {
+				Err   error
+				Reply ordercomm.ExistOrderReply
+			}{
+				Err: nil,
+				Reply: ordercomm.ExistOrderReply{
+					Exists: true,
+				},
+			},
+		},
+		1*time.Second,
+	)
+	ctx := context.Background()
+
+	// act
+	reply, err := svr.Create(ctx, &activitycomm.CreateActivityRequest{
+		ActTypeID:   activity.ActivityTypeID.String(),
+		OrderID:     activity.OrderID.String(),
+		Code:        activity.Code,
+		Description: activity.Description,
+		Name:        activity.Name,
+	})
+
+	// assert
+	if err != nil {
+		t.Fatalf("error invoking read: %v", err)
+	}
+
+	if expected, provided := store.CreateResult.ID.String(), reply.GetId(); expected != provided {
+		t.Errorf("expected id %s, provided %s", expected, provided)
+	}
+}
+
+func Test_CreateInvalidActivityTypeID(t *testing.T) {
+	// arrange
+	activity := storage.Activity{
+		ID:          uuid.New(),
+		OrderID:     uuid.New(),
+		Code:        "Activity Code",
+		Description: "Activity Description",
+		Name:        "Activity Name",
 	}
 	store := &activityTestRepo{
 		CreateResult: struct {
@@ -45,51 +113,13 @@ func Test_CreateHappyPath(t *testing.T) {
 				},
 			},
 		},
-		1*time.Second,
-	)
-	ctx := context.Background()
-
-	// act
-	_, err := svr.Create(ctx, &activitycomm.CreateActivityRequest{
-		ActTypeID:   activity.ActivityTypeID.String(),
-		Code:        activity.Code,
-		Description: activity.Description,
-		Name:        activity.Name,
-	})
-
-	// assert
-	if err != nil {
-		t.Fatalf("error invoking read: %v", err)
-	}
-}
-
-func Test_CreateInvalidActivityTypeID(t *testing.T) {
-	// arrange
-	activity := storage.Activity{
-		ID:          uuid.New(),
-		Code:        "Activity Code",
-		Description: "Activity Description",
-		Name:        "Activity Name",
-	}
-	store := &activityTestRepo{
-		CreateResult: struct {
-			ID  uuid.UUID
-			Err error
-		}{
-			ID:  activity.ID,
-			Err: nil,
-		},
-	}
-	svr := api.NewActivityServer(
-		store,
-		&actTestClient{
-			WaitTime: time.Duration(0),
+		&orderTestClient{
 			ExistResult: struct {
 				Err   error
-				Reply activitytypecomm.ExistActivityTypeReply
+				Reply ordercomm.ExistOrderReply
 			}{
 				Err: nil,
-				Reply: activitytypecomm.ExistActivityTypeReply{
+				Reply: ordercomm.ExistOrderReply{
 					Exists: true,
 				},
 			},
@@ -125,6 +155,7 @@ func Test_CreateNotExistingActivityTypeID(t *testing.T) {
 	// arrange
 	activity := storage.Activity{
 		ActivityTypeID: uuid.New(),
+		OrderID:        uuid.New(),
 		Code:           "Activity Code",
 		Description:    "Activity Description",
 		Name:           "Activity Name",
@@ -149,6 +180,17 @@ func Test_CreateNotExistingActivityTypeID(t *testing.T) {
 				Err: nil,
 				Reply: activitytypecomm.ExistActivityTypeReply{
 					Exists: false,
+				},
+			},
+		},
+		&orderTestClient{
+			ExistResult: struct {
+				Err   error
+				Reply ordercomm.ExistOrderReply
+			}{
+				Err: nil,
+				Reply: ordercomm.ExistOrderReply{
+					Exists: true,
 				},
 			},
 		},

@@ -10,7 +10,8 @@ import (
 type Repository interface {
 	Create(context.Context, Order) (uuid.UUID, error)
 	Read(context.Context, uuid.UUID) (Order, error)
-	Update(context.Context, Order) (Order, error)
-	Delete(context.Context, uuid.UUID) (Order, error)
-	List(context.Context) (Activities, error)
+	Exist(context.Context, uuid.UUID) (bool, error)
+	Update(context.Context, Order) error
+	Delete(context.Context, uuid.UUID) error
+	List(context.Context) (Orders, error)
 }

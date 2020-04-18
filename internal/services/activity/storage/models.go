@@ -10,6 +10,7 @@ import (
 type Activity struct {
 	ID             uuid.UUID
 	ActivityTypeID uuid.UUID
+	OrderID        uuid.UUID
 	Description    string
 	Code           string
 	Name           string
