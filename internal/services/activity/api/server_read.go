@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"log"
 
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
@@ -35,11 +36,31 @@ func (s *activityServer) read(ctx context.Context, uid uuid.UUID) (*activitycomm
 
 	actOut, actErr := s.getActivityType(ctx, at.ActivityTypeID)
 	ordOut, ordErr := s.getOrder(ctx, at.OrderID)
+
+	var order *ordercomm.Order
+	var acttype *activitytypecomm.ActivityType
 	if err, open := <-actErr; open {
-		return nil, err
+		log.Printf(
+			"error contacting ActivityType service for details of entity with id %s: %v",
+			at.ActivityTypeID.String(), err)
+
+		acttype = &activitytypecomm.ActivityType{
+			Id: at.ActivityTypeID.String(),
+		}
+	} else {
+		acttype = <-actOut
 	}
+
 	if err, open := <-ordErr; open {
-		return nil, err
+		log.Printf(
+			"error contacting Order service for details of entity with id %s: %v",
+			at.OrderID.String(), err)
+
+		order = &ordercomm.Order{
+			Id: at.OrderID.String(),
+		}
+	} else {
+		order = <-ordOut
 	}
 
 	return &activitycomm.ReadActivityReply{
@@ -48,9 +69,9 @@ func (s *activityServer) read(ctx context.Context, uid uuid.UUID) (*activitycomm
 			Description:  at.Description,
 			Id:           at.ID.String(),
 			Name:         at.Name,
-			ActType:      <-actOut,
+			ActType:      acttype,
 			CreationTime: creationTime,
-			Order:        <-ordOut,
+			Order:        order,
 		},
 	}, nil
 }

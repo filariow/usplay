@@ -93,7 +93,9 @@ func (c *actTestClient) Read(ctx context.Context, in *activitytypecomm.ReadActiv
 	time.Sleep(c.WaitTime)
 
 	reply := c.ReadResult.Reply
-	reply.ActivityType.Id = in.Id
+	if reply.GetActivityType() != nil {
+		reply.ActivityType.Id = in.Id
+	}
 	return &reply, c.ReadResult.Err
 }
 
@@ -143,7 +145,9 @@ func (c *orderTestClient) Read(ctx context.Context, in *ordercomm.ReadOrderReque
 	time.Sleep(c.WaitTime)
 
 	reply := c.ReadResult.Reply
-	reply.Order.Id = in.Id
+	if reply.GetOrder() != nil {
+		reply.Order.Id = in.Id
+	}
 	return &reply, c.ReadResult.Err
 }
 
