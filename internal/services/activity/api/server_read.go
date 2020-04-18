@@ -33,13 +33,12 @@ func (s *activityServer) read(ctx context.Context, uid uuid.UUID) (*activitycomm
 		return nil, err
 	}
 
-	act, err := s.getActivityType(ctx, at.ActivityTypeID)
-	if err != nil {
+	actOut, actErr := s.getActivityType(ctx, at.ActivityTypeID)
+	ordOut, ordErr := s.getOrder(ctx, at.OrderID)
+	if err, open := <-actErr; open {
 		return nil, err
 	}
-
-	ord, err := s.getOrder(ctx, at.OrderID)
-	if err != nil {
+	if err, open := <-ordErr; open {
 		return nil, err
 	}
 
@@ -49,21 +48,49 @@ func (s *activityServer) read(ctx context.Context, uid uuid.UUID) (*activitycomm
 			Description:  at.Description,
 			Id:           at.ID.String(),
 			Name:         at.Name,
-			ActType:      act,
+			ActType:      <-actOut,
 			CreationTime: creationTime,
-			Order:        ord,
+			Order:        <-ordOut,
 		},
 	}, nil
 }
 
-func (s *activityServer) getOrder(ctx context.Context, uid uuid.UUID) (*ordercomm.Order, error) {
-	resp, err := s.orderCli.Read(ctx, &ordercomm.ReadOrderRequest{Id: uid.String()})
-	return resp.GetOrder(), err
+func (s *activityServer) getOrder(ctx context.Context, uid uuid.UUID) (<-chan *ordercomm.Order, <-chan error) {
+	c := make(chan *ordercomm.Order, 1)
+	e := make(chan error, 1)
+
+	go func() {
+		resp, err := s.orderCli.Read(ctx, &ordercomm.ReadOrderRequest{Id: uid.String()})
+		if err != nil {
+			e <- err
+		} else {
+			c <- resp.GetOrder()
+		}
+
+		close(e)
+		close(c)
+	}()
+
+	return c, e
 }
 
-func (s *activityServer) getActivityType(ctx context.Context, uid uuid.UUID) (*activitytypecomm.ActivityType, error) {
-	resp, err := s.actTypeCli.Read(ctx, &activitytypecomm.ReadActivityTypeRequest{Id: uid.String()})
-	return resp.GetActivityType(), err
+func (s *activityServer) getActivityType(ctx context.Context, uid uuid.UUID) (<-chan *activitytypecomm.ActivityType, chan error) {
+	c := make(chan *activitytypecomm.ActivityType, 1)
+	e := make(chan error, 1)
+
+	go func() {
+		resp, err := s.actTypeCli.Read(ctx, &activitytypecomm.ReadActivityTypeRequest{Id: uid.String()})
+		if err != nil {
+			e <- err
+		} else {
+			c <- resp.GetActivityType()
+		}
+
+		close(e)
+		close(c)
+	}()
+
+	return c, e
 }
 
 func (s *activityServer) readFromRepo(ctx context.Context, uid uuid.UUID) (*storage.Activity, error) {
