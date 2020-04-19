@@ -9,7 +9,12 @@ import (
 )
 
 func (s *mongoStore) List(ctx context.Context, ids []uuid.UUID) (storage.Activities, error) {
-	filter := bson.M{"_id": bson.M{"$in": ids}}
+	idsString := make([]string, len(ids))
+	for i, id := range ids {
+		idsString[i] = id.String()
+	}
+
+	filter := bson.M{"_id": bson.M{"$in": idsString}}
 
 	cursor, err := s.Collection.Find(ctx, filter)
 	if err != nil {

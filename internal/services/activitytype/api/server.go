@@ -15,16 +15,17 @@ type activityTypeServer struct {
 }
 
 // NewActivityTypeServer returns the default implementation of ActivityTypeSvcServer
-func NewActivityTypeServer() activitytypecomm.ActivityTypeSvcServer {
+func NewActivityTypeServer(repo storage.Repository) activitytypecomm.ActivityTypeSvcServer {
 	return &activityTypeServer{
-		repo: storage.NewInMemoryStore(),
+		repo: repo,
 	}
 }
 
 func (s *activityTypeServer) Create(ctx context.Context, req *activitytypecomm.CreateActivityTypeRequest) (*activitytypecomm.CreateActivityTypeReply, error) {
 	act := storage.ActivityType{
-		Name: req.GetName(),
-		Code: req.GetCode(),
+		Name:        req.GetName(),
+		Code:        req.GetCode(),
+		Description: req.GetDescription(),
 	}
 
 	id, err := s.repo.Create(ctx, act)
@@ -51,9 +52,10 @@ func (s *activityTypeServer) Read(ctx context.Context, req *activitytypecomm.Rea
 
 	return &activitytypecomm.ReadActivityTypeReply{
 		ActivityType: &activitytypecomm.ActivityType{
-			Code: act.Code,
-			Name: act.Name,
-			Id:   act.ID.String(),
+			Code:        act.Code,
+			Name:        act.Name,
+			Id:          act.ID,
+			Description: act.Description,
 		},
 	}, nil
 }
@@ -74,8 +76,10 @@ func (s *activityTypeServer) Delete(ctx context.Context, req *activitytypecomm.D
 
 func (s *activityTypeServer) Update(ctx context.Context, req *activitytypecomm.UpdateActivityTypeRequest) (*activitytypecomm.UpdateActivityTypeReply, error) {
 	act := storage.ActivityType{
-		Name: req.GetName(),
-		Code: req.GetCode(),
+		ID:          req.GetId(),
+		Name:        req.GetName(),
+		Code:        req.GetCode(),
+		Description: req.GetDescription(),
 	}
 
 	err := s.repo.Update(ctx, act)
@@ -106,7 +110,7 @@ func (s *activityTypeServer) List(ctx context.Context, req *activitytypecomm.Lis
 		activityTypes = append(activityTypes, &activitytypecomm.ActivityType{
 			Code: v.Code,
 			Name: v.Name,
-			Id:   v.ID.String(),
+			Id:   v.ID,
 		})
 	}
 

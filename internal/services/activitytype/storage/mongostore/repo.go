@@ -11,20 +11,31 @@ import (
 type mongoStore struct {
 	Client        *mongo.Client
 	Collection    *mongo.Collection
-	Configuration MongoConfiguration
+	Configuration Configuration
 }
 
-// MongoConfiguration configuration for Mongo storage
-type MongoConfiguration struct {
+// Configuration configuration for Mongo storage
+type Configuration struct {
 	ConnectionString string
 	Database         string
 	Collection       string
+	Username         string
+	Password         string
 }
 
 // NewRepository New Mongo database instance
-func NewRepository(conf MongoConfiguration) (storage.Repository, error) {
+func NewRepository(conf *Configuration) (storage.Repository, error) {
 	// Set client options
-	clientOptions := options.Client().ApplyURI(conf.ConnectionString)
+	clientOptions := options.Client().
+		ApplyURI(conf.ConnectionString)
+
+	if conf.Username != "" {
+		clientOptions = clientOptions.
+			SetAuth(options.Credential{
+				Username: conf.Username,
+				Password: conf.Password,
+			})
+	}
 
 	// Connect to MongoDB
 	client, err := mongo.Connect(context.TODO(), clientOptions)
@@ -42,10 +53,13 @@ func NewRepository(conf MongoConfiguration) (storage.Repository, error) {
 		Collection(conf.Collection)
 
 	// build database
+	stconf := *conf
+	stconf.Password = ""
+
 	db := mongoStore{
 		Client:        client,
 		Collection:    collection,
-		Configuration: conf,
+		Configuration: stconf,
 	}
 	return &db, nil
 }

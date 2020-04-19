@@ -8,11 +8,12 @@ import (
 )
 
 func (s *mongoStore) Create(ctx context.Context, act storage.ActivityType) (*uuid.UUID, error) {
-	act.ID = uuid.New()
+	id := uuid.New()
+	act.ID = id.String()
 
 	if _, err := s.Collection.InsertOne(ctx, act); err != nil {
 		return nil, err
 	}
 
-	return &act.ID, nil
+	return &id, nil
 }

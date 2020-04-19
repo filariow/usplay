@@ -9,7 +9,7 @@ import (
 )
 
 func (s *mongoStore) Read(ctx context.Context, id uuid.UUID) (*storage.ActivityType, error) {
-	filter := bson.M{"_id": id}
+	filter := bson.M{"_id": id.String()}
 
 	sr := s.Collection.FindOne(ctx, filter)
 	if err := sr.Err(); err != nil {
