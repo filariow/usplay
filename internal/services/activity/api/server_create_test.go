@@ -73,7 +73,7 @@ func Test_CreateHappyPath(t *testing.T) {
 
 	// assert
 	if err != nil {
-		t.Fatalf("error invoking read: %v", err)
+		t.Fatalf("error invoking create: %v", err)
 	}
 
 	if expected, provided := store.CreateResult.ID.String(), reply.GetId(); expected != provided {
