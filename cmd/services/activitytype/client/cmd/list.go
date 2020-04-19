@@ -38,9 +38,9 @@ var (
 		},
 	}
 
-	listIds = make([]string, 0)
+	listIds = []string{}
 )
 
 func init() {
-	cmdList.PersistentFlags().StringArrayVarP(&listIds, "i", "ids", nil, "filter IDs")
+	cmdList.Flags().StringArrayVarP(&listIds, "ids", "i", []string{}, "filter IDs")
 }

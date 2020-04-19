@@ -21,22 +21,18 @@ var (
 			defer conn.Close()
 
 			cli := activitytypecomm.NewActivityTypeSvcClient(conn)
-			resp, err := cli.Delete(context.TODO(), &activitytypecomm.DeleteActivityTypeRequest{
-				Id: id,
-			})
-			if err != nil {
+			if _, err := cli.Delete(context.TODO(),
+				&activitytypecomm.DeleteActivityTypeRequest{
+					Id: id,
+				}); err != nil {
 				log.Fatalf("error calling delete: %v", err)
 			}
 
-			log.Printf(
-				"deleted ActivityType:\n\tid: %s\n\tcode: %v\n\tname: %s",
-				resp.ActivityType.Id,
-				resp.ActivityType.Code,
-				resp.ActivityType.Name)
+			log.Printf("deleted ActivityType with id: %s", id)
 		},
 	}
 )
 
 func init() {
-	cmdDelete.PersistentFlags().StringVarP(&id, "id", "i", "", "ActivityType's id")
+	cmdDelete.Flags().StringVarP(&id, "id", "i", "", "ActivityType's id")
 }

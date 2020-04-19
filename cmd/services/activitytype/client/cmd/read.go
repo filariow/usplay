@@ -29,10 +29,15 @@ var (
 			}
 
 			log.Printf(
-				"read ActivityType:\n\tid: %s\n\tcode: %v\n\tname: %s",
-				resp.ActivityType.Id,
-				resp.ActivityType.Code,
-				resp.ActivityType.Name)
+				`read ActivityType:
+	id: %s
+	code: %v
+	name: %s
+	description: %s`,
+				resp.ActivityType.GetId(),
+				resp.ActivityType.GetCode(),
+				resp.ActivityType.GetName(),
+				resp.ActivityType.GetDescription())
 		},
 	}
 
@@ -40,5 +45,5 @@ var (
 )
 
 func init() {
-	cmdRead.PersistentFlags().StringVarP(&id, "id", "i", "", "ActivityType's id")
+	cmdRead.Flags().StringVarP(&id, "id", "i", "", "ActivityType's id")
 }

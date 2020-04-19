@@ -11,4 +11,5 @@ require (
 	github.com/gorilla/mux v1.7.4
 	github.com/spf13/cobra v1.0.0
 	google.golang.org/grpc v1.28.1
+	go.mongodb.org/mongo-driver v1.3.2
 )

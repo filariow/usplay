@@ -25,6 +25,7 @@ service ActivityTypeSvc {
 message CreateActivityTypeRequest {
     int32 Code = 1;
     string Name = 2;
+    string Description = 3;
 }
 
 // The response message containing the id of the ActivityType
@@ -58,21 +59,18 @@ message DeleteActivityTypeRequest {
 }
 
 // The response message to the delete request
-message DeleteActivityTypeReply {
-    ActivityType ActivityType = 1;
-}
+message DeleteActivityTypeReply {}
 
 // The request message for the update request
 message UpdateActivityTypeRequest {
     string Id = 1;
     int32 Code = 2;
     string Name = 3;
+    string Description = 4;
 }
 
-// The response message to the update request.
-// Returns the old values for the ActivityType
+// The response message to the update requests
 message UpdateActivityTypeReply {
-    ActivityType ActivityType = 1;
 }
 
 // The request message for the list ActivityTypes request
@@ -89,4 +87,5 @@ message ActivityType {
     string Id = 1;
     int32 Code = 2;
     string Name = 3;
+    string Description = 4;
 }

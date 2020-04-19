@@ -36,5 +36,5 @@ var (
 )
 
 func init() {
-	cmdExist.PersistentFlags().StringVarP(&id, "id", "i", "", "ActivityType's id")
+	cmdExist.Flags().StringVarP(&id, "id", "i", "", "ActivityType's id")
 }
