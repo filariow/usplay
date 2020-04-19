@@ -30,7 +30,27 @@ services:
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
 
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_DATABASE: usplay
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: supersecret
+    volumes: 
+      - mongodata:/data/db
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: supersecret
+
 volumes:
+  mongodata:
   vscode_extension:
     external:
       name: "vscode_extension_go"
