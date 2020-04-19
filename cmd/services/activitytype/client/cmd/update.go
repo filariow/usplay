@@ -24,8 +24,11 @@ var (
 
 			if _, err := cli.Update(context.TODO(),
 				&activitytypecomm.UpdateActivityTypeRequest{
-					Code: code,
-					Name: name}); err != nil {
+					Id:          id,
+					Code:        code,
+					Name:        name,
+					Description: desc,
+				}); err != nil {
 				log.Fatalf("error calling update: %v", err)
 			}
 
@@ -35,8 +38,8 @@ var (
 )
 
 func init() {
-	cmdUpdate.PersistentFlags().Int32VarP(&code, "code", "c", 0, "ActivityType's code")
-	cmdUpdate.PersistentFlags().StringVarP(&desc, "description", "d", "", "ActivityType's description")
-	cmdUpdate.PersistentFlags().StringVarP(&name, "name", "n", "", "ActivityType's name")
-	cmdUpdate.PersistentFlags().StringVarP(&id, "id", "i", "", "ActivityType's id")
+	cmdUpdate.Flags().Int32VarP(&code, "code", "c", 0, "ActivityType's code")
+	cmdUpdate.Flags().StringVarP(&desc, "description", "d", "", "ActivityType's description")
+	cmdUpdate.Flags().StringVarP(&name, "name", "n", "", "ActivityType's name")
+	cmdUpdate.Flags().StringVarP(&id, "id", "i", "", "ActivityType's id")
 }

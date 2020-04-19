@@ -22,8 +22,9 @@ var (
 
 			cli := activitytypecomm.NewActivityTypeSvcClient(conn)
 			resp, err := cli.Create(context.TODO(), &activitytypecomm.CreateActivityTypeRequest{
-				Code: code,
-				Name: name,
+				Code:        code,
+				Name:        name,
+				Description: desc,
 			})
 			if err != nil {
 				log.Fatalf("error calling create: %v", err)
@@ -35,7 +36,7 @@ var (
 )
 
 func init() {
-	cmdCreate.PersistentFlags().Int32VarP(&code, "code", "c", 0, "ActivityType's code")
-	cmdCreate.PersistentFlags().StringVarP(&desc, "description", "d", "", "ActivityType's description")
-	cmdCreate.PersistentFlags().StringVarP(&name, "name", "n", "", "ActivityType's name")
+	cmdCreate.Flags().Int32VarP(&code, "code", "c", 0, "ActivityType's code")
+	cmdCreate.Flags().StringVarP(&desc, "description", "d", "", "ActivityType's description")
+	cmdCreate.Flags().StringVarP(&name, "name", "n", "", "ActivityType's name")
 }

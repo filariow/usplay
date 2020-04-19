@@ -34,5 +34,5 @@ var (
 )
 
 func init() {
-	cmdDelete.PersistentFlags().StringVarP(&id, "id", "i", "", "ActivityType's id")
+	cmdDelete.Flags().StringVarP(&id, "id", "i", "", "ActivityType's id")
 }
