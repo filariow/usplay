@@ -25,6 +25,7 @@ service ActivityTypeSvc {
 message CreateActivityTypeRequest {
     int32 Code = 1;
     string Name = 2;
+    string Description = 3;
 }
 
 // The response message containing the id of the ActivityType
@@ -65,6 +66,7 @@ message UpdateActivityTypeRequest {
     string Id = 1;
     int32 Code = 2;
     string Name = 3;
+    string Description = 4;
 }
 
 // The response message to the update requests
@@ -85,4 +87,5 @@ message ActivityType {
     string Id = 1;
     int32 Code = 2;
     string Name = 3;
+    string Description = 4;
 }
