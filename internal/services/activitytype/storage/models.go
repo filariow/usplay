@@ -8,5 +8,5 @@ type ActivityType struct {
 	Name        string `bson:"name"`
 }
 
-// Activities list of activities
-type Activities []ActivityType
+// ActivityTypes list of activities
+type ActivityTypes []ActivityType

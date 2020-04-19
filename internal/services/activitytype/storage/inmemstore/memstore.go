@@ -68,7 +68,7 @@ func (s *memoryStore) Delete(ctx context.Context, id uuid.UUID) error {
 }
 
 // List returns all the activities in the store
-func (s *memoryStore) List(ctx context.Context, ids []uuid.UUID) (storage.Activities, error) {
+func (s *memoryStore) List(ctx context.Context, ids []uuid.UUID) (storage.ActivityTypes, error) {
 	list := make([]storage.ActivityType, len(ids), len(s.data))
 	for i, v := range ids {
 		a, ok := s.data[v.String()]

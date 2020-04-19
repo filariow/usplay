@@ -8,7 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func (s *mongoStore) List(ctx context.Context, ids []uuid.UUID) (storage.Activities, error) {
+func (s *mongoStore) List(ctx context.Context, ids []uuid.UUID) (storage.ActivityTypes, error) {
 	idsString := make([]string, len(ids))
 	for i, id := range ids {
 		idsString[i] = id.String()

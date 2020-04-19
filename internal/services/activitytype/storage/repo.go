@@ -13,5 +13,5 @@ type Repository interface {
 	Read(context.Context, uuid.UUID) (*ActivityType, error)
 	Update(context.Context, ActivityType) error
 	Delete(context.Context, uuid.UUID) error
-	List(context.Context, []uuid.UUID) (Activities, error)
+	List(context.Context, []uuid.UUID) (ActivityTypes, error)
 }
