@@ -36,8 +36,8 @@ var (
 )
 
 func init() {
-	cmdUpdate.PersistentFlags().StringVarP(&code, "code", "c", "", "order's code")
-	cmdUpdate.PersistentFlags().StringVarP(&desc, "description", "d", "", "order's description")
-	cmdUpdate.PersistentFlags().StringVarP(&name, "name", "n", "", "order's name")
-	cmdUpdate.PersistentFlags().StringVarP(&id, "id", "i", "", "order's id")
+	cmdUpdate.Flags().StringVarP(&code, "code", "c", "", "order's code")
+	cmdUpdate.Flags().StringVarP(&desc, "description", "d", "", "order's description")
+	cmdUpdate.Flags().StringVarP(&name, "name", "n", "", "order's name")
+	cmdUpdate.Flags().StringVarP(&id, "id", "i", "", "order's id")
 }

@@ -10,18 +10,18 @@ import (
 // Order Test repository
 type orderTestRepo struct {
 	CreateResult struct {
-		ID  uuid.UUID
+		ID  *uuid.UUID
 		Err error
 	}
 	DeleteResult struct {
 		Err error
 	}
 	ExistResult struct {
-		Exist bool
+		Exist *bool
 		Err   error
 	}
 	ReadResult struct {
-		Order storage.Order
+		Order *storage.Order
 		Err   error
 	}
 	ListResult struct {
@@ -34,19 +34,19 @@ type orderTestRepo struct {
 }
 
 // Create
-func (r *orderTestRepo) Create(context.Context, storage.Order) (uuid.UUID, error) {
+func (r *orderTestRepo) Create(context.Context, storage.Order) (*uuid.UUID, error) {
 	return r.CreateResult.ID, r.CreateResult.Err
 }
 
 // Exist
-func (r *orderTestRepo) Exist(ctx context.Context, id uuid.UUID) (bool, error) {
+func (r *orderTestRepo) Exist(ctx context.Context, id uuid.UUID) (*bool, error) {
 	return r.ExistResult.Exist, r.ExistResult.Err
 }
 
 // Read
-func (r *orderTestRepo) Read(ctx context.Context, id uuid.UUID) (storage.Order, error) {
+func (r *orderTestRepo) Read(ctx context.Context, id uuid.UUID) (*storage.Order, error) {
 	order := r.ReadResult.Order
-	order.ID = id
+	order.ID = id.String()
 	return order, r.ReadResult.Err
 }
 
@@ -61,6 +61,6 @@ func (r *orderTestRepo) Delete(context.Context, uuid.UUID) error {
 }
 
 // List
-func (r *orderTestRepo) List(context.Context) (storage.Orders, error) {
+func (r *orderTestRepo) List(context.Context, []uuid.UUID) (storage.Orders, error) {
 	return r.ListResult.Orders, r.ListResult.Err
 }

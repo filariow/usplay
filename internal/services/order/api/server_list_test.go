@@ -16,7 +16,7 @@ func Test_ListHappyPath(t *testing.T) {
 	orders := make([]storage.Order, 2)
 	for i := 1; i <= 2; i++ {
 		order := storage.Order{
-			ID:          uuid.New(),
+			ID:          uuid.New().String(),
 			Code:        fmt.Sprintf("Order Code %v", i),
 			Description: fmt.Sprintf("Order Description %v", i),
 			Name:        fmt.Sprintf("Order Name %v", i),
@@ -52,11 +52,11 @@ func Test_ListHappyPath(t *testing.T) {
 	for i, provOrder := range provOrders {
 		order := orders[i]
 
-		if providedId := provOrder.GetId(); order.ID.String() != providedId {
-			t.Errorf(`expected id %s, provided %s`, order.ID.String(), providedId)
+		if providedId := provOrder.GetId(); order.ID != providedId {
+			t.Errorf(`expected id %s, provided %s`, order.ID, providedId)
 		}
 		if providedDesc := provOrder.GetDescription(); order.Description != providedDesc {
-			t.Errorf(`expected description "%s", provided "%s"`, order.ID.String(), providedDesc)
+			t.Errorf(`expected description "%s", provided "%s"`, order.ID, providedDesc)
 		}
 		if providedName := provOrder.Name; order.Name != providedName {
 			t.Errorf(`expected named "%s", provided "%s"`, order.Name, providedName)

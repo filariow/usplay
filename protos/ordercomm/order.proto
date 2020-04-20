@@ -79,7 +79,9 @@ message UpdateOrderReply {
 }
 
 // The request message for the list orders request
-message ListOrdersRequest { }
+message ListOrdersRequest { 
+    repeated string FilterIds = 1;
+}
 
 // The response message to the list orders request.
 message ListOrdersReply {

@@ -16,17 +16,18 @@ import (
 func Test_ExistHappyPathTrue(t *testing.T) {
 	// arrange
 	order := storage.Order{
-		ID:          uuid.New(),
+		ID:          uuid.New().String(),
 		Code:        "Order Code",
 		Description: "Order Description",
 		Name:        "Order Name",
 	}
+	existRes := true
 	store := &orderTestRepo{
 		ExistResult: struct {
-			Exist bool
+			Exist *bool
 			Err   error
 		}{
-			Exist: true,
+			Exist: &existRes,
 			Err:   nil,
 		},
 	}
@@ -35,7 +36,7 @@ func Test_ExistHappyPathTrue(t *testing.T) {
 
 	// act
 	reply, err := svr.Exist(ctx, &ordercomm.ExistOrderRequest{
-		Id: order.ID.String(),
+		Id: order.ID,
 	})
 
 	// assert
@@ -51,17 +52,18 @@ func Test_ExistHappyPathTrue(t *testing.T) {
 func Test_ExistHappyPathFalse(t *testing.T) {
 	// arrange
 	order := storage.Order{
-		ID:          uuid.New(),
+		ID:          uuid.New().String(),
 		Code:        "Order Code",
 		Description: "Order Description",
 		Name:        "Order Name",
 	}
+	existRes := false
 	store := &orderTestRepo{
 		ExistResult: struct {
-			Exist bool
+			Exist *bool
 			Err   error
 		}{
-			Exist: false,
+			Exist: &existRes,
 			Err:   nil,
 		},
 	}
@@ -70,7 +72,7 @@ func Test_ExistHappyPathFalse(t *testing.T) {
 
 	// act
 	reply, err := svr.Exist(ctx, &ordercomm.ExistOrderRequest{
-		Id: order.ID.String(),
+		Id: order.ID,
 	})
 
 	// assert
@@ -86,17 +88,18 @@ func Test_ExistHappyPathFalse(t *testing.T) {
 func Test_ExistSadPath(t *testing.T) {
 	// arrange
 	order := storage.Order{
-		ID:          uuid.New(),
+		ID:          uuid.New().String(),
 		Code:        "Order Code",
 		Description: "Order Description",
 		Name:        "Order Name",
 	}
+	existRes := true
 	store := &orderTestRepo{
 		ExistResult: struct {
-			Exist bool
+			Exist *bool
 			Err   error
 		}{
-			Exist: false,
+			Exist: &existRes,
 			Err:   fmt.Errorf("Test Error"),
 		},
 	}
@@ -105,7 +108,7 @@ func Test_ExistSadPath(t *testing.T) {
 
 	// act
 	_, err := svr.Exist(ctx, &ordercomm.ExistOrderRequest{
-		Id: order.ID.String(),
+		Id: order.ID,
 	})
 
 	// assert

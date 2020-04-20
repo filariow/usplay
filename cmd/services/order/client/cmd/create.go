@@ -40,7 +40,7 @@ var (
 )
 
 func init() {
-	cmdCreate.PersistentFlags().StringVarP(&code, "code", "c", "", "order's code")
-	cmdCreate.PersistentFlags().StringVarP(&desc, "description", "d", "", "order's description")
-	cmdCreate.PersistentFlags().StringVarP(&name, "name", "n", "", "order's name")
+	cmdCreate.Flags().StringVarP(&code, "code", "c", "", "order's code")
+	cmdCreate.Flags().StringVarP(&desc, "description", "d", "", "order's description")
+	cmdCreate.Flags().StringVarP(&name, "name", "n", "", "order's name")
 }
