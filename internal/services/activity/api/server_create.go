@@ -14,7 +14,7 @@ import (
 func (s *activityServer) Create(ctx context.Context, req *activitycomm.CreateActivityRequest) (*activitycomm.CreateActivityReply, error) {
 	// parse inputs
 	actTypeIDStr := req.GetActTypeID()
-	actTypeID, err := uuid.Parse(actTypeIDStr)
+	_, err := uuid.Parse(actTypeIDStr)
 	if err != nil {
 		return nil, status.Errorf(codes.InvalidArgument, "error creating activity, ActivityType ID is invalid: %v", err)
 	}
@@ -33,7 +33,7 @@ func (s *activityServer) Create(ctx context.Context, req *activitycomm.CreateAct
 		Name:           req.GetName(),
 		Code:           req.GetCode(),
 		Description:    req.GetDescription(),
-		ActivityTypeID: actTypeID,
+		ActivityTypeID: req.GetActTypeID(),
 	}
 
 	// persista data

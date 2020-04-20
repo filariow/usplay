@@ -24,13 +24,13 @@ func TestReadHappyPath(t *testing.T) {
 	orderId, actTypeId, actId := uuid.New(), uuid.New(), uuid.New()
 
 	activity := storage.Activity{
-		ID:             actId,
+		ID:             actId.String(),
 		Code:           "Activity Code",
 		Description:    "Activity Description",
 		Name:           "Activity Name",
 		CreationTime:   ctime,
-		OrderID:        orderId,
-		ActivityTypeID: actTypeId,
+		OrderID:        orderId.String(),
+		ActivityTypeID: actTypeId.String(),
 	}
 	activityType := activitytypecomm.ActivityType{
 		Id:   actTypeId.String(),
@@ -45,7 +45,7 @@ func TestReadHappyPath(t *testing.T) {
 	}
 	expectedActivity := activitycomm.Activity{
 		Code:         activity.Code,
-		Id:           activity.ID.String(),
+		Id:           activity.ID,
 		ActType:      &activityType,
 		Order:        &order,
 		Description:  activity.Description,
@@ -55,10 +55,10 @@ func TestReadHappyPath(t *testing.T) {
 
 	store := &activityTestRepo{
 		ReadResult: struct {
-			Activity storage.Activity
+			Activity *storage.Activity
 			Err      error
 		}{
-			Activity: activity,
+			Activity: &activity,
 			Err:      nil,
 		},
 	}
@@ -94,7 +94,7 @@ func TestReadHappyPath(t *testing.T) {
 
 	// act
 	reply, err := svr.Read(ctx, &activitycomm.ReadActivityRequest{
-		Id: activity.ID.String(),
+		Id: activity.ID,
 	})
 	if err != nil {
 		t.Fatalf("error invoking read: %v", err)
@@ -118,13 +118,13 @@ func TestRead_NoActivityTypeResponse(t *testing.T) {
 	orderId, actTypeId, actId := uuid.New(), uuid.New(), uuid.New()
 
 	activity := storage.Activity{
-		ID:             actId,
+		ID:             actId.String(),
 		Code:           "Activity Code",
 		Description:    "Activity Description",
 		Name:           "Activity Name",
 		CreationTime:   ctime,
-		OrderID:        orderId,
-		ActivityTypeID: actTypeId,
+		OrderID:        orderId.String(),
+		ActivityTypeID: actTypeId.String(),
 	}
 	activityType := activitytypecomm.ActivityType{
 		Id: actTypeId.String(),
@@ -137,7 +137,7 @@ func TestRead_NoActivityTypeResponse(t *testing.T) {
 	}
 	expectedActivity := activitycomm.Activity{
 		Code:         activity.Code,
-		Id:           activity.ID.String(),
+		Id:           activity.ID,
 		ActType:      &activityType,
 		Order:        &order,
 		Description:  activity.Description,
@@ -147,10 +147,10 @@ func TestRead_NoActivityTypeResponse(t *testing.T) {
 
 	store := &activityTestRepo{
 		ReadResult: struct {
-			Activity storage.Activity
+			Activity *storage.Activity
 			Err      error
 		}{
-			Activity: activity,
+			Activity: &activity,
 			Err:      nil,
 		},
 	}
@@ -184,7 +184,7 @@ func TestRead_NoActivityTypeResponse(t *testing.T) {
 
 	// act
 	reply, err := svr.Read(ctx, &activitycomm.ReadActivityRequest{
-		Id: activity.ID.String(),
+		Id: activity.ID,
 	})
 	if err != nil {
 		t.Fatalf("error invoking read: %v", err)
@@ -216,17 +216,17 @@ func TestRead_NoOrderResponse(t *testing.T) {
 		Id: orderId.String(),
 	}
 	activity := storage.Activity{
-		ID:             actId,
+		ID:             actId.String(),
 		Code:           "Activity Code",
 		Description:    "Activity Description",
 		Name:           "Activity Name",
 		CreationTime:   ctime,
-		OrderID:        orderId,
-		ActivityTypeID: actTypeId,
+		OrderID:        orderId.String(),
+		ActivityTypeID: actTypeId.String(),
 	}
 	expectedActivity := activitycomm.Activity{
 		Code:         activity.Code,
-		Id:           activity.ID.String(),
+		Id:           activity.ID,
 		ActType:      &activityType,
 		Order:        &order,
 		Description:  activity.Description,
@@ -236,10 +236,10 @@ func TestRead_NoOrderResponse(t *testing.T) {
 
 	store := &activityTestRepo{
 		ReadResult: struct {
-			Activity storage.Activity
+			Activity *storage.Activity
 			Err      error
 		}{
-			Activity: activity,
+			Activity: &activity,
 			Err:      nil,
 		},
 	}
@@ -273,7 +273,7 @@ func TestRead_NoOrderResponse(t *testing.T) {
 
 	// act
 	reply, err := svr.Read(ctx, &activitycomm.ReadActivityRequest{
-		Id: activity.ID.String(),
+		Id: activity.ID,
 	})
 	if err != nil {
 		t.Fatalf("error invoking read: %v", err)

@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/FrancescoIlario/usplay/cmd/services/activity/server/data"
 	"github.com/FrancescoIlario/usplay/internal/services/activity/api"
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
@@ -32,8 +33,6 @@ func main() {
 	}
 	log.Printf("acquired address %v", address)
 
-	store := storage.NewInMemoryStore()
-
 	conn, err := grpc.Dial(actTypeHost, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("cannot connect to %s: %v", actTypeHost, err)
@@ -41,7 +40,12 @@ func main() {
 	actTypeCli := activitytypecomm.NewActivityTypeSvcClient(conn)
 	orderCli := ordercomm.NewOrderSvcClient(conn)
 
-	actServer := api.NewActivityServer(store, actTypeCli, orderCli, 1*time.Second)
+	repo, err := setUpRepository()
+	if err != nil {
+		log.Fatalf("error setting up repository: %v", err)
+	}
+
+	actServer := api.NewActivityServer(repo, actTypeCli, orderCli, 1*time.Second)
 	grpcServer := grpc.NewServer()
 	activitycomm.RegisterActivitySvcServer(grpcServer, actServer)
 
@@ -49,4 +53,13 @@ func main() {
 	if err := grpcServer.Serve(ls); err != nil {
 		log.Fatalf("Error serving: %v", err)
 	}
+}
+
+func setUpRepository() (storage.Repository, error) {
+	configuration, err := data.ParseFromEnvs()
+	if err != nil {
+		return nil, err
+	}
+
+	return data.BuildStore(configuration)
 }

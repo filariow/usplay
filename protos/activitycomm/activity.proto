@@ -69,7 +69,9 @@ message UpdateActivityRequest {
 message UpdateActivityReply {}
 
 // The request message for the list activities request
-message ListActivitiesRequest { }
+message ListActivitiesRequest { 
+    repeated string FilterIds = 1;
+}
 
 // The response message to the list activities request.
 message ListActivitiesReply {

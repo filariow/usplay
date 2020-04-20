@@ -16,7 +16,7 @@ import (
 func Test_DeleteHappyPath(t *testing.T) {
 	// arrange
 	activity := storage.Activity{
-		ID:          uuid.New(),
+		ID:          uuid.New().String(),
 		Code:        "Activity Code",
 		Description: "Activity Description",
 		Name:        "Activity Name",
@@ -33,7 +33,7 @@ func Test_DeleteHappyPath(t *testing.T) {
 
 	// act
 	_, err := svr.Delete(ctx,
-		&activitycomm.DeleteActivityRequest{Id: activity.ID.String()})
+		&activitycomm.DeleteActivityRequest{Id: activity.ID})
 
 	// assert
 	if err != nil {

@@ -34,7 +34,7 @@ func (s *activityServer) read(ctx context.Context, uid uuid.UUID) (*activitycomm
 		return nil, err
 	}
 
-	actOut, actErr := s.getActivityType(ctx, at.ActivityTypeID)
+	actOut, actErr := s.getActivityType(ctx, uid)
 	ordOut, ordErr := s.getOrder(ctx, at.OrderID)
 
 	var order *ordercomm.Order
@@ -42,10 +42,10 @@ func (s *activityServer) read(ctx context.Context, uid uuid.UUID) (*activitycomm
 	if err, open := <-actErr; open {
 		log.Printf(
 			"error contacting ActivityType service for details of entity with id %s: %v",
-			at.ActivityTypeID.String(), err)
+			at.ActivityTypeID, err)
 
 		acttype = &activitytypecomm.ActivityType{
-			Id: at.ActivityTypeID.String(),
+			Id: at.ActivityTypeID,
 		}
 	} else {
 		acttype = <-actOut
@@ -54,11 +54,9 @@ func (s *activityServer) read(ctx context.Context, uid uuid.UUID) (*activitycomm
 	if err, open := <-ordErr; open {
 		log.Printf(
 			"error contacting Order service for details of entity with id %s: %v",
-			at.OrderID.String(), err)
+			at.OrderID, err)
 
-		order = &ordercomm.Order{
-			Id: at.OrderID.String(),
-		}
+		order = &ordercomm.Order{Id: at.OrderID}
 	} else {
 		order = <-ordOut
 	}
@@ -67,7 +65,7 @@ func (s *activityServer) read(ctx context.Context, uid uuid.UUID) (*activitycomm
 		Activity: &activitycomm.Activity{
 			Code:         at.Code,
 			Description:  at.Description,
-			Id:           at.ID.String(),
+			Id:           at.ID,
 			Name:         at.Name,
 			ActType:      acttype,
 			CreationTime: creationTime,
@@ -76,12 +74,12 @@ func (s *activityServer) read(ctx context.Context, uid uuid.UUID) (*activitycomm
 	}, nil
 }
 
-func (s *activityServer) getOrder(ctx context.Context, uid uuid.UUID) (<-chan *ordercomm.Order, <-chan error) {
+func (s *activityServer) getOrder(ctx context.Context, uid string) (<-chan *ordercomm.Order, <-chan error) {
 	c := make(chan *ordercomm.Order, 1)
 	e := make(chan error, 1)
 
 	go func() {
-		resp, err := s.orderCli.Read(ctx, &ordercomm.ReadOrderRequest{Id: uid.String()})
+		resp, err := s.orderCli.Read(ctx, &ordercomm.ReadOrderRequest{Id: uid})
 		if err != nil {
 			e <- err
 		} else {
@@ -119,5 +117,5 @@ func (s *activityServer) readFromRepo(ctx context.Context, uid uuid.UUID) (*stor
 	if err != nil {
 		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", uid.String())
 	}
-	return &act, nil
+	return act, nil
 }
