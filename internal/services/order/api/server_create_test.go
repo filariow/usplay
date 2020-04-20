@@ -12,17 +12,19 @@ import (
 
 func Test_CreateHappyPath(t *testing.T) {
 	// arrange
+	id := uuid.New()
 	order := storage.Order{
+		ID:          id.String(),
 		Code:        "Order Code",
 		Description: "Order Description",
 		Name:        "Order Name",
 	}
 	store := &orderTestRepo{
 		CreateResult: struct {
-			ID  uuid.UUID
+			ID  *uuid.UUID
 			Err error
 		}{
-			ID:  order.ID,
+			ID:  &id,
 			Err: nil,
 		},
 	}
@@ -41,7 +43,7 @@ func Test_CreateHappyPath(t *testing.T) {
 		t.Fatalf("error invoking create: %v", err)
 	}
 
-	if providedId := reply.GetId(); order.ID.String() != providedId {
-		t.Errorf("expected id %s provided %s", order.ID.String(), providedId)
+	if providedId := reply.GetId(); order.ID != providedId {
+		t.Errorf("expected id %s provided %s", order.ID, providedId)
 	}
 }

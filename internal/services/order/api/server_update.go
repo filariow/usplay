@@ -18,7 +18,7 @@ func (s *orderServer) Update(ctx context.Context, req *ordercomm.UpdateOrderRequ
 	}
 
 	act := storage.Order{
-		ID:          uid,
+		ID:          uid.String(),
 		Name:        req.GetName(),
 		Code:        req.GetCode(),
 		Description: req.GetDescription(),

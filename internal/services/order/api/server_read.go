@@ -26,7 +26,7 @@ func (s *orderServer) Read(ctx context.Context, req *ordercomm.ReadOrderRequest)
 			Code:        act.Code,
 			Description: act.Description,
 			Name:        act.Name,
-			Id:          act.ID.String(),
+			Id:          act.ID,
 		},
 	}, nil
 }

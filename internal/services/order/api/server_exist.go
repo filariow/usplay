@@ -21,5 +21,5 @@ func (s *orderServer) Exist(ctx context.Context, req *ordercomm.ExistOrderReques
 		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", id)
 	}
 
-	return &ordercomm.ExistOrderReply{Exists: exists}, nil
+	return &ordercomm.ExistOrderReply{Exists: *exists}, nil
 }
