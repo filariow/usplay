@@ -2,19 +2,17 @@ package storage
 
 import (
 	"time"
-
-	"github.com/google/uuid"
 )
 
 // Activity activity model for storage
 type Activity struct {
-	ID             uuid.UUID
-	ActivityTypeID uuid.UUID
-	OrderID        uuid.UUID
-	Description    string
-	Code           string
-	Name           string
-	CreationTime   time.Time
+	ID             string    `bson:"_id"`
+	ActivityTypeID string    `bson:"activitytype_id"`
+	OrderID        string    `bson:"order_id"`
+	Description    string    `bson:"description"`
+	Code           string    `bson:"code"`
+	Name           string    `bson:"name"`
+	CreationTime   time.Time `bson:"creation_time"`
 }
 
 // Activities list of activities
