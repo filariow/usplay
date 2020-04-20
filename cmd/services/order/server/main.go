@@ -5,7 +5,7 @@ import (
 	"net"
 
 	"github.com/FrancescoIlario/usplay/internal/services/order/api"
-	"github.com/FrancescoIlario/usplay/internal/services/order/storage"
+	"github.com/FrancescoIlario/usplay/internal/services/order/storage/inmemstore"
 	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
 
 	"google.golang.org/grpc"
@@ -22,7 +22,7 @@ func main() {
 	}
 	log.Printf("acquired address %v", address)
 
-	store := storage.NewInMemoryStore()
+	store := inmemstore.NewInMemoryStore()
 	actServer := api.NewOrderServer(store)
 	grpcServer := grpc.NewServer()
 	ordercomm.RegisterOrderSvcServer(grpcServer, actServer)
