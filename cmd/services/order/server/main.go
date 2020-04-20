@@ -4,8 +4,9 @@ import (
 	"log"
 	"net"
 
+	"github.com/FrancescoIlario/usplay/cmd/services/order/server/data"
 	"github.com/FrancescoIlario/usplay/internal/services/order/api"
-	"github.com/FrancescoIlario/usplay/internal/services/order/storage/inmemstore"
+	"github.com/FrancescoIlario/usplay/internal/services/order/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
 
 	"google.golang.org/grpc"
@@ -22,8 +23,12 @@ func main() {
 	}
 	log.Printf("acquired address %v", address)
 
-	store := inmemstore.NewInMemoryStore()
-	actServer := api.NewOrderServer(store)
+	repo, err := setUpRepository()
+	if err != nil {
+		log.Fatalf("error setting up repository: %v", err)
+	}
+
+	actServer := api.NewOrderServer(repo)
 	grpcServer := grpc.NewServer()
 	ordercomm.RegisterOrderSvcServer(grpcServer, actServer)
 
@@ -31,4 +36,13 @@ func main() {
 	if err := grpcServer.Serve(ls); err != nil {
 		log.Fatalf("Error serving: %v", err)
 	}
+}
+
+func setUpRepository() (storage.Repository, error) {
+	configuration, err := data.ParseFromEnvs()
+	if err != nil {
+		return nil, err
+	}
+
+	return data.BuildStore(configuration)
 }
