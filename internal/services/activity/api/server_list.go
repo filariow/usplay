@@ -6,12 +6,23 @@ import (
 
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
+	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
 func (s *activityServer) List(ctx context.Context, req *activitycomm.ListActivitiesRequest) (*activitycomm.ListActivitiesReply, error) {
-	acts, err := s.repo.List(ctx)
+	ids := make([]uuid.UUID, len(req.FilterIds))
+	for idx, i := range req.FilterIds {
+		id, err := uuid.Parse(i)
+		if err != nil {
+			return nil, status.Errorf(codes.InvalidArgument, "ID is not valid: %v", err)
+		}
+		ids[idx] = id
+	}
+
+	acts, err := s.repo.List(ctx, ids)
+
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "error retrieving the list of activities: %v", err)
 	}
@@ -21,7 +32,7 @@ func (s *activityServer) List(ctx context.Context, req *activitycomm.ListActivit
 	if len(acts) > 0 {
 		types := []string{}
 		for _, act := range acts {
-			types = append(types, act.ActivityTypeID.String())
+			types = append(types, act.ActivityTypeID)
 		}
 
 		activityTypesReply, err := s.actTypeCli.List(ctx, &activitytypecomm.ListActivityTypesRequest{FilterIds: types})
@@ -39,16 +50,16 @@ func (s *activityServer) List(ctx context.Context, req *activitycomm.ListActivit
 	activities := make([]*activitycomm.Activity, len(acts))
 	for idx, act := range acts {
 		// if info about the ActivityType was not retrieved, add the info you have
-		actType, ok := actTypes[act.ActivityTypeID.String()]
+		actType, ok := actTypes[act.ActivityTypeID]
 		if !ok {
-			actType = &activitytypecomm.ActivityType{Id: act.ActivityTypeID.String()}
+			actType = &activitytypecomm.ActivityType{Id: act.ActivityTypeID}
 		}
 
 		activities[idx] = &activitycomm.Activity{
 			Code:        act.Code,
 			Description: act.Description,
 			Name:        act.Name,
-			Id:          act.ID.String(),
+			Id:          act.ID,
 			ActType:     actType,
 		}
 	}

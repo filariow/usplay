@@ -54,11 +54,11 @@ func (s *activityServer) Update(ctx context.Context, req *activitycomm.UpdateAct
 
 	// build storage payload
 	act := storage.Activity{
-		ID:             id,
+		ID:             id.String(),
 		Name:           req.GetName(),
 		Code:           req.GetCode(),
 		Description:    req.GetDescription(),
-		ActivityTypeID: actTypeID,
+		ActivityTypeID: actTypeID.String(),
 	}
 
 	// persist data in storage

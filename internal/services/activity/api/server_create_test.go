@@ -17,19 +17,20 @@ import (
 
 func Test_CreateHappyPath(t *testing.T) {
 	// arrange
+	activityID := uuid.New()
 	activity := storage.Activity{
-		ActivityTypeID: uuid.New(),
-		OrderID:        uuid.New(),
+		ActivityTypeID: uuid.New().String(),
+		OrderID:        uuid.New().String(),
 		Code:           "Activity Code",
 		Description:    "Activity Description",
 		Name:           "Activity Name",
 	}
 	store := &activityTestRepo{
 		CreateResult: struct {
-			ID  uuid.UUID
+			ID  *uuid.UUID
 			Err error
 		}{
-			ID:  uuid.New(),
+			ID:  &activityID,
 			Err: nil,
 		},
 	}
@@ -64,8 +65,8 @@ func Test_CreateHappyPath(t *testing.T) {
 
 	// act
 	reply, err := svr.Create(ctx, &activitycomm.CreateActivityRequest{
-		ActTypeID:   activity.ActivityTypeID.String(),
-		OrderID:     activity.OrderID.String(),
+		ActTypeID:   activity.ActivityTypeID,
+		OrderID:     activity.OrderID,
 		Code:        activity.Code,
 		Description: activity.Description,
 		Name:        activity.Name,
@@ -83,19 +84,20 @@ func Test_CreateHappyPath(t *testing.T) {
 
 func Test_CreateInvalidActivityTypeID(t *testing.T) {
 	// arrange
+	activityID, orderID := uuid.New(), uuid.New()
 	activity := storage.Activity{
-		ID:          uuid.New(),
-		OrderID:     uuid.New(),
+		ID:          activityID.String(),
+		OrderID:     orderID.String(),
 		Code:        "Activity Code",
 		Description: "Activity Description",
 		Name:        "Activity Name",
 	}
 	store := &activityTestRepo{
 		CreateResult: struct {
-			ID  uuid.UUID
+			ID  *uuid.UUID
 			Err error
 		}{
-			ID:  activity.ID,
+			ID:  &activityID,
 			Err: nil,
 		},
 	}
@@ -153,19 +155,20 @@ func Test_CreateInvalidActivityTypeID(t *testing.T) {
 
 func Test_CreateNotExistingActivityTypeID(t *testing.T) {
 	// arrange
+	activityID := uuid.New()
 	activity := storage.Activity{
-		ActivityTypeID: uuid.New(),
-		OrderID:        uuid.New(),
+		ActivityTypeID: uuid.New().String(),
+		OrderID:        uuid.New().String(),
 		Code:           "Activity Code",
 		Description:    "Activity Description",
 		Name:           "Activity Name",
 	}
 	store := &activityTestRepo{
 		CreateResult: struct {
-			ID  uuid.UUID
+			ID  *uuid.UUID
 			Err error
 		}{
-			ID:  activity.ID,
+			ID:  &activityID,
 			Err: nil,
 		},
 	}
@@ -200,7 +203,7 @@ func Test_CreateNotExistingActivityTypeID(t *testing.T) {
 
 	// act
 	_, err := svr.Create(ctx, &activitycomm.CreateActivityRequest{
-		ActTypeID:   activity.ActivityTypeID.String(),
+		ActTypeID:   activity.ActivityTypeID,
 		Code:        activity.Code,
 		Description: activity.Description,
 		Name:        activity.Name,

@@ -16,14 +16,18 @@ import (
 // Activity Test repository
 type activityTestRepo struct {
 	CreateResult struct {
-		ID  uuid.UUID
+		ID  *uuid.UUID
 		Err error
 	}
 	DeleteResult struct {
 		Err error
 	}
+	ExistResult struct {
+		Exists *bool
+		Err    error
+	}
 	ReadResult struct {
-		Activity storage.Activity
+		Activity *storage.Activity
 		Err      error
 	}
 	ListResult struct {
@@ -36,15 +40,20 @@ type activityTestRepo struct {
 }
 
 // Create
-func (r *activityTestRepo) Create(context.Context, storage.Activity) (uuid.UUID, error) {
+func (r *activityTestRepo) Create(context.Context, storage.Activity) (*uuid.UUID, error) {
 	return r.CreateResult.ID, r.CreateResult.Err
 }
 
 // Read
-func (r *activityTestRepo) Read(ctx context.Context, id uuid.UUID) (storage.Activity, error) {
+func (r *activityTestRepo) Read(ctx context.Context, id uuid.UUID) (*storage.Activity, error) {
 	activity := r.ReadResult.Activity
-	activity.ID = id
+	activity.ID = id.String()
 	return activity, r.ReadResult.Err
+}
+
+// Exist
+func (r *activityTestRepo) Exist(ctx context.Context, id uuid.UUID) (*bool, error) {
+	return r.ExistResult.Exists, r.ReadResult.Err
 }
 
 // Update
@@ -58,7 +67,7 @@ func (r *activityTestRepo) Delete(context.Context, uuid.UUID) error {
 }
 
 // List
-func (r *activityTestRepo) List(context.Context) (storage.Activities, error) {
+func (r *activityTestRepo) List(context.Context, []uuid.UUID) (storage.Activities, error) {
 	return r.ListResult.Activities, r.ListResult.Err
 }
 

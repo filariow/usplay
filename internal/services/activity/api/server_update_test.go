@@ -18,7 +18,7 @@ import (
 func Test_UpdateHappyPath(t *testing.T) {
 	// arrange
 	activity := storage.Activity{
-		ID:          uuid.New(),
+		ID:          uuid.New().String(),
 		Code:        "Activity Code",
 		Description: "Activity Description",
 		Name:        "Activity Name",
@@ -61,7 +61,7 @@ func Test_UpdateHappyPath(t *testing.T) {
 
 	// act
 	_, err := svr.Update(ctx, &activitycomm.UpdateActivityRequest{
-		Id:          activity.ID.String(),
+		Id:          activity.ID,
 		OrderID:     uuid.New().String(),
 		ActTypeID:   uuid.New().String(),
 		Code:        activity.Code,
@@ -81,7 +81,7 @@ func Test_UpdateInvalidActivityID(t *testing.T) {
 		Code:           "Activity Code",
 		Description:    "Activity Description",
 		Name:           "Activity Name",
-		ActivityTypeID: uuid.New(),
+		ActivityTypeID: uuid.New().String(),
 	}
 	store := &activityTestRepo{
 		UpdateResult: struct {
@@ -122,7 +122,7 @@ func Test_UpdateInvalidActivityID(t *testing.T) {
 	// act
 	_, err := svr.Update(ctx, &activitycomm.UpdateActivityRequest{
 		Id:          "",
-		ActTypeID:   activity.ActivityTypeID.String(),
+		ActTypeID:   activity.ActivityTypeID,
 		Code:        activity.Code,
 		Description: activity.Description,
 		Name:        activity.Name,
@@ -146,7 +146,7 @@ func Test_UpdateInvalidActivityID(t *testing.T) {
 func Test_UpdateInvalidActivityTypeID(t *testing.T) {
 	// arrange
 	activity := storage.Activity{
-		ID:          uuid.New(),
+		ID:          uuid.New().String(),
 		Code:        "Activity Code",
 		Description: "Activity Description",
 		Name:        "Activity Name",
@@ -189,7 +189,7 @@ func Test_UpdateInvalidActivityTypeID(t *testing.T) {
 
 	// act
 	_, err := svr.Update(ctx, &activitycomm.UpdateActivityRequest{
-		Id:          activity.ID.String(),
+		Id:          activity.ID,
 		ActTypeID:   "",
 		OrderID:     uuid.New().String(),
 		Code:        activity.Code,
@@ -215,8 +215,8 @@ func Test_UpdateInvalidActivityTypeID(t *testing.T) {
 func Test_UpdateNotExistingActivityTypeID(t *testing.T) {
 	// arrange
 	activity := storage.Activity{
-		ID:             uuid.New(),
-		ActivityTypeID: uuid.New(),
+		ID:             uuid.New().String(),
+		ActivityTypeID: uuid.New().String(),
 		Code:           "Activity Code",
 		Description:    "Activity Description",
 		Name:           "Activity Name",
@@ -259,8 +259,8 @@ func Test_UpdateNotExistingActivityTypeID(t *testing.T) {
 
 	// act
 	_, err := svr.Update(ctx, &activitycomm.UpdateActivityRequest{
-		Id:          activity.ID.String(),
-		ActTypeID:   activity.ActivityTypeID.String(),
+		Id:          activity.ID,
+		ActTypeID:   activity.ActivityTypeID,
 		OrderID:     uuid.New().String(),
 		Code:        activity.Code,
 		Description: activity.Description,
@@ -285,7 +285,7 @@ func Test_UpdateNotExistingActivityTypeID(t *testing.T) {
 func Test_UpdateInvalidOrderID(t *testing.T) {
 	// arrange
 	activity := storage.Activity{
-		ID:          uuid.New(),
+		ID:          uuid.New().String(),
 		Code:        "Activity Code",
 		Description: "Activity Description",
 		Name:        "Activity Name",
@@ -328,7 +328,7 @@ func Test_UpdateInvalidOrderID(t *testing.T) {
 
 	// act
 	_, err := svr.Update(ctx, &activitycomm.UpdateActivityRequest{
-		Id:          activity.ID.String(),
+		Id:          activity.ID,
 		ActTypeID:   uuid.New().String(),
 		OrderID:     "",
 		Code:        activity.Code,
@@ -354,8 +354,8 @@ func Test_UpdateInvalidOrderID(t *testing.T) {
 func Test_UpdateNotExistingOrderID(t *testing.T) {
 	// arrange
 	activity := storage.Activity{
-		ID:             uuid.New(),
-		ActivityTypeID: uuid.New(),
+		ID:             uuid.New().String(),
+		ActivityTypeID: uuid.New().String(),
 		Code:           "Activity Code",
 		Description:    "Activity Description",
 		Name:           "Activity Name",
@@ -398,8 +398,8 @@ func Test_UpdateNotExistingOrderID(t *testing.T) {
 
 	// act
 	_, err := svr.Update(ctx, &activitycomm.UpdateActivityRequest{
-		Id:          activity.ID.String(),
-		ActTypeID:   activity.ActivityTypeID.String(),
+		Id:          activity.ID,
+		ActTypeID:   activity.ActivityTypeID,
 		OrderID:     uuid.New().String(),
 		Code:        activity.Code,
 		Description: activity.Description,

@@ -33,17 +33,17 @@ func Test_ListHappyPath(t *testing.T) {
 		activityTypes[i] = &activityType
 
 		activity := storage.Activity{
-			ID:             uuid.New(),
+			ID:             uuid.New().String(),
 			Code:           "Activity Code",
 			Description:    "Activity Description",
 			Name:           "Activity Name",
-			ActivityTypeID: activityTypeID,
+			ActivityTypeID: activityTypeID.String(),
 		}
 		activities[i] = activity
 
 		expectedActivity := activitycomm.Activity{
 			Code:        activity.Code,
-			Id:          activity.ID.String(),
+			Id:          activity.ID,
 			ActType:     &activityType,
 			Description: activity.Description,
 			Name:        activity.Name,
@@ -124,17 +124,17 @@ func Test_ListHappyPathNoActivityTypesDetails(t *testing.T) {
 		activityTypeID := uuid.New()
 
 		activity := storage.Activity{
-			ID:             uuid.New(),
+			ID:             uuid.New().String(),
 			Code:           "Activity Code",
 			Description:    "Activity Description",
 			Name:           "Activity Name",
-			ActivityTypeID: activityTypeID,
+			ActivityTypeID: activityTypeID.String(),
 		}
 		activities[i] = activity
 
 		expectedActivity := activitycomm.Activity{
 			Code: activity.Code,
-			Id:   activity.ID.String(),
+			Id:   activity.ID,
 			ActType: &activitytypecomm.ActivityType{
 				Id: activityTypeID.String(),
 			},
