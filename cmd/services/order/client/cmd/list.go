@@ -39,5 +39,5 @@ var (
 )
 
 func init() {
-	cmdList.PersistentFlags().StringVarP(&id, "id", "i", "", "order's id")
+	cmdList.Flags().StringVarP(&id, "id", "i", "", "order's id")
 }

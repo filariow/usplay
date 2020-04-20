@@ -41,5 +41,5 @@ var (
 )
 
 func init() {
-	cmdRead.PersistentFlags().StringVarP(&id, "id", "i", "", "order's id")
+	cmdRead.Flags().StringVarP(&id, "id", "i", "", "order's id")
 }
