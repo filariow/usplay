@@ -10,7 +10,7 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-func (s *reportServer) Generate(ctx context.Context, req *reportcomm.GenerateReportRequest) (*reportcomm.GenerateReportReply, error) {
+func (s *reportServer) Create(ctx context.Context, req *reportcomm.CreateReportRequest) (*reportcomm.CreateReportReply, error) {
 	report := storage.Report{
 		Name: req.GetName(),
 	}
@@ -20,7 +20,7 @@ func (s *reportServer) Generate(ctx context.Context, req *reportcomm.GenerateRep
 		return nil, status.Errorf(codes.Internal, "error creating report: %v", err)
 	}
 
-	return &reportcomm.GenerateReportReply{
+	return &reportcomm.CreateReportReply{
 		Id: id.String(),
 	}, nil
 }

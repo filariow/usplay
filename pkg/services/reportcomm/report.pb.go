@@ -6,6 +6,7 @@ package reportcomm
 import (
 	context "context"
 	fmt "fmt"
+	activitycomm "github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	proto "github.com/golang/protobuf/proto"
 	timestamp "github.com/golang/protobuf/ptypes/timestamp"
 	grpc "google.golang.org/grpc"
@@ -26,7 +27,7 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 // The request message containing the report details
-type GenerateReportRequest struct {
+type CreateReportRequest struct {
 	Name                 string    `protobuf:"bytes,1,opt,name=Name,proto3" json:"Name,omitempty"`
 	Period               *TimeSpan `protobuf:"bytes,2,opt,name=Period,proto3" json:"Period,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
@@ -34,39 +35,39 @@ type GenerateReportRequest struct {
 	XXX_sizecache        int32     `json:"-"`
 }
 
-func (m *GenerateReportRequest) Reset()         { *m = GenerateReportRequest{} }
-func (m *GenerateReportRequest) String() string { return proto.CompactTextString(m) }
-func (*GenerateReportRequest) ProtoMessage()    {}
-func (*GenerateReportRequest) Descriptor() ([]byte, []int) {
+func (m *CreateReportRequest) Reset()         { *m = CreateReportRequest{} }
+func (m *CreateReportRequest) String() string { return proto.CompactTextString(m) }
+func (*CreateReportRequest) ProtoMessage()    {}
+func (*CreateReportRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b0d9a2e7955692ed, []int{0}
 }
 
-func (m *GenerateReportRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GenerateReportRequest.Unmarshal(m, b)
+func (m *CreateReportRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CreateReportRequest.Unmarshal(m, b)
 }
-func (m *GenerateReportRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GenerateReportRequest.Marshal(b, m, deterministic)
+func (m *CreateReportRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CreateReportRequest.Marshal(b, m, deterministic)
 }
-func (m *GenerateReportRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GenerateReportRequest.Merge(m, src)
+func (m *CreateReportRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateReportRequest.Merge(m, src)
 }
-func (m *GenerateReportRequest) XXX_Size() int {
-	return xxx_messageInfo_GenerateReportRequest.Size(m)
+func (m *CreateReportRequest) XXX_Size() int {
+	return xxx_messageInfo_CreateReportRequest.Size(m)
 }
-func (m *GenerateReportRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_GenerateReportRequest.DiscardUnknown(m)
+func (m *CreateReportRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_CreateReportRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GenerateReportRequest proto.InternalMessageInfo
+var xxx_messageInfo_CreateReportRequest proto.InternalMessageInfo
 
-func (m *GenerateReportRequest) GetName() string {
+func (m *CreateReportRequest) GetName() string {
 	if m != nil {
 		return m.Name
 	}
 	return ""
 }
 
-func (m *GenerateReportRequest) GetPeriod() *TimeSpan {
+func (m *CreateReportRequest) GetPeriod() *TimeSpan {
 	if m != nil {
 		return m.Period
 	}
@@ -74,39 +75,39 @@ func (m *GenerateReportRequest) GetPeriod() *TimeSpan {
 }
 
 // The response message containing the id of the report
-type GenerateReportReply struct {
+type CreateReportReply struct {
 	Id                   string   `protobuf:"bytes,1,opt,name=Id,proto3" json:"Id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GenerateReportReply) Reset()         { *m = GenerateReportReply{} }
-func (m *GenerateReportReply) String() string { return proto.CompactTextString(m) }
-func (*GenerateReportReply) ProtoMessage()    {}
-func (*GenerateReportReply) Descriptor() ([]byte, []int) {
+func (m *CreateReportReply) Reset()         { *m = CreateReportReply{} }
+func (m *CreateReportReply) String() string { return proto.CompactTextString(m) }
+func (*CreateReportReply) ProtoMessage()    {}
+func (*CreateReportReply) Descriptor() ([]byte, []int) {
 	return fileDescriptor_b0d9a2e7955692ed, []int{1}
 }
 
-func (m *GenerateReportReply) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GenerateReportReply.Unmarshal(m, b)
+func (m *CreateReportReply) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CreateReportReply.Unmarshal(m, b)
 }
-func (m *GenerateReportReply) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GenerateReportReply.Marshal(b, m, deterministic)
+func (m *CreateReportReply) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CreateReportReply.Marshal(b, m, deterministic)
 }
-func (m *GenerateReportReply) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GenerateReportReply.Merge(m, src)
+func (m *CreateReportReply) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateReportReply.Merge(m, src)
 }
-func (m *GenerateReportReply) XXX_Size() int {
-	return xxx_messageInfo_GenerateReportReply.Size(m)
+func (m *CreateReportReply) XXX_Size() int {
+	return xxx_messageInfo_CreateReportReply.Size(m)
 }
-func (m *GenerateReportReply) XXX_DiscardUnknown() {
-	xxx_messageInfo_GenerateReportReply.DiscardUnknown(m)
+func (m *CreateReportReply) XXX_DiscardUnknown() {
+	xxx_messageInfo_CreateReportReply.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GenerateReportReply proto.InternalMessageInfo
+var xxx_messageInfo_CreateReportReply proto.InternalMessageInfo
 
-func (m *GenerateReportReply) GetId() string {
+func (m *CreateReportReply) GetId() string {
 	if m != nil {
 		return m.Id
 	}
@@ -451,14 +452,14 @@ func (m *ListReportsReply) GetReports() []*Report {
 }
 
 type Report struct {
-	Id                   string      `protobuf:"bytes,1,opt,name=Id,proto3" json:"Id,omitempty"`
-	Name                 string      `protobuf:"bytes,2,opt,name=Name,proto3" json:"Name,omitempty"`
-	OrderId              string      `protobuf:"bytes,3,opt,name=OrderId,proto3" json:"OrderId,omitempty"`
-	Period               *TimeSpan   `protobuf:"bytes,4,opt,name=Period,proto3" json:"Period,omitempty"`
-	Activities           []*Activity `protobuf:"bytes,5,rep,name=Activities,proto3" json:"Activities,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
-	XXX_unrecognized     []byte      `json:"-"`
-	XXX_sizecache        int32       `json:"-"`
+	Id                   string                   `protobuf:"bytes,1,opt,name=Id,proto3" json:"Id,omitempty"`
+	Name                 string                   `protobuf:"bytes,2,opt,name=Name,proto3" json:"Name,omitempty"`
+	OrderId              string                   `protobuf:"bytes,3,opt,name=OrderId,proto3" json:"OrderId,omitempty"`
+	Period               *TimeSpan                `protobuf:"bytes,4,opt,name=Period,proto3" json:"Period,omitempty"`
+	Activities           []*activitycomm.Activity `protobuf:"bytes,5,rep,name=Activities,proto3" json:"Activities,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
+	XXX_unrecognized     []byte                   `json:"-"`
+	XXX_sizecache        int32                    `json:"-"`
 }
 
 func (m *Report) Reset()         { *m = Report{} }
@@ -514,7 +515,7 @@ func (m *Report) GetPeriod() *TimeSpan {
 	return nil
 }
 
-func (m *Report) GetActivities() []*Activity {
+func (m *Report) GetActivities() []*activitycomm.Activity {
 	if m != nil {
 		return m.Activities
 	}
@@ -568,119 +569,9 @@ func (m *TimeSpan) GetTo() *timestamp.Timestamp {
 	return nil
 }
 
-type Activity struct {
-	Id                   string        `protobuf:"bytes,1,opt,name=Id,proto3" json:"Id,omitempty"`
-	Type                 *ActivityType `protobuf:"bytes,2,opt,name=type,proto3" json:"type,omitempty"`
-	Period               *TimeSpan     `protobuf:"bytes,3,opt,name=period,proto3" json:"period,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
-	XXX_unrecognized     []byte        `json:"-"`
-	XXX_sizecache        int32         `json:"-"`
-}
-
-func (m *Activity) Reset()         { *m = Activity{} }
-func (m *Activity) String() string { return proto.CompactTextString(m) }
-func (*Activity) ProtoMessage()    {}
-func (*Activity) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b0d9a2e7955692ed, []int{12}
-}
-
-func (m *Activity) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Activity.Unmarshal(m, b)
-}
-func (m *Activity) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Activity.Marshal(b, m, deterministic)
-}
-func (m *Activity) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Activity.Merge(m, src)
-}
-func (m *Activity) XXX_Size() int {
-	return xxx_messageInfo_Activity.Size(m)
-}
-func (m *Activity) XXX_DiscardUnknown() {
-	xxx_messageInfo_Activity.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_Activity proto.InternalMessageInfo
-
-func (m *Activity) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-func (m *Activity) GetType() *ActivityType {
-	if m != nil {
-		return m.Type
-	}
-	return nil
-}
-
-func (m *Activity) GetPeriod() *TimeSpan {
-	if m != nil {
-		return m.Period
-	}
-	return nil
-}
-
-type ActivityType struct {
-	Id                   string   `protobuf:"bytes,1,opt,name=Id,proto3" json:"Id,omitempty"`
-	Code                 string   `protobuf:"bytes,2,opt,name=Code,proto3" json:"Code,omitempty"`
-	Name                 string   `protobuf:"bytes,3,opt,name=Name,proto3" json:"Name,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *ActivityType) Reset()         { *m = ActivityType{} }
-func (m *ActivityType) String() string { return proto.CompactTextString(m) }
-func (*ActivityType) ProtoMessage()    {}
-func (*ActivityType) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b0d9a2e7955692ed, []int{13}
-}
-
-func (m *ActivityType) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ActivityType.Unmarshal(m, b)
-}
-func (m *ActivityType) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ActivityType.Marshal(b, m, deterministic)
-}
-func (m *ActivityType) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ActivityType.Merge(m, src)
-}
-func (m *ActivityType) XXX_Size() int {
-	return xxx_messageInfo_ActivityType.Size(m)
-}
-func (m *ActivityType) XXX_DiscardUnknown() {
-	xxx_messageInfo_ActivityType.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_ActivityType proto.InternalMessageInfo
-
-func (m *ActivityType) GetId() string {
-	if m != nil {
-		return m.Id
-	}
-	return ""
-}
-
-func (m *ActivityType) GetCode() string {
-	if m != nil {
-		return m.Code
-	}
-	return ""
-}
-
-func (m *ActivityType) GetName() string {
-	if m != nil {
-		return m.Name
-	}
-	return ""
-}
-
 func init() {
-	proto.RegisterType((*GenerateReportRequest)(nil), "reportcomm.GenerateReportRequest")
-	proto.RegisterType((*GenerateReportReply)(nil), "reportcomm.GenerateReportReply")
+	proto.RegisterType((*CreateReportRequest)(nil), "reportcomm.CreateReportRequest")
+	proto.RegisterType((*CreateReportReply)(nil), "reportcomm.CreateReportReply")
 	proto.RegisterType((*ReadReportRequest)(nil), "reportcomm.ReadReportRequest")
 	proto.RegisterType((*ReadReportReply)(nil), "reportcomm.ReadReportReply")
 	proto.RegisterType((*DeleteReportRequest)(nil), "reportcomm.DeleteReportRequest")
@@ -691,64 +582,62 @@ func init() {
 	proto.RegisterType((*ListReportsReply)(nil), "reportcomm.ListReportsReply")
 	proto.RegisterType((*Report)(nil), "reportcomm.Report")
 	proto.RegisterType((*TimeSpan)(nil), "reportcomm.TimeSpan")
-	proto.RegisterType((*Activity)(nil), "reportcomm.Activity")
-	proto.RegisterType((*ActivityType)(nil), "reportcomm.ActivityType")
 }
 
-func init() { proto.RegisterFile("reportcomm/report.proto", fileDescriptor_b0d9a2e7955692ed) }
+func init() {
+	proto.RegisterFile("reportcomm/report.proto", fileDescriptor_b0d9a2e7955692ed)
+}
 
 var fileDescriptor_b0d9a2e7955692ed = []byte{
-	// 536 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x54, 0xdb, 0x6e, 0xd3, 0x40,
-	0x10, 0xc5, 0x17, 0xdc, 0x74, 0x82, 0x0a, 0xdd, 0x16, 0x61, 0x19, 0x4a, 0x83, 0x11, 0x52, 0x55,
-	0x45, 0x8e, 0x14, 0x78, 0x45, 0xdc, 0xa2, 0x42, 0x10, 0x82, 0xca, 0x2d, 0x0f, 0xf0, 0xe6, 0xc6,
-	0x93, 0xca, 0x52, 0x9c, 0x5d, 0xd6, 0xdb, 0x48, 0xfe, 0x25, 0x7e, 0x80, 0xdf, 0x43, 0xde, 0x5d,
-	0x93, 0xb5, 0x9b, 0xa4, 0xf4, 0x6d, 0x3d, 0x73, 0xf6, 0x9c, 0xf1, 0xec, 0x9c, 0x81, 0x47, 0x1c,
-	0x19, 0xe5, 0x62, 0x42, 0xf3, 0x7c, 0xa0, 0x8e, 0x11, 0xe3, 0x54, 0x50, 0x02, 0xcb, 0x44, 0x70,
-	0x78, 0x49, 0xe9, 0xe5, 0x0c, 0x07, 0x32, 0x73, 0x71, 0x35, 0x1d, 0x88, 0x2c, 0xc7, 0x42, 0x24,
-	0x39, 0x53, 0xe0, 0xf0, 0x07, 0x3c, 0xfc, 0x88, 0x73, 0xe4, 0x89, 0xc0, 0x58, 0x5e, 0x8b, 0xf1,
-	0xd7, 0x15, 0x16, 0x82, 0x10, 0x70, 0xbf, 0x26, 0x39, 0xfa, 0x56, 0xcf, 0x3a, 0xda, 0x8e, 0xe5,
-	0x99, 0xf4, 0xc1, 0x3b, 0x45, 0x9e, 0xd1, 0xd4, 0xb7, 0x7b, 0xd6, 0x51, 0x77, 0xb8, 0x1f, 0x2d,
-	0xa5, 0xa2, 0xf3, 0x2c, 0xc7, 0x33, 0x96, 0xcc, 0x63, 0x8d, 0x09, 0x5f, 0xc0, 0x5e, 0x9b, 0x9a,
-	0xcd, 0x4a, 0xb2, 0x03, 0xf6, 0x38, 0xd5, 0xb4, 0xf6, 0x38, 0x0d, 0x9f, 0xc3, 0x6e, 0x8c, 0x49,
-	0xda, 0x54, 0x6f, 0x83, 0x5e, 0xc3, 0x7d, 0x13, 0x54, 0xf1, 0x1c, 0x83, 0xa7, 0xd4, 0x25, 0xac,
-	0x3b, 0x24, 0x66, 0x31, 0x1a, 0xa8, 0x11, 0x55, 0x29, 0x23, 0x9c, 0x61, 0xfb, 0x1f, 0xdb, 0x2a,
-	0x6f, 0x60, 0xb7, 0x09, 0xbb, 0xad, 0x0e, 0x85, 0xbd, 0xef, 0x2c, 0x4d, 0x6e, 0xd0, 0xf9, 0xd7,
-	0x5b, 0xdb, 0xe8, 0x2d, 0x01, 0xf7, 0x03, 0x4d, 0xd1, 0x77, 0x54, 0xac, 0x3a, 0x93, 0x1e, 0x74,
-	0x47, 0x58, 0x4c, 0x78, 0xc6, 0x44, 0x46, 0xe7, 0xbe, 0x2b, 0x53, 0x66, 0xa8, 0xaa, 0xb8, 0x29,
-	0x78, 0xdb, 0x8a, 0xf7, 0x81, 0x7c, 0xc9, 0x0a, 0xa1, 0xa2, 0x85, 0x2e, 0x38, 0x7c, 0x0b, 0x0f,
-	0x1a, 0xd1, 0x8a, 0xb5, 0x0f, 0x5b, 0xea, 0x4e, 0xe1, 0x5b, 0x3d, 0x67, 0x0d, 0x6d, 0x0d, 0x09,
-	0x7f, 0x5b, 0xe0, 0xa9, 0xd8, 0x7f, 0xfd, 0xbd, 0x0f, 0x5b, 0xdf, 0x78, 0x8a, 0x7c, 0x9c, 0xea,
-	0x06, 0xd4, 0x9f, 0xc6, 0xcc, 0xb9, 0x37, 0xcf, 0x1c, 0x79, 0x05, 0xf0, 0x6e, 0x22, 0xb2, 0x45,
-	0x26, 0x32, 0x2c, 0xfc, 0xbb, 0xb2, 0xce, 0xc6, 0x0d, 0x9d, 0x2d, 0x63, 0x03, 0x17, 0x4e, 0xa1,
-	0x53, 0x33, 0x91, 0x08, 0xdc, 0x29, 0xa7, 0xb9, 0x6e, 0x5d, 0x10, 0x29, 0x03, 0x45, 0xb5, 0x81,
-	0xa4, 0xa4, 0x34, 0x50, 0x2c, 0x71, 0xe4, 0x18, 0x6c, 0x41, 0xb5, 0x1f, 0x36, 0xa1, 0x6d, 0x41,
-	0xc3, 0x05, 0x74, 0x6a, 0xfd, 0x6b, 0x5d, 0xe9, 0x83, 0x2b, 0x4a, 0x86, 0x9a, 0xc9, 0x5f, 0x55,
-	0xf3, 0x79, 0xc9, 0x30, 0x96, 0xa8, 0xaa, 0x2b, 0x4c, 0x75, 0xc5, 0xd9, 0xd4, 0x15, 0x85, 0x09,
-	0x4f, 0xe0, 0x9e, 0xc9, 0xb1, 0xea, 0x45, 0xe4, 0xec, 0xd9, 0xc6, 0xec, 0xd5, 0xaf, 0xe4, 0x2c,
-	0x5f, 0x69, 0xf8, 0xc7, 0x86, 0x6d, 0xf5, 0xa8, 0x67, 0x8b, 0x09, 0x39, 0x85, 0x4e, 0xed, 0x6f,
-	0xf2, 0xcc, 0xd4, 0x5f, 0xb9, 0x50, 0x82, 0xc3, 0x4d, 0x10, 0x36, 0x2b, 0xc3, 0x3b, 0x64, 0x04,
-	0x6e, 0xe5, 0x72, 0x72, 0xd0, 0x9c, 0xac, 0xd6, 0x72, 0x08, 0x1e, 0xaf, 0x4b, 0x2b, 0x96, 0xcf,
-	0xe0, 0x29, 0x17, 0x93, 0x86, 0xe4, 0x8a, 0x05, 0x10, 0x1c, 0xac, 0x07, 0x28, 0xae, 0x13, 0x70,
-	0x2b, 0x23, 0x90, 0xa7, 0x26, 0xf0, 0xba, 0x61, 0x82, 0x27, 0x6b, 0xf3, 0x92, 0xe7, 0xfd, 0xce,
-	0x27, 0xe7, 0xa7, 0xb1, 0x97, 0x2f, 0x3c, 0x39, 0x21, 0x2f, 0xff, 0x06, 0x00, 0x00, 0xff, 0xff,
-	0x3d, 0xfa, 0x4c, 0xb3, 0xc5, 0x05, 0x00, 0x00,
+	// 497 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x94, 0xdf, 0x6b, 0xd4, 0x40,
+	0x10, 0xc7, 0x9b, 0x5c, 0x4c, 0xed, 0x1c, 0x54, 0x3b, 0x57, 0x34, 0xa4, 0xd6, 0x1e, 0x11, 0xa1,
+	0x94, 0x92, 0x83, 0x13, 0x7c, 0x13, 0x7f, 0xf4, 0x10, 0xaf, 0x88, 0x4a, 0xaa, 0x08, 0xbe, 0xa5,
+	0x97, 0xb9, 0xb2, 0x70, 0xe9, 0xc6, 0xcd, 0xb6, 0x70, 0xff, 0x93, 0x2f, 0xfe, 0x87, 0x92, 0xdd,
+	0x8d, 0xdd, 0xbd, 0x36, 0xd6, 0xbe, 0xed, 0xce, 0x7c, 0xee, 0x3b, 0xb3, 0x73, 0xf3, 0x0d, 0x3c,
+	0x16, 0x54, 0x71, 0x21, 0x67, 0xbc, 0x2c, 0x47, 0xfa, 0x98, 0x56, 0x82, 0x4b, 0x8e, 0x70, 0x95,
+	0x88, 0xf7, 0xce, 0x38, 0x3f, 0x5b, 0xd0, 0x48, 0x65, 0x4e, 0x2f, 0xe6, 0x23, 0xc9, 0x4a, 0xaa,
+	0x65, 0x5e, 0x56, 0x1a, 0x8e, 0x77, 0xf2, 0x99, 0x64, 0x97, 0x4c, 0x2e, 0x95, 0x4e, 0x7b, 0xd1,
+	0xc9, 0xe4, 0x3b, 0x0c, 0x8e, 0x04, 0xe5, 0x92, 0x32, 0xa5, 0x98, 0xd1, 0xcf, 0x0b, 0xaa, 0x25,
+	0x22, 0x04, 0x9f, 0xf2, 0x92, 0x22, 0x6f, 0xe8, 0xed, 0x6f, 0x64, 0xea, 0x8c, 0x87, 0x10, 0x7e,
+	0x21, 0xc1, 0x78, 0x11, 0xf9, 0x43, 0x6f, 0xbf, 0x3f, 0xde, 0x4e, 0xaf, 0xba, 0x48, 0xbf, 0xb2,
+	0x92, 0x4e, 0xaa, 0xfc, 0x3c, 0x33, 0x4c, 0xf2, 0x0c, 0xb6, 0x5c, 0xe1, 0x6a, 0xb1, 0xc4, 0x4d,
+	0xf0, 0xa7, 0x85, 0x11, 0xf5, 0xa7, 0x0a, 0xca, 0x28, 0x2f, 0xdc, 0xda, 0xab, 0xd0, 0x2b, 0x78,
+	0x60, 0x43, 0x8d, 0xce, 0x01, 0x84, 0xba, 0xb6, 0xc2, 0xfa, 0x63, 0xb4, 0x5b, 0x31, 0xa0, 0x21,
+	0x92, 0xe7, 0x30, 0x98, 0xd0, 0x82, 0x56, 0x5f, 0xb8, 0x5a, 0xe5, 0x35, 0x6c, 0xb9, 0xd8, 0x5d,
+	0xeb, 0x70, 0x18, 0x7c, 0xab, 0x8a, 0xfc, 0x96, 0x3a, 0x7f, 0x27, 0xeb, 0x5b, 0x93, 0x45, 0x08,
+	0x8e, 0x78, 0x41, 0x51, 0x4f, 0xc7, 0x9a, 0x33, 0x0e, 0xa1, 0x3f, 0xa1, 0x7a, 0x26, 0x58, 0x25,
+	0x19, 0x3f, 0x8f, 0x02, 0x95, 0xb2, 0x43, 0x4d, 0xc7, 0x6e, 0xc1, 0xbb, 0x76, 0xbc, 0x0d, 0xf8,
+	0x91, 0xd5, 0x52, 0x47, 0x6b, 0xd3, 0x70, 0xf2, 0x06, 0x1e, 0x3a, 0xd1, 0x46, 0xf5, 0x10, 0xd6,
+	0xf5, 0x6f, 0xea, 0xc8, 0x1b, 0xf6, 0x3a, 0x64, 0x5b, 0x24, 0xf9, 0xe5, 0x41, 0xa8, 0x63, 0xff,
+	0xf5, 0xfa, 0x08, 0xd6, 0x3f, 0x8b, 0x82, 0xc4, 0xb4, 0x30, 0x03, 0x68, 0xaf, 0xd6, 0xc6, 0x05,
+	0xb7, 0x6f, 0x1c, 0xbe, 0x04, 0x78, 0xab, 0x97, 0x9b, 0x51, 0x1d, 0xdd, 0x53, 0x7d, 0x3e, 0x4a,
+	0xed, 0xe5, 0x4f, 0x4d, 0x7e, 0x99, 0x59, 0x64, 0x32, 0x87, 0xfb, 0xad, 0x16, 0xa6, 0x10, 0xcc,
+	0x05, 0x2f, 0xcd, 0xf0, 0xe2, 0x54, 0x7b, 0x2b, 0x6d, 0xbd, 0xa5, 0x8a, 0x2a, 0x6f, 0x65, 0x8a,
+	0xc3, 0x03, 0xf0, 0x25, 0x37, 0x7e, 0xf8, 0x17, 0xed, 0x4b, 0x3e, 0xfe, 0xed, 0xc3, 0x86, 0x1e,
+	0xcb, 0xc9, 0xe5, 0x0c, 0x8f, 0x21, 0xd4, 0xfe, 0xc0, 0x3d, 0xfb, 0x55, 0x37, 0x98, 0x31, 0xde,
+	0xed, 0x06, 0xaa, 0xc5, 0x32, 0x59, 0xc3, 0x09, 0x04, 0x8d, 0x43, 0x70, 0xd7, 0xfd, 0x57, 0x56,
+	0x8c, 0x15, 0xef, 0x74, 0xa5, 0xb5, 0xca, 0x31, 0x84, 0xda, 0x01, 0x6e, 0x47, 0x37, 0x98, 0xc7,
+	0xed, 0xe8, 0x9a, 0x6d, 0x92, 0x35, 0x7c, 0x0f, 0x41, 0xb3, 0x44, 0xf8, 0xd4, 0x06, 0xaf, 0x2f,
+	0x5b, 0xfc, 0xa4, 0x33, 0xaf, 0x74, 0xde, 0x6d, 0x7e, 0xe8, 0xfd, 0xb0, 0x3e, 0x76, 0xa7, 0xa1,
+	0x9a, 0xed, 0x8b, 0x3f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x11, 0x0f, 0x99, 0xeb, 0x1a, 0x05, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ context.Context
-var _ grpc.ClientConn
+var _ grpc.ClientConnInterface
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion4
+const _ = grpc.SupportPackageIsVersion6
 
 // ReportSvcClient is the client API for ReportSvc service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type ReportSvcClient interface {
-	// Generates a new report
-	Generate(ctx context.Context, in *GenerateReportRequest, opts ...grpc.CallOption) (*GenerateReportReply, error)
+	// Creates a new report
+	Create(ctx context.Context, in *CreateReportRequest, opts ...grpc.CallOption) (*CreateReportReply, error)
 	// Reads an report
 	Read(ctx context.Context, in *ReadReportRequest, opts ...grpc.CallOption) (*ReadReportReply, error)
 	// Delete an report
@@ -758,16 +647,16 @@ type ReportSvcClient interface {
 }
 
 type reportSvcClient struct {
-	cc *grpc.ClientConn
+	cc grpc.ClientConnInterface
 }
 
-func NewReportSvcClient(cc *grpc.ClientConn) ReportSvcClient {
+func NewReportSvcClient(cc grpc.ClientConnInterface) ReportSvcClient {
 	return &reportSvcClient{cc}
 }
 
-func (c *reportSvcClient) Generate(ctx context.Context, in *GenerateReportRequest, opts ...grpc.CallOption) (*GenerateReportReply, error) {
-	out := new(GenerateReportReply)
-	err := c.cc.Invoke(ctx, "/reportcomm.ReportSvc/Generate", in, out, opts...)
+func (c *reportSvcClient) Create(ctx context.Context, in *CreateReportRequest, opts ...grpc.CallOption) (*CreateReportReply, error) {
+	out := new(CreateReportReply)
+	err := c.cc.Invoke(ctx, "/reportcomm.ReportSvc/Create", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -803,8 +692,8 @@ func (c *reportSvcClient) List(ctx context.Context, in *ListReportsRequest, opts
 
 // ReportSvcServer is the server API for ReportSvc service.
 type ReportSvcServer interface {
-	// Generates a new report
-	Generate(context.Context, *GenerateReportRequest) (*GenerateReportReply, error)
+	// Creates a new report
+	Create(context.Context, *CreateReportRequest) (*CreateReportReply, error)
 	// Reads an report
 	Read(context.Context, *ReadReportRequest) (*ReadReportReply, error)
 	// Delete an report
@@ -817,8 +706,8 @@ type ReportSvcServer interface {
 type UnimplementedReportSvcServer struct {
 }
 
-func (*UnimplementedReportSvcServer) Generate(ctx context.Context, req *GenerateReportRequest) (*GenerateReportReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Generate not implemented")
+func (*UnimplementedReportSvcServer) Create(ctx context.Context, req *CreateReportRequest) (*CreateReportReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
 func (*UnimplementedReportSvcServer) Read(ctx context.Context, req *ReadReportRequest) (*ReadReportReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Read not implemented")
@@ -834,20 +723,20 @@ func RegisterReportSvcServer(s *grpc.Server, srv ReportSvcServer) {
 	s.RegisterService(&_ReportSvc_serviceDesc, srv)
 }
 
-func _ReportSvc_Generate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GenerateReportRequest)
+func _ReportSvc_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateReportRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ReportSvcServer).Generate(ctx, in)
+		return srv.(ReportSvcServer).Create(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/reportcomm.ReportSvc/Generate",
+		FullMethod: "/reportcomm.ReportSvc/Create",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ReportSvcServer).Generate(ctx, req.(*GenerateReportRequest))
+		return srv.(ReportSvcServer).Create(ctx, req.(*CreateReportRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -911,8 +800,8 @@ var _ReportSvc_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*ReportSvcServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Generate",
-			Handler:    _ReportSvc_Generate_Handler,
+			MethodName: "Create",
+			Handler:    _ReportSvc_Create_Handler,
 		},
 		{
 			MethodName: "Read",

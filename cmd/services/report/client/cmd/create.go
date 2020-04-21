@@ -10,9 +10,9 @@ import (
 )
 
 var (
-	cmdGenerate = &cobra.Command{
+	cmdCreate = &cobra.Command{
 		Use:   "generate",
-		Short: "Generates a new report",
+		Short: "Creates a new report",
 		Run: func(cmd *cobra.Command, args []string) {
 			conn, err := grpc.Dial(target, grpc.WithInsecure())
 			if err != nil {
@@ -21,7 +21,7 @@ var (
 			defer conn.Close()
 
 			cli := reportcomm.NewReportSvcClient(conn)
-			resp, err := cli.Generate(context.TODO(), &reportcomm.GenerateReportRequest{Name: name})
+			resp, err := cli.Create(context.TODO(), &reportcomm.CreateReportRequest{Name: name})
 			if err != nil {
 				log.Fatalf("error calling generate: %v", err)
 			}
@@ -36,7 +36,7 @@ var (
 )
 
 func init() {
-	cmdGenerate.PersistentFlags().StringVarP(&code, "code", "c", "", "report's code")
-	cmdGenerate.PersistentFlags().StringVarP(&desc, "description", "d", "", "report's description")
-	cmdGenerate.PersistentFlags().StringVarP(&name, "name", "n", "", "report's name")
+	cmdCreate.Flags().StringVarP(&code, "code", "c", "", "report's code")
+	cmdCreate.Flags().StringVarP(&desc, "description", "d", "", "report's description")
+	cmdCreate.Flags().StringVarP(&name, "name", "n", "", "report's name")
 }
