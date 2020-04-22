@@ -7,6 +7,7 @@ import (
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
+	"github.com/golang/protobuf/ptypes/timestamp"
 	"github.com/google/uuid"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -34,41 +35,43 @@ type activityTestRepo struct {
 		Activities []storage.Activity
 		Err        error
 	}
+	ListInIntervalResult struct {
+		Activities []storage.Activity
+		Err        error
+	}
 	UpdateResult struct {
 		Err error
 	}
 }
 
-// Create
 func (r *activityTestRepo) Create(context.Context, storage.Activity) (*uuid.UUID, error) {
 	return r.CreateResult.ID, r.CreateResult.Err
 }
 
-// Read
 func (r *activityTestRepo) Read(ctx context.Context, id uuid.UUID) (*storage.Activity, error) {
 	activity := r.ReadResult.Activity
 	activity.ID = id.String()
 	return activity, r.ReadResult.Err
 }
 
-// Exist
 func (r *activityTestRepo) Exist(ctx context.Context, id uuid.UUID) (*bool, error) {
 	return r.ExistResult.Exists, r.ReadResult.Err
 }
 
-// Update
 func (r *activityTestRepo) Update(context.Context, storage.Activity) error {
 	return r.UpdateResult.Err
 }
 
-// Delete
 func (r *activityTestRepo) Delete(context.Context, uuid.UUID) error {
 	return r.DeleteResult.Err
 }
 
-// List
 func (r *activityTestRepo) List(context.Context, []uuid.UUID) (storage.Activities, error) {
 	return r.ListResult.Activities, r.ListResult.Err
+}
+
+func (r *activityTestRepo) ListInInterval(context.Context, *timestamp.Timestamp, *timestamp.Timestamp) (storage.Activities, error) {
+	return r.ListInIntervalResult.Activities, r.ListInIntervalResult.Err
 }
 
 // ActivityType Test Client

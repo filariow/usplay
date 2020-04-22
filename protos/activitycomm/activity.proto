@@ -20,6 +20,8 @@ service ActivitySvc {
     rpc Update (UpdateActivityRequest) returns (UpdateActivityReply) {}
     // List an activity
     rpc List (ListActivitiesRequest) returns (ListActivitiesReply) {}
+    // List an activity
+    rpc ListInInterval (ListInIntervalActivitiesRequest) returns (ListActivitiesReply) {}
 }
 
 // The request message containing the activity details
@@ -62,6 +64,8 @@ message UpdateActivityRequest {
     string Description = 4;
     string ActTypeID = 5;
     string OrderID = 6;
+    google.protobuf.Timestamp From = 7;
+    google.protobuf.Timestamp To = 8;
 }
 
 // The response message to the update request.
@@ -71,6 +75,11 @@ message UpdateActivityReply {}
 // The request message for the list activities request
 message ListActivitiesRequest { 
     repeated string FilterIds = 1;
+}
+
+message ListInIntervalActivitiesRequest {
+    google.protobuf.Timestamp From = 1;
+    google.protobuf.Timestamp To = 2;
 }
 
 // The response message to the list activities request.
@@ -86,4 +95,6 @@ message Activity {
     activitytypecomm.ActivityType ActType = 5;
     google.protobuf.Timestamp CreationTime = 6;
     ordercomm.Order Order = 7;
+    google.protobuf.Timestamp From = 8;
+    google.protobuf.Timestamp To = 9;
 }

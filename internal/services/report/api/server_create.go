@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/FrancescoIlario/usplay/internal/services/report/storage"
+	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/reportcomm"
 
 	"google.golang.org/grpc/codes"
@@ -11,6 +12,7 @@ import (
 )
 
 func (s *reportServer) Create(ctx context.Context, req *reportcomm.CreateReportRequest) (*reportcomm.CreateReportReply, error) {
+	s.activityCli.List(ctx, &activitycomm.ListActivitiesRequest{})
 	report := storage.Report{
 		Name: req.GetName(),
 	}

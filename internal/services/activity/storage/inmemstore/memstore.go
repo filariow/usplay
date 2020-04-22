@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
+	"github.com/golang/protobuf/ptypes/timestamp"
 	"github.com/google/uuid"
 )
 
@@ -80,4 +81,15 @@ func (s *memoryStore) List(ctx context.Context, ids []uuid.UUID) (storage.Activi
 		list[i] = a
 	}
 	return list, nil
+}
+
+func (s *memoryStore) ListInInterval(ctx context.Context, from, to *timestamp.Timestamp) (storage.Activities, error) {
+	res := storage.Activities{}
+	for _, v := range s.data {
+		if v.Interval.From.Unix() >= from.GetSeconds() &&
+			v.Interval.To.Unix() <= to.GetSeconds() {
+			res = append(res, v)
+		}
+	}
+	return res, nil
 }

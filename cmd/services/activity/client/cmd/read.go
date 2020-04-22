@@ -41,5 +41,5 @@ var (
 )
 
 func init() {
-	cmdRead.PersistentFlags().StringVarP(&id, "id", "i", "", "activity's id")
+	cmdRead.Flags().StringVarP(&id, "id", "i", "", "activity's id")
 }

@@ -3,6 +3,7 @@ package storage
 import (
 	"context"
 
+	"github.com/golang/protobuf/ptypes/timestamp"
 	"github.com/google/uuid"
 )
 
@@ -14,4 +15,5 @@ type Repository interface {
 	Update(context.Context, Activity) error
 	Delete(context.Context, uuid.UUID) error
 	List(context.Context, []uuid.UUID) (Activities, error)
+	ListInInterval(context.Context, *timestamp.Timestamp, *timestamp.Timestamp) (Activities, error)
 }

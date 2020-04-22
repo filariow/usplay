@@ -13,6 +13,13 @@ type Activity struct {
 	Code           string    `bson:"code"`
 	Name           string    `bson:"name"`
 	CreationTime   time.Time `bson:"creation_time"`
+	Interval       Interval  `bson:"interval"`
+}
+
+//Interval interval data structure
+type Interval struct {
+	From time.Time `bson:"from"`
+	To   time.Time `bson:"to"`
 }
 
 // Activities list of activities

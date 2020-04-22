@@ -26,6 +26,7 @@ func init() {
 	rootCmd.AddCommand(cmdUpdate)
 	rootCmd.AddCommand(cmdDelete)
 	rootCmd.AddCommand(cmdList)
+	rootCmd.AddCommand(cmdListInInterval)
 }
 
 // Execute executes the root cmd

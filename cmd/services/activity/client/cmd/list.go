@@ -21,23 +21,25 @@ var (
 			defer conn.Close()
 
 			cli := activitycomm.NewActivitySvcClient(conn)
-			resp, err := cli.List(context.TODO(), &activitycomm.ListActivitiesRequest{})
+			resp, err := cli.List(context.TODO(),
+				&activitycomm.ListActivitiesRequest{FilterIds: ids})
 			if err != nil {
 				log.Fatalf("error calling list: %v", err)
 			}
 
 			for _, v := range resp.GetActivities() {
-				log.Printf(
-					"list activity:\n\tid: %s\n\tcode: %s\n\tdescription: %s\n\tname: %s",
-					v.Id,
-					v.Code,
-					v.Description,
-					v.Name)
+				log.Printf(`list activity:
+	id: %s
+	code: %s
+	description: %s
+	name: %s`, v.Id, v.Code, v.Description, v.Name)
 			}
 		},
 	}
+
+	ids []string
 )
 
 func init() {
-	cmdList.PersistentFlags().StringVarP(&id, "id", "i", "", "activity's id")
+	cmdList.Flags().StringArrayVarP(&ids, "ids", "i", nil, "activities id")
 }
