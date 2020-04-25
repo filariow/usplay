@@ -6,6 +6,7 @@ import (
 
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
+	"github.com/golang/protobuf/ptypes"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -55,12 +56,15 @@ func (s *activityServer) List(ctx context.Context, req *activitycomm.ListActivit
 			actType = &activitytypecomm.ActivityType{Id: act.ActivityTypeID}
 		}
 
+		from, _ := ptypes.TimestampProto(act.Period.From)
+		to, _ := ptypes.TimestampProto(act.Period.To)
 		activities[idx] = &activitycomm.Activity{
-			Code:        act.Code,
-			Description: act.Description,
-			Name:        act.Name,
-			Id:          act.ID,
-			ActType:     actType,
+			Period: &activitycomm.Interval{
+				From: from,
+				To:   to,
+			},
+			Id:      act.ID,
+			ActType: actType,
 		}
 	}
 

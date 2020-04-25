@@ -4,14 +4,25 @@ import (
 	"context"
 	"log"
 
+	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
+	"github.com/golang/protobuf/ptypes"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
 func (s *activityServer) ListInInterval(ctx context.Context, req *activitycomm.ListInIntervalActivitiesRequest) (*activitycomm.ListActivitiesReply, error) {
-	acts, err := s.repo.ListInInterval(ctx, req.From, req.To)
+	periodComm := req.GetPeriod()
+	if periodComm != nil {
+		return nil, status.Errorf(codes.InvalidArgument, "error retrieving the list of activities: interval not provided")
+	}
+
+	period, err := storage.NewIntervalProto(periodComm.From, periodComm.To)
+	if err != nil {
+		return nil, status.Errorf(codes.InvalidArgument, "error retrieving the list of activities: interval not valid: %v", err)
+	}
+	acts, err := s.repo.ListInInterval(ctx, *period)
 
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "error retrieving the list of activities: %v", err)
@@ -45,12 +56,15 @@ func (s *activityServer) ListInInterval(ctx context.Context, req *activitycomm.L
 			actType = &activitytypecomm.ActivityType{Id: act.ActivityTypeID}
 		}
 
+		from, _ := ptypes.TimestampProto(act.Period.From)
+		to, _ := ptypes.TimestampProto(act.Period.To)
 		activities[idx] = &activitycomm.Activity{
-			Code:        act.Code,
-			Description: act.Description,
-			Name:        act.Name,
-			Id:          act.ID,
-			ActType:     actType,
+			Id:      act.ID,
+			ActType: actType,
+			Period: &activitycomm.Interval{
+				From: from,
+				To:   to,
+			},
 		}
 	}
 

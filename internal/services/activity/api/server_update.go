@@ -7,6 +7,7 @@ import (
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
+	"github.com/golang/protobuf/ptypes"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -52,13 +53,29 @@ func (s *activityServer) Update(ctx context.Context, req *activitycomm.UpdateAct
 		}
 	}
 
+	period := req.GetPeriod()
+	if period == nil || period.GetFrom() == nil || period.GetTo() == nil {
+		return nil, status.Errorf(codes.InvalidArgument, "error updating activity: period is invalid")
+	}
+
+	from, err := ptypes.Timestamp(period.GetFrom())
+	if err != nil {
+		return nil, status.Errorf(codes.InvalidArgument, "error updating activity: period's from is invalid: %v", err)
+	}
+	to, err := ptypes.Timestamp(period.GetTo())
+	if err != nil {
+		return nil, status.Errorf(codes.InvalidArgument, "error updating activity: period's to is invalid: %v", err)
+	}
+
 	// build storage payload
 	act := storage.Activity{
-		ID:             id.String(),
-		Name:           req.GetName(),
-		Code:           req.GetCode(),
-		Description:    req.GetDescription(),
-		ActivityTypeID: actTypeID.String(),
+		ID: id.String(),
+		Period: storage.Interval{
+			From: from,
+			To:   to,
+		},
+		OrderID:        orderIDStr,
+		ActivityTypeID: actTypeIDStr,
 	}
 
 	// persist data in storage

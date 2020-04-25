@@ -11,10 +11,8 @@ import (
 func (s *mongoStore) Update(ctx context.Context, activity storage.Activity) error {
 	filter := bson.M{"_id": activity.ID}
 	data := bson.M{"$set": bson.M{
-		"code":        activity.Code,
-		"description": activity.Description,
-		"name":        activity.Name,
-		"activitytype_id":        activity.ActivityTypeID,
+		"interval":        activity.Period,
+		"activitytype_id": activity.ActivityTypeID,
 		"order_id":        activity.OrderID,
 	}}
 	sr, err := s.Collection.UpdateOne(ctx, filter, data)

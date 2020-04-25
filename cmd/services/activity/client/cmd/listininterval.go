@@ -36,8 +36,10 @@ var (
 			cli := activitycomm.NewActivitySvcClient(conn)
 			resp, err := cli.ListInInterval(context.TODO(),
 				&activitycomm.ListInIntervalActivitiesRequest{
-					From: fromTimestamp,
-					To:   toTimestamp,
+					Period: &activitycomm.Interval{
+						From: fromTimestamp,
+						To:   toTimestamp,
+					},
 				})
 			if err != nil {
 				log.Fatalf("error calling list: %v", err)
@@ -46,9 +48,10 @@ var (
 			for _, v := range resp.GetActivities() {
 				log.Printf(`list activity:
 	tid: %s
-	code: %s
-	description: %s
-	name: %s`, v.Id, v.Code, v.Description, v.Name)
+	internal:
+		from: %s
+		to: %s`,
+					v.Id, v.GetPeriod().GetFrom(), v.GetPeriod().GetTo())
 			}
 		},
 	}
@@ -74,4 +77,19 @@ func parseDateTime(value string) (*timestamp.Timestamp, error) {
 	}
 	ts, err := ptypes.TimestampProto(t)
 	return ts, err
+}
+
+func parseInterval(from, to string) (*activitycomm.Interval, error) {
+	fromTimestamp, err := parseDateTime(from)
+	if err != nil {
+		return nil, fmt.Errorf(`"from" field is invalid: %v`, err)
+	}
+	toTimestamp, err := parseDateTime(to)
+	if err != nil {
+		return nil, fmt.Errorf(`"to" field is invalid: %v`, err)
+	}
+	return &activitycomm.Interval{
+		From: fromTimestamp,
+		To:   toTimestamp,
+	}, nil
 }

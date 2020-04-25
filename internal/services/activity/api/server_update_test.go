@@ -10,6 +10,7 @@ import (
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
+	"github.com/golang/protobuf/ptypes"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -18,10 +19,11 @@ import (
 func Test_UpdateHappyPath(t *testing.T) {
 	// arrange
 	activity := storage.Activity{
-		ID:          uuid.New().String(),
-		Code:        "Activity Code",
-		Description: "Activity Description",
-		Name:        "Activity Name",
+		ID: uuid.New().String(),
+		Period: storage.Interval{
+			From: time.Now(),
+			To:   time.Now().Add(10 * 24 * time.Hour),
+		},
 	}
 	store := &activityTestRepo{
 		UpdateResult: struct {
@@ -60,13 +62,16 @@ func Test_UpdateHappyPath(t *testing.T) {
 	ctx := context.Background()
 
 	// act
+	from, _ := ptypes.TimestampProto(activity.Period.From)
+	to, _ := ptypes.TimestampProto(activity.Period.To)
 	_, err := svr.Update(ctx, &activitycomm.UpdateActivityRequest{
-		Id:          activity.ID,
-		OrderID:     uuid.New().String(),
-		ActTypeID:   uuid.New().String(),
-		Code:        activity.Code,
-		Description: activity.Description,
-		Name:        activity.Name,
+		Id:        activity.ID,
+		OrderID:   uuid.New().String(),
+		ActTypeID: uuid.New().String(),
+		Period: &activitycomm.Interval{
+			From: from,
+			To:   to,
+		},
 	})
 
 	// assert
@@ -78,10 +83,11 @@ func Test_UpdateHappyPath(t *testing.T) {
 func Test_UpdateInvalidActivityID(t *testing.T) {
 	// arrange
 	activity := storage.Activity{
-		Code:           "Activity Code",
-		Description:    "Activity Description",
-		Name:           "Activity Name",
 		ActivityTypeID: uuid.New().String(),
+		Period: storage.Interval{
+			From: time.Now(),
+			To:   time.Now().Add(10 * 24 * time.Hour),
+		},
 	}
 	store := &activityTestRepo{
 		UpdateResult: struct {
@@ -120,12 +126,15 @@ func Test_UpdateInvalidActivityID(t *testing.T) {
 	ctx := context.Background()
 
 	// act
+	from, _ := ptypes.TimestampProto(activity.Period.From)
+	to, _ := ptypes.TimestampProto(activity.Period.To)
 	_, err := svr.Update(ctx, &activitycomm.UpdateActivityRequest{
-		Id:          "",
-		ActTypeID:   activity.ActivityTypeID,
-		Code:        activity.Code,
-		Description: activity.Description,
-		Name:        activity.Name,
+		Id:        "",
+		ActTypeID: activity.ActivityTypeID,
+		Period: &activitycomm.Interval{
+			From: from,
+			To:   to,
+		},
 	})
 
 	// assert
@@ -146,10 +155,11 @@ func Test_UpdateInvalidActivityID(t *testing.T) {
 func Test_UpdateInvalidActivityTypeID(t *testing.T) {
 	// arrange
 	activity := storage.Activity{
-		ID:          uuid.New().String(),
-		Code:        "Activity Code",
-		Description: "Activity Description",
-		Name:        "Activity Name",
+		ID: uuid.New().String(),
+		Period: storage.Interval{
+			From: time.Now(),
+			To:   time.Now().Add(10 * 24 * time.Hour),
+		},
 	}
 	store := &activityTestRepo{
 		UpdateResult: struct {
@@ -188,13 +198,16 @@ func Test_UpdateInvalidActivityTypeID(t *testing.T) {
 	ctx := context.Background()
 
 	// act
+	from, _ := ptypes.TimestampProto(activity.Period.From)
+	to, _ := ptypes.TimestampProto(activity.Period.To)
 	_, err := svr.Update(ctx, &activitycomm.UpdateActivityRequest{
-		Id:          activity.ID,
-		ActTypeID:   "",
-		OrderID:     uuid.New().String(),
-		Code:        activity.Code,
-		Description: activity.Description,
-		Name:        activity.Name,
+		Id:        activity.ID,
+		ActTypeID: "",
+		OrderID:   uuid.New().String(),
+		Period: &activitycomm.Interval{
+			From: from,
+			To:   to,
+		},
 	})
 
 	// assert
@@ -217,9 +230,10 @@ func Test_UpdateNotExistingActivityTypeID(t *testing.T) {
 	activity := storage.Activity{
 		ID:             uuid.New().String(),
 		ActivityTypeID: uuid.New().String(),
-		Code:           "Activity Code",
-		Description:    "Activity Description",
-		Name:           "Activity Name",
+		Period: storage.Interval{
+			From: time.Now(),
+			To:   time.Now().Add(10 * 24 * time.Hour),
+		},
 	}
 	store := &activityTestRepo{
 		UpdateResult: struct {
@@ -258,13 +272,16 @@ func Test_UpdateNotExistingActivityTypeID(t *testing.T) {
 	ctx := context.Background()
 
 	// act
+	from, _ := ptypes.TimestampProto(activity.Period.From)
+	to, _ := ptypes.TimestampProto(activity.Period.To)
 	_, err := svr.Update(ctx, &activitycomm.UpdateActivityRequest{
-		Id:          activity.ID,
-		ActTypeID:   activity.ActivityTypeID,
-		OrderID:     uuid.New().String(),
-		Code:        activity.Code,
-		Description: activity.Description,
-		Name:        activity.Name,
+		Id:        activity.ID,
+		ActTypeID: activity.ActivityTypeID,
+		OrderID:   uuid.New().String(),
+		Period: &activitycomm.Interval{
+			From: from,
+			To:   to,
+		},
 	})
 
 	// assert
@@ -285,10 +302,11 @@ func Test_UpdateNotExistingActivityTypeID(t *testing.T) {
 func Test_UpdateInvalidOrderID(t *testing.T) {
 	// arrange
 	activity := storage.Activity{
-		ID:          uuid.New().String(),
-		Code:        "Activity Code",
-		Description: "Activity Description",
-		Name:        "Activity Name",
+		ID: uuid.New().String(),
+		Period: storage.Interval{
+			From: time.Now(),
+			To:   time.Now().Add(10 * 24 * time.Hour),
+		},
 	}
 	store := &activityTestRepo{
 		UpdateResult: struct {
@@ -327,13 +345,16 @@ func Test_UpdateInvalidOrderID(t *testing.T) {
 	ctx := context.Background()
 
 	// act
+	from, _ := ptypes.TimestampProto(activity.Period.From)
+	to, _ := ptypes.TimestampProto(activity.Period.To)
 	_, err := svr.Update(ctx, &activitycomm.UpdateActivityRequest{
-		Id:          activity.ID,
-		ActTypeID:   uuid.New().String(),
-		OrderID:     "",
-		Code:        activity.Code,
-		Description: activity.Description,
-		Name:        activity.Name,
+		Id:        activity.ID,
+		ActTypeID: uuid.New().String(),
+		OrderID:   "",
+		Period: &activitycomm.Interval{
+			From: from,
+			To:   to,
+		},
 	})
 
 	// assert
@@ -356,9 +377,10 @@ func Test_UpdateNotExistingOrderID(t *testing.T) {
 	activity := storage.Activity{
 		ID:             uuid.New().String(),
 		ActivityTypeID: uuid.New().String(),
-		Code:           "Activity Code",
-		Description:    "Activity Description",
-		Name:           "Activity Name",
+		Period: storage.Interval{
+			From: time.Now(),
+			To:   time.Now().Add(10 * 24 * time.Hour),
+		},
 	}
 	store := &activityTestRepo{
 		UpdateResult: struct {
@@ -397,13 +419,16 @@ func Test_UpdateNotExistingOrderID(t *testing.T) {
 	ctx := context.Background()
 
 	// act
+	from, _ := ptypes.TimestampProto(activity.Period.From)
+	to, _ := ptypes.TimestampProto(activity.Period.To)
 	_, err := svr.Update(ctx, &activitycomm.UpdateActivityRequest{
-		Id:          activity.ID,
-		ActTypeID:   activity.ActivityTypeID,
-		OrderID:     uuid.New().String(),
-		Code:        activity.Code,
-		Description: activity.Description,
-		Name:        activity.Name,
+		Id:        activity.ID,
+		ActTypeID: activity.ActivityTypeID,
+		OrderID:   uuid.New().String(),
+		Period: &activitycomm.Interval{
+			From: from,
+			To:   to,
+		},
 	})
 
 	// assert

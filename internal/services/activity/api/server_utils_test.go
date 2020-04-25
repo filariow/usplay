@@ -7,7 +7,6 @@ import (
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
-	"github.com/golang/protobuf/ptypes/timestamp"
 	"github.com/google/uuid"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -70,7 +69,7 @@ func (r *activityTestRepo) List(context.Context, []uuid.UUID) (storage.Activitie
 	return r.ListResult.Activities, r.ListResult.Err
 }
 
-func (r *activityTestRepo) ListInInterval(context.Context, *timestamp.Timestamp, *timestamp.Timestamp) (storage.Activities, error) {
+func (r *activityTestRepo) ListInInterval(context.Context, storage.Interval) (storage.Activities, error) {
 	return r.ListInIntervalResult.Activities, r.ListInIntervalResult.Err
 }
 

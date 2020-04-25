@@ -10,6 +10,7 @@ import (
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
+	"github.com/golang/protobuf/ptypes"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -21,9 +22,10 @@ func Test_CreateHappyPath(t *testing.T) {
 	activity := storage.Activity{
 		ActivityTypeID: uuid.New().String(),
 		OrderID:        uuid.New().String(),
-		Code:           "Activity Code",
-		Description:    "Activity Description",
-		Name:           "Activity Name",
+		Period: storage.Interval{
+			From: time.Now(),
+			To:   time.Now().Add(10 * 24 * time.Hour),
+		},
 	}
 	store := &activityTestRepo{
 		CreateResult: struct {
@@ -62,14 +64,17 @@ func Test_CreateHappyPath(t *testing.T) {
 		1*time.Second,
 	)
 	ctx := context.Background()
+	from, _ := ptypes.TimestampProto(activity.Period.From)
+	to, _ := ptypes.TimestampProto(activity.Period.From)
 
 	// act
 	reply, err := svr.Create(ctx, &activitycomm.CreateActivityRequest{
-		ActTypeID:   activity.ActivityTypeID,
-		OrderID:     activity.OrderID,
-		Code:        activity.Code,
-		Description: activity.Description,
-		Name:        activity.Name,
+		ActTypeID: activity.ActivityTypeID,
+		OrderID:   activity.OrderID,
+		Period: &activitycomm.Interval{
+			From: from,
+			To:   to,
+		},
 	})
 
 	// assert
@@ -86,11 +91,12 @@ func Test_CreateInvalidActivityTypeID(t *testing.T) {
 	// arrange
 	activityID, orderID := uuid.New(), uuid.New()
 	activity := storage.Activity{
-		ID:          activityID.String(),
-		OrderID:     orderID.String(),
-		Code:        "Activity Code",
-		Description: "Activity Description",
-		Name:        "Activity Name",
+		ID:      activityID.String(),
+		OrderID: orderID.String(),
+		Period: storage.Interval{
+			From: time.Now(),
+			To:   time.Now().Add(10 * 24 * time.Hour),
+		},
 	}
 	store := &activityTestRepo{
 		CreateResult: struct {
@@ -129,13 +135,16 @@ func Test_CreateInvalidActivityTypeID(t *testing.T) {
 		1*time.Second,
 	)
 	ctx := context.Background()
+	from, _ := ptypes.TimestampProto(activity.Period.From)
+	to, _ := ptypes.TimestampProto(activity.Period.From)
 
 	// act
 	_, err := svr.Create(ctx, &activitycomm.CreateActivityRequest{
-		ActTypeID:   "",
-		Code:        activity.Code,
-		Description: activity.Description,
-		Name:        activity.Name,
+		ActTypeID: "",
+		Period: &activitycomm.Interval{
+			From: from,
+			To:   to,
+		},
 	})
 
 	// assert
@@ -159,9 +168,10 @@ func Test_CreateNotExistingActivityTypeID(t *testing.T) {
 	activity := storage.Activity{
 		ActivityTypeID: uuid.New().String(),
 		OrderID:        uuid.New().String(),
-		Code:           "Activity Code",
-		Description:    "Activity Description",
-		Name:           "Activity Name",
+		Period: storage.Interval{
+			From: time.Now(),
+			To:   time.Now().Add(10 * 24 * time.Hour),
+		},
 	}
 	store := &activityTestRepo{
 		CreateResult: struct {
@@ -200,13 +210,16 @@ func Test_CreateNotExistingActivityTypeID(t *testing.T) {
 		1*time.Second,
 	)
 	ctx := context.Background()
+	from, _ := ptypes.TimestampProto(activity.Period.From)
+	to, _ := ptypes.TimestampProto(activity.Period.From)
 
 	// act
 	_, err := svr.Create(ctx, &activitycomm.CreateActivityRequest{
-		ActTypeID:   activity.ActivityTypeID,
-		Code:        activity.Code,
-		Description: activity.Description,
-		Name:        activity.Name,
+		ActTypeID: activity.ActivityTypeID,
+		Period: &activitycomm.Interval{
+			From: from,
+			To:   to,
+		},
 	})
 
 	// assert

@@ -4,15 +4,14 @@ import (
 	"context"
 
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
-	"github.com/golang/protobuf/ptypes/timestamp"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func (s *mongoStore) ListInInterval(ctx context.Context, from, to *timestamp.Timestamp) (storage.Activities, error) {
+func (s *mongoStore) ListInInterval(ctx context.Context, interval storage.Interval) (storage.Activities, error) {
 	filter := bson.M{
 		"interval": bson.M{
-			"from": bson.M{"$gte": from.GetSeconds()},
-			"to":   bson.M{"$lte": to.GetSeconds()},
+			"from": bson.M{"$gte": interval.From.Unix()},
+			"to":   bson.M{"$lte": interval.To.Unix()},
 		},
 	}
 

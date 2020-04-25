@@ -30,9 +30,13 @@ var (
 			for _, v := range resp.GetActivities() {
 				log.Printf(`list activity:
 	id: %s
-	code: %s
-	description: %s
-	name: %s`, v.Id, v.Code, v.Description, v.Name)
+	activity type: %s
+	order: %s
+	period: 
+		from: %s
+		to: %s`,
+					v.Id, v.ActType.Id, v.Order.Id,
+					v.Period.From, v.Period.To)
 			}
 		},
 	}

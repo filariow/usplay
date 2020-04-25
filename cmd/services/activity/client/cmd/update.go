@@ -14,6 +14,10 @@ var (
 		Use:   "update",
 		Short: "Updates a new activity",
 		Run: func(cmd *cobra.Command, args []string) {
+			interval, err := parseInterval(from, to)
+			if err != nil {
+
+			}
 			conn, err := grpc.Dial(target, grpc.WithInsecure())
 			if err != nil {
 				log.Fatalf("cannot connect to %s: %v", target, err)
@@ -22,9 +26,9 @@ var (
 
 			cli := activitycomm.NewActivitySvcClient(conn)
 			if _, err = cli.Update(context.TODO(), &activitycomm.UpdateActivityRequest{
-				Code:        code,
-				Description: desc,
-				Name:        name,
+				ActTypeID: actid,
+				OrderID:   ordid,
+				Period:    interval,
 			}); err != nil {
 				log.Fatalf("error calling update: %v", err)
 			}
@@ -35,8 +39,14 @@ var (
 )
 
 func init() {
-	cmdUpdate.Flags().StringVarP(&code, "code", "c", "", "activity's code")
-	cmdUpdate.Flags().StringVarP(&desc, "description", "d", "", "activity's description")
-	cmdUpdate.Flags().StringVarP(&name, "name", "n", "", "activity's name")
 	cmdUpdate.Flags().StringVarP(&id, "id", "i", "", "activity's id")
+	cmdUpdate.MarkFlagRequired("id")
+	cmdUpdate.Flags().StringVarP(&actid, "activity-type", "a", "", "activityType's ID")
+	cmdUpdate.MarkFlagRequired("activity-type")
+	cmdUpdate.Flags().StringVarP(&ordid, "order", "o", "", "Order ID")
+	cmdUpdate.MarkFlagRequired("order")
+	cmdUpdate.Flags().StringVarP(&from, "from", "F", "", "Interval's From")
+	cmdUpdate.MarkFlagRequired("from")
+	cmdUpdate.Flags().StringVarP(&to, "to", "T", "", "Interval's To")
+	cmdUpdate.MarkFlagRequired("to")
 }
