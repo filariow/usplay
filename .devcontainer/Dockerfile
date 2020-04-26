@@ -17,6 +17,8 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 ARG DOCKER_GUID
 
+ARG GHCLI_VERSION=0.7.0
+
 # Configure apt, install packages and tools
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils dialog 2>&1 \
@@ -81,6 +83,12 @@ RUN apt-get update \
     && echo 'alias la="ls -al " >> /home/${USERNAME}/.zshrc' \
     && echo 'alias l.="ls -al " >> /home/${USERNAME}/.zshrc' \
     #
+    # GitHub CLI
+    && mkdir -p /tmp/gh \
+    && cd /tmp/gh \
+    && curl -sLO  https://github.com/cli/cli/releases/download/v0.7.0/gh_${GHCLI_VERSION}_linux_amd64.deb \
+    && apt install ./gh_${GHCLI_VERSION}_linux_amd64.deb \
+    #
     # Permit VS Code find the installed extensions after container rebuild
     && mkdir -p /home/$USERNAME/.vscode-server/extensions \
         /home/$USERNAME/.vscode-server-insiders/extensions \
@@ -100,13 +108,6 @@ RUN apt-get update \
     # Add write permission for /go/pkg
     && chown -R ${USERNAME}:${USERNAME} /go \
     #
-    # Clean up
-    && apt-get autoremove -y \
-    && apt-get clean -y \
-    && rm -rf /var/lib/apt/lists/* /go/src /tmp/gotools 
-
-RUN apt-get update \
-    #
     # Install Docker CE CLI
     && apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common lsb-release \
     && curl -fsSL https://download.docker.com/linux/$(lsb_release -is | tr '[:upper:]' '[:lower:]')/gpg | (OUT=$(apt-key add - 2>&1) || echo $OUT) \
@@ -118,9 +119,14 @@ RUN apt-get update \
     #
     # Install Docker Compose
     && curl -sSL "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
-    && chmod a+x /usr/local/bin/docker-compose
-    
-RUN echo ${DOCKER_GUID} > /home/${USERNAME}/dockerguid
+    && chmod a+x /usr/local/bin/docker-compose \
+    && echo ${DOCKER_GUID} > /home/${USERNAME}/dockerguid \
+    #
+    # Clean up
+    && cd / \
+    && apt-get autoremove -y \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/* /go/src /tmp/* 
 
 ENV ZSH_THEME=agnoster
 
