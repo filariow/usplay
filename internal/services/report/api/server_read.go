@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"sort"
 
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
@@ -46,6 +47,15 @@ func (s *reportServer) Read(ctx context.Context, req *reportcomm.ReadReportReque
 			},
 		}
 	}
+
+	sort.Slice(activities, func(i, j int) bool {
+		ifrom := activities[i].GetPeriod().GetFrom()
+		jfrom := activities[j].GetPeriod().GetFrom()
+		isec, jsec := ifrom.GetSeconds(), jfrom.GetSeconds()
+
+		return isec < jsec ||
+			(isec == jsec && ifrom.GetNanos() < jfrom.GetNanos())
+	})
 
 	from, _ := ptypes.TimestampProto(report.Period.From)
 	to, _ := ptypes.TimestampProto(report.Period.To)
