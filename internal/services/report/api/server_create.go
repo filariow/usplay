@@ -54,9 +54,15 @@ func (s *reportServer) Create(ctx context.Context, req *reportcomm.CreateReportR
 		}
 	}
 
+	from, _ := ptypes.Timestamp(req.GetPeriod().GetFrom())
+	to, _ := ptypes.Timestamp(req.GetPeriod().GetTo())
 	report := storage.Report{
 		Name:       req.GetName(),
 		Activities: acts,
+		Period: storage.Interval{
+			From: from,
+			To:   to,
+		},
 	}
 
 	id, err := s.repo.Create(ctx, report)

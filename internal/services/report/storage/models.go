@@ -11,6 +11,7 @@ type Report struct {
 	Code        string
 	Name        string
 	Activities  Activities
+	Period      Interval
 }
 
 // Reports list of reports

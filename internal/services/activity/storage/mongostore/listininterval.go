@@ -9,10 +9,8 @@ import (
 
 func (s *mongoStore) ListInInterval(ctx context.Context, interval storage.Interval) (storage.Activities, error) {
 	filter := bson.M{
-		"interval": bson.M{
-			"from": bson.M{"$gte": interval.From.Unix()},
-			"to":   bson.M{"$lte": interval.To.Unix()},
-		},
+		"interval.from": bson.M{"$gte": interval.From},
+		"interval.to":   bson.M{"$lte": interval.To},
 	}
 
 	cursor, err := s.Collection.Find(ctx, filter)

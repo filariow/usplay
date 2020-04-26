@@ -31,9 +31,15 @@ func (s *activityServer) ListInInterval(ctx context.Context, req *activitycomm.L
 	// collecting the needed ActivityType details
 	var actTypes map[string]*activitytypecomm.ActivityType
 	if len(acts) > 0 {
-		types := []string{}
+		_types := map[string]*struct{}{}
 		for _, act := range acts {
-			types = append(types, act.ActivityTypeID)
+			_types[act.ActivityTypeID] = nil
+		}
+
+		counter, types := 0, make([]string, len(_types))
+		for k := range _types {
+			types[counter] = k
+			counter++
 		}
 
 		activityTypesReply, err := s.actTypeCli.List(ctx, &activitytypecomm.ListActivityTypesRequest{FilterIds: types})
