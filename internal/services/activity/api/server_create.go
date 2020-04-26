@@ -29,6 +29,7 @@ func (s *activityServer) Create(ctx context.Context, req *activitycomm.CreateAct
 	act := storage.Activity{
 		Period:         *period,
 		ActivityTypeID: req.GetActTypeID(),
+		OrderID:        req.GetOrderID(),
 	}
 
 	// persista data
