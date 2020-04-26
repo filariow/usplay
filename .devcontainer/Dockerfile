@@ -18,6 +18,7 @@ ARG USER_GID=$USER_UID
 ARG DOCKER_GUID
 
 ARG GHCLI_VERSION=0.7.0
+ARG NODEJS_VERSION=14
 
 # Configure apt, install packages and tools
 RUN apt-get update \
@@ -121,6 +122,12 @@ RUN apt-get update \
     && curl -sSL "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
     && chmod a+x /usr/local/bin/docker-compose \
     && echo ${DOCKER_GUID} > /home/${USERNAME}/dockerguid \
+    #
+    # Install NodeJS
+    # Using Debian, as root
+    && curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g @vue/cli \
     #
     # Clean up
     && cd / \
