@@ -14,7 +14,7 @@ import (
 
 func (s *activityServer) ListInInterval(ctx context.Context, req *activitycomm.ListInIntervalActivitiesRequest) (*activitycomm.ListActivitiesReply, error) {
 	periodComm := req.GetPeriod()
-	if periodComm != nil {
+	if periodComm == nil {
 		return nil, status.Errorf(codes.InvalidArgument, "error retrieving the list of activities: interval not provided")
 	}
 

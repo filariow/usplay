@@ -21,17 +21,12 @@ var (
 			defer conn.Close()
 
 			cli := reportcomm.NewReportSvcClient(conn)
-			resp, err := cli.Delete(context.TODO(), &reportcomm.DeleteReportRequest{
-				Id: id,
-			})
-			if err != nil {
+			if _, err := cli.Delete(context.TODO(),
+				&reportcomm.DeleteReportRequest{Id: id}); err != nil {
 				log.Fatalf("error calling delete: %v", err)
 			}
 
-			log.Printf(
-				"deleted report:\n\tid: %s\n\tname: %s",
-				resp.Report.Id,
-				resp.Report.Name)
+			log.Printf("deleted report %s", id)
 		},
 	}
 )

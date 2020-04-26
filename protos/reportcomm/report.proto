@@ -23,7 +23,7 @@ service ReportSvc {
 // The request message containing the report details
 message CreateReportRequest {
     string Name = 1;
-    TimeSpan Period = 2;
+    Interval Period = 2;
 }
 
 // The response message containing the id of the report
@@ -47,9 +47,7 @@ message DeleteReportRequest {
 }
 
 // The response message to the delete request
-message DeleteReportReply {
-    Report report = 1;
-}
+message DeleteReportReply {}
 
 // The request message for the update request
 message UpdateReportRequest {
@@ -61,9 +59,7 @@ message UpdateReportRequest {
 
 // The response message to the update request.
 // Returns the old values for the Report
-message UpdateReportReply {
-    Report report = 1;
-}
+message UpdateReportReply {}
 
 // The request message for the list reports request
 message ListReportsRequest { }
@@ -77,11 +73,11 @@ message Report {
     string Id = 1;
     string Name = 2;
     string OrderId = 3;
-    TimeSpan Period = 4;
+    Interval Period = 4;
     repeated activitycomm.Activity Activities = 5;
 }
 
-message TimeSpan {
+message Interval {
     google.protobuf.Timestamp from = 1;
     google.protobuf.Timestamp to = 2;
 }

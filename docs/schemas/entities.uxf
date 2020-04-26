@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.3.0">
-  <zoom_level>8</zoom_level>
+  <zoom_level>15</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>528</x>
-      <y>488</y>
-      <w>96</w>
-      <h>80</h>
+      <x>435</x>
+      <y>240</y>
+      <w>180</w>
+      <h>150</h>
     </coordinates>
     <panel_attributes>Activity
 --
@@ -17,10 +17,10 @@ Id</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>528</x>
-      <y>640</y>
-      <w>96</w>
-      <h>48</h>
+      <x>435</x>
+      <y>525</y>
+      <w>180</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>Report
 --
@@ -30,10 +30,10 @@ Id</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>712</x>
-      <y>664</y>
-      <w>80</w>
-      <h>24</h>
+      <x>780</x>
+      <y>570</y>
+      <w>150</w>
+      <h>45</h>
     </coordinates>
     <panel_attributes>User</panel_attributes>
     <additional_attributes/>
@@ -41,10 +41,10 @@ Id</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>568</x>
-      <y>560</y>
-      <w>40</w>
-      <h>96</h>
+      <x>510</x>
+      <y>375</y>
+      <w>75</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=0..*</panel_attributes>
@@ -53,10 +53,10 @@ m1=0..*</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>616</x>
-      <y>664</y>
-      <w>112</w>
-      <h>32</h>
+      <x>600</x>
+      <y>570</y>
+      <w>210</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1</panel_attributes>
@@ -65,10 +65,10 @@ m1=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>336</x>
-      <y>640</y>
-      <w>80</w>
-      <h>48</h>
+      <x>75</x>
+      <y>525</y>
+      <w>150</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>Timespan
 --
@@ -79,10 +79,10 @@ To: Date</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>408</x>
-      <y>656</y>
-      <w>136</w>
-      <h>40</h>
+      <x>210</x>
+      <y>555</y>
+      <w>255</w>
+      <h>75</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 Period
@@ -93,10 +93,10 @@ m1=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>704</x>
-      <y>480</y>
-      <w>96</w>
-      <h>88</h>
+      <x>765</x>
+      <y>225</y>
+      <w>180</w>
+      <h>165</h>
     </coordinates>
     <panel_attributes>Order
 --
@@ -109,10 +109,10 @@ Code: string
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>368</x>
-      <y>560</y>
-      <w>192</w>
-      <h>96</h>
+      <x>135</x>
+      <y>375</y>
+      <w>360</w>
+      <h>180</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 Period
@@ -123,13 +123,13 @@ m1=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>616</x>
-      <y>504</y>
-      <w>104</w>
-      <h>40</h>
+      <x>600</x>
+      <y>270</y>
+      <w>195</w>
+      <h>75</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
-Period
+Order
 m1=1
 </panel_attributes>
     <additional_attributes>110.0;20.0;10.0;20.0</additional_attributes>
@@ -137,10 +137,10 @@ m1=1
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>336</x>
-      <y>488</y>
-      <w>96</w>
-      <h>64</h>
+      <x>75</x>
+      <y>240</y>
+      <w>180</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>ActivityType
 --
@@ -152,10 +152,10 @@ Name: string</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>424</x>
-      <y>504</y>
-      <w>120</w>
-      <h>40</h>
+      <x>240</x>
+      <y>270</y>
+      <w>225</w>
+      <h>75</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 Type
@@ -166,10 +166,10 @@ m1=1
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>600</x>
-      <y>560</y>
-      <w>176</w>
-      <h>120</h>
+      <x>570</x>
+      <y>375</y>
+      <w>330</w>
+      <h>225</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=1</panel_attributes>

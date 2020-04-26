@@ -16,15 +16,9 @@ func (s *reportServer) Delete(ctx context.Context, req *reportcomm.DeleteReportR
 		return nil, status.Errorf(codes.InvalidArgument, "Invalid id provided (%s): %v", id, err)
 	}
 
-	report, err := s.repo.Delete(ctx, uid)
-	if err != nil {
+	if err := s.repo.Delete(ctx, uid); err != nil {
 		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", id)
 	}
 
-	return &reportcomm.DeleteReportReply{
-		Report: &reportcomm.Report{
-			Name: report.Name,
-			Id:   report.ID.String(),
-		},
-	}, nil
+	return &reportcomm.DeleteReportReply{}, nil
 }

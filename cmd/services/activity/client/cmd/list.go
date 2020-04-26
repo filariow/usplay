@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
+	"github.com/golang/protobuf/ptypes"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )
@@ -45,15 +46,17 @@ var (
 						v.ActType.Id, v.ActType.Code, v.ActType.Description)
 				}
 
+				f, _ := ptypes.Timestamp(v.Period.From)
+				t, _ := ptypes.Timestamp(v.Period.To)
 				log.Printf(`list activity:
 	id: %s
 	activity type: %s
 	order: %s
 	period: 
-		from: %s
-		to: %s`,
+		from: %v
+		to: %v`,
 					v.Id, activitytype, order,
-					v.Period.From, v.Period.To)
+					f, t)
 			}
 		},
 	}

@@ -24,7 +24,7 @@ func (s *reportServer) Read(ctx context.Context, req *reportcomm.ReadReportReque
 	return &reportcomm.ReadReportReply{
 		Report: &reportcomm.Report{
 			Name: report.Name,
-			Id:   report.ID.String(),
+			Id:   report.ID,
 		},
 	}, nil
 }

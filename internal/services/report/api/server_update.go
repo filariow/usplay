@@ -16,15 +16,9 @@ func (s *reportServer) Update(ctx context.Context, req *reportcomm.UpdateReportR
 		Description: req.GetDescription(),
 	}
 
-	uact, err := s.repo.Update(ctx, report)
-	if err != nil {
+	if err := s.repo.Update(ctx, report); err != nil {
 		return nil, status.Errorf(codes.Internal, "error creating report: %v", err)
 	}
 
-	return &reportcomm.UpdateReportReply{
-		Report: &reportcomm.Report{
-			Name: uact.Name,
-			Id:   uact.ID.String(),
-		},
-	}, nil
+	return &reportcomm.UpdateReportReply{}, nil
 }

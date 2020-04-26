@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/FrancescoIlario/usplay/internal/services/activitytype/api"
-	"github.com/FrancescoIlario/usplay/internal/services/report/storage"
+	"github.com/FrancescoIlario/usplay/internal/services/activitytype/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
@@ -15,8 +15,8 @@ import (
 func Test_DeleteHappyPath(t *testing.T) {
 	// arrange
 	activitytype := storage.ActivityType{
-		ID:   uuid.New(),
-		Code: int(32),
+		ID:   uuid.New().String(),
+		Code: 32,
 		Name: "Name",
 	}
 	store := &activityTypeTestRepo{
@@ -31,7 +31,7 @@ func Test_DeleteHappyPath(t *testing.T) {
 
 	// act
 	_, err := svr.Delete(ctx,
-		&activitytypecomm.DeleteActivityTypeRequest{Id: activitytype.ID.String()})
+		&activitytypecomm.DeleteActivityTypeRequest{Id: activitytype.ID})
 
 	// assert
 	if err != nil {

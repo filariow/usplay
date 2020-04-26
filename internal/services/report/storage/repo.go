@@ -8,9 +8,9 @@ import (
 
 // Repository Repository interface
 type Repository interface {
-	Create(context.Context, Report) (uuid.UUID, error)
-	Read(context.Context, uuid.UUID) (Report, error)
-	Update(context.Context, Report) (Report, error)
-	Delete(context.Context, uuid.UUID) (Report, error)
+	Create(context.Context, Report) (*uuid.UUID, error)
+	Read(context.Context, uuid.UUID) (*Report, error)
+	Update(context.Context, Report) error
+	Delete(context.Context, uuid.UUID) error
 	List(context.Context) (Reports, error)
 }
