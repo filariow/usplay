@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
@@ -28,6 +29,22 @@ var (
 			}
 
 			for _, v := range resp.GetActivities() {
+				order, activitytype := "", ""
+				if v.Order != nil {
+					order = fmt.Sprintf(`
+		id: %s
+		code: %s
+		description: %s`,
+						v.Order.Id, v.Order.Code, v.Order.Description)
+				}
+				if v.ActType != nil {
+					activitytype = fmt.Sprintf(`
+		id: %s
+		code: %v
+		description: %s`,
+						v.ActType.Id, v.ActType.Code, v.ActType.Description)
+				}
+
 				log.Printf(`list activity:
 	id: %s
 	activity type: %s
@@ -35,7 +52,7 @@ var (
 	period: 
 		from: %s
 		to: %s`,
-					v.Id, v.ActType.Id, v.Order.Id,
+					v.Id, activitytype, order,
 					v.Period.From, v.Period.To)
 			}
 		},
