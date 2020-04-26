@@ -16,7 +16,7 @@ var (
 		Run: func(cmd *cobra.Command, args []string) {
 			interval, err := parseInterval(from, to)
 			if err != nil {
-				log.Fatal("error parsing interval: %v", err)
+				log.Fatalf("error parsing interval: %v", err)
 			}
 
 			conn, err := grpc.Dial(target, grpc.WithInsecure())
