@@ -19,16 +19,14 @@ import (
 
 func TestReadHappyPath(t *testing.T) {
 	// arrange
-	ctime := time.Now()
-	ptime, _ := ptypes.TimestampProto(ctime)
 	orderId, actTypeId, actId := uuid.New(), uuid.New(), uuid.New()
 
 	activity := storage.Activity{
-		ID:             actId.String(),
-		Code:           "Activity Code",
-		Description:    "Activity Description",
-		Name:           "Activity Name",
-		CreationTime:   ctime,
+		ID: actId.String(),
+		Period: storage.Interval{
+			From: time.Now(),
+			To:   time.Now().Add(10 * 24 * time.Hour),
+		},
 		OrderID:        orderId.String(),
 		ActivityTypeID: actTypeId.String(),
 	}
@@ -43,14 +41,17 @@ func TestReadHappyPath(t *testing.T) {
 		Description: "Order description",
 		Name:        "order name",
 	}
+
+	from, _ := ptypes.TimestampProto(activity.Period.From)
+	to, _ := ptypes.TimestampProto(activity.Period.To)
 	expectedActivity := activitycomm.Activity{
-		Code:         activity.Code,
-		Id:           activity.ID,
-		ActType:      &activityType,
-		Order:        &order,
-		Description:  activity.Description,
-		Name:         activity.Name,
-		CreationTime: ptime,
+		Id:      activity.ID,
+		ActType: &activityType,
+		Order:   &order,
+		Period: &activitycomm.Interval{
+			From: from,
+			To:   to,
+		},
 	}
 
 	store := &activityTestRepo{
@@ -113,16 +114,14 @@ func TestReadHappyPath(t *testing.T) {
 
 func TestRead_NoActivityTypeResponse(t *testing.T) {
 	// arrange
-	ctime := time.Now()
-	ptime, _ := ptypes.TimestampProto(ctime)
 	orderId, actTypeId, actId := uuid.New(), uuid.New(), uuid.New()
 
 	activity := storage.Activity{
-		ID:             actId.String(),
-		Code:           "Activity Code",
-		Description:    "Activity Description",
-		Name:           "Activity Name",
-		CreationTime:   ctime,
+		ID: actId.String(),
+		Period: storage.Interval{
+			From: time.Now(),
+			To:   time.Now().Add(10 * 24 * time.Hour),
+		},
 		OrderID:        orderId.String(),
 		ActivityTypeID: actTypeId.String(),
 	}
@@ -135,14 +134,17 @@ func TestRead_NoActivityTypeResponse(t *testing.T) {
 		Description: "Order description",
 		Name:        "order name",
 	}
+
+	from, _ := ptypes.TimestampProto(activity.Period.From)
+	to, _ := ptypes.TimestampProto(activity.Period.To)
 	expectedActivity := activitycomm.Activity{
-		Code:         activity.Code,
-		Id:           activity.ID,
-		ActType:      &activityType,
-		Order:        &order,
-		Description:  activity.Description,
-		Name:         activity.Name,
-		CreationTime: ptime,
+		Id:      activity.ID,
+		ActType: &activityType,
+		Order:   &order,
+		Period: &activitycomm.Interval{
+			From: from,
+			To:   to,
+		},
 	}
 
 	store := &activityTestRepo{
@@ -203,8 +205,6 @@ func TestRead_NoActivityTypeResponse(t *testing.T) {
 
 func TestRead_NoOrderResponse(t *testing.T) {
 	// arrange
-	ctime := time.Now()
-	ptime, _ := ptypes.TimestampProto(ctime)
 	orderId, actTypeId, actId := uuid.New(), uuid.New(), uuid.New()
 
 	activityType := activitytypecomm.ActivityType{
@@ -216,22 +216,25 @@ func TestRead_NoOrderResponse(t *testing.T) {
 		Id: orderId.String(),
 	}
 	activity := storage.Activity{
-		ID:             actId.String(),
-		Code:           "Activity Code",
-		Description:    "Activity Description",
-		Name:           "Activity Name",
-		CreationTime:   ctime,
+		ID: actId.String(),
+		Period: storage.Interval{
+			From: time.Now(),
+			To:   time.Now().Add(10 * 24 * time.Hour),
+		},
 		OrderID:        orderId.String(),
 		ActivityTypeID: actTypeId.String(),
 	}
+
+	from, _ := ptypes.TimestampProto(activity.Period.From)
+	to, _ := ptypes.TimestampProto(activity.Period.To)
 	expectedActivity := activitycomm.Activity{
-		Code:         activity.Code,
-		Id:           activity.ID,
-		ActType:      &activityType,
-		Order:        &order,
-		Description:  activity.Description,
-		Name:         activity.Name,
-		CreationTime: ptime,
+		Id:      activity.ID,
+		ActType: &activityType,
+		Order:   &order,
+		Period: &activitycomm.Interval{
+			From: from,
+			To:   to,
+		},
 	}
 
 	store := &activityTestRepo{
@@ -317,17 +320,23 @@ func assertEqActivity(t *testing.T, expected, provided *activitycomm.Activity) {
 		return
 	}
 
-	if expected.Code != provided.Code {
-		t.Errorf("expected activity Code is %v while provided is %v", expected.Code, provided.Code)
-	}
-	if expected.Description != provided.Description {
-		t.Errorf("expected activity Description is %v while provided is %v", expected.Description, provided.Description)
-	}
 	if expected.Id != provided.Id {
 		t.Errorf("expected activity Id is %v while provided is %v", expected.Id, provided.Id)
 	}
-	if expected.Name != provided.Name {
-		t.Errorf("expected activity Name is %v while provided is %v", expected.Name, provided.Name)
+
+	if expected.Period != nil && provided.Period == nil {
+		t.Errorf("expected activity Period is not nil while provided is")
+	} else if expected.Period == nil && provided.Period != nil {
+		t.Errorf("expected activity Period is nil while provided is not")
+	} else {
+		if expected.Period.From.Seconds != provided.Period.From.Seconds ||
+			expected.Period.From.Nanos != provided.Period.From.Nanos {
+			t.Errorf("expected activity Period To is %v while provided is %v", expected.Period.From, provided.Period.From)
+		}
+		if expected.Period.To.Seconds != provided.Period.To.Seconds ||
+			expected.Period.To.Nanos != provided.Period.To.Nanos {
+			t.Errorf("expected activity Period To is %v while provided is %v", expected.Period.To, provided.Period.To)
+		}
 	}
 }
 

@@ -11,6 +11,7 @@ import (
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
+	"github.com/golang/protobuf/ptypes"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -33,20 +34,24 @@ func Test_ListHappyPath(t *testing.T) {
 		activityTypes[i] = &activityType
 
 		activity := storage.Activity{
-			ID:             uuid.New().String(),
-			Code:           "Activity Code",
-			Description:    "Activity Description",
-			Name:           "Activity Name",
+			ID: uuid.New().String(),
+			Period: storage.Interval{
+				From: time.Now(),
+				To:   time.Now().Add(10 * 24 * time.Hour),
+			},
 			ActivityTypeID: activityTypeID.String(),
 		}
 		activities[i] = activity
 
+		from, _ := ptypes.TimestampProto(activity.Period.From)
+		to, _ := ptypes.TimestampProto(activity.Period.To)
 		expectedActivity := activitycomm.Activity{
-			Code:        activity.Code,
-			Id:          activity.ID,
-			ActType:     &activityType,
-			Description: activity.Description,
-			Name:        activity.Name,
+			Id:      activity.ID,
+			ActType: &activityType,
+			Period: &activitycomm.Interval{
+				From: from,
+				To:   to,
+			},
 		}
 		expectedActivities[i] = expectedActivity
 
@@ -124,22 +129,26 @@ func Test_ListHappyPathNoActivityTypesDetails(t *testing.T) {
 		activityTypeID := uuid.New()
 
 		activity := storage.Activity{
-			ID:             uuid.New().String(),
-			Code:           "Activity Code",
-			Description:    "Activity Description",
-			Name:           "Activity Name",
+			ID: uuid.New().String(),
+			Period: storage.Interval{
+				From: time.Now(),
+				To:   time.Now().Add(10 * 24 * time.Hour),
+			},
 			ActivityTypeID: activityTypeID.String(),
 		}
 		activities[i] = activity
 
+		from, _ := ptypes.TimestampProto(activity.Period.From)
+		to, _ := ptypes.TimestampProto(activity.Period.To)
 		expectedActivity := activitycomm.Activity{
-			Code: activity.Code,
-			Id:   activity.ID,
+			Id: activity.ID,
 			ActType: &activitytypecomm.ActivityType{
 				Id: activityTypeID.String(),
 			},
-			Description: activity.Description,
-			Name:        activity.Name,
+			Period: &activitycomm.Interval{
+				From: from,
+				To:   to,
+			},
 		}
 		expectedActivities[i] = expectedActivity
 

@@ -4,7 +4,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build ActivityType Client ",
+            "label": "Build ActivityType Client",
             "type": "shell",
             "command": "go",
             "args": [
@@ -12,6 +12,57 @@
                 "-o",
                 "/workspace/bin/activitytype/activitytype_cli",
                 "/workspace/cmd/services/activitytype/client/main.go"
+            ],
+            // "command": "realpath .",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Build ActivityType Server",
+            "type": "shell",
+            "command": "go",
+            "args": [
+                "build",
+                "-o",
+                "/workspace/bin/activitytype/activitytype_srv",
+                "/workspace/cmd/services/activitytype/server/main.go"
+            ],
+            // "command": "realpath .",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Build Activity Client",
+            "type": "shell",
+            "command": "go",
+            "args": [
+                "build",
+                "-o",
+                "/workspace/bin/activity/activity_cli",
+                "/workspace/cmd/services/activity/client/main.go"
+            ],
+            // "command": "realpath .",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Build Activity Server",
+            "type": "shell",
+            "command": "go",
+            "args": [
+                "build",
+                "-o",
+                "/workspace/bin/activity/activity_srv",
+                "/workspace/cmd/services/activity/server/main.go"
             ],
             // "command": "realpath .",
             "problemMatcher": [],

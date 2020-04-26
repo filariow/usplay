@@ -19,7 +19,7 @@ var (
 
 func init() {
 	rootCmd.PersistentFlags().StringVarP(&target, "target", "t", "localhost:8080", "the address of the target server")
-	rootCmd.AddCommand(cmdGenerate)
+	rootCmd.AddCommand(cmdCreate)
 	rootCmd.AddCommand(cmdRead)
 	rootCmd.AddCommand(cmdDelete)
 	rootCmd.AddCommand(cmdList)

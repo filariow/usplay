@@ -14,7 +14,10 @@ func (s *mongoStore) List(ctx context.Context, ids []uuid.UUID) (storage.Activit
 		idsString[i] = id.String()
 	}
 
-	filter := bson.M{"_id": bson.M{"$in": idsString}}
+	filter := bson.M{}
+	if len(idsString) > 0 {
+		filter = bson.M{"_id": bson.M{"$in": idsString}}
+	}
 
 	cursor, err := s.Collection.Find(ctx, filter)
 	if err != nil {

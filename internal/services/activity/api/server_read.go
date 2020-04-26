@@ -29,10 +29,6 @@ func (s *activityServer) read(ctx context.Context, uid uuid.UUID) (*activitycomm
 	if err != nil {
 		return nil, err
 	}
-	creationTime, err := ptypes.TimestampProto(at.CreationTime)
-	if err != nil {
-		return nil, err
-	}
 
 	actOut, actErr := s.getActivityType(ctx, uid)
 	ordOut, ordErr := s.getOrder(ctx, at.OrderID)
@@ -61,15 +57,17 @@ func (s *activityServer) read(ctx context.Context, uid uuid.UUID) (*activitycomm
 		order = <-ordOut
 	}
 
+	from, _ := ptypes.TimestampProto(at.Period.From)
+	to, _ := ptypes.TimestampProto(at.Period.To)
 	return &activitycomm.ReadActivityReply{
 		Activity: &activitycomm.Activity{
-			Code:         at.Code,
-			Description:  at.Description,
-			Id:           at.ID,
-			Name:         at.Name,
-			ActType:      acttype,
-			CreationTime: creationTime,
-			Order:        order,
+			Id:      at.ID,
+			ActType: acttype,
+			Order:   order,
+			Period: &activitycomm.Interval{
+				From: from,
+				To:   to,
+			},
 		},
 	}, nil
 }

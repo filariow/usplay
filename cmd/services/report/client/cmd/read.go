@@ -2,8 +2,10 @@ package cmd
 
 import (
 	"context"
+	"fmt"
 	"log"
 
+	"github.com/FrancescoIlario/usplay/pkg/datext"
 	"github.com/FrancescoIlario/usplay/pkg/services/reportcomm"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
@@ -28,10 +30,7 @@ var (
 				log.Fatalf("error calling read: %v", err)
 			}
 
-			log.Printf(
-				"read report:\n\tid: %s\n\tname: %s",
-				resp.Report.Id,
-				resp.Report.Name)
+			printReport(resp.GetReport())
 		},
 	}
 
@@ -39,5 +38,35 @@ var (
 )
 
 func init() {
-	cmdRead.PersistentFlags().StringVarP(&id, "id", "i", "", "report's id")
+	cmdRead.Flags().StringVarP(&id, "id", "i", "", "report's id")
+}
+
+func printReport(report *reportcomm.Report) {
+	if report == nil {
+		fmt.Println("Empty report returned")
+		return
+	}
+
+	from, to := datext.ExtractDatesStr(report.GetPeriod())
+
+	fmt.Printf(`Report %s - %s
+From: %s
+To: %s
+`, report.GetId(), report.GetName(), from, to)
+
+	if activities := report.GetActivities(); len(activities) > 0 {
+		fmt.Printf("Printing Activities (%v)\n", len(activities))
+
+		for _, act := range report.GetActivities() {
+			from, to := datext.ExtractDatesStr(act.GetPeriod())
+
+			fmt.Printf("%s | %v | %s | %s | %s |\n",
+				act.Id,
+				act.GetActType().GetCode(),
+				from,
+				to,
+				act.GetOrder().GetName(),
+			)
+		}
+	}
 }

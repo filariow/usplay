@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/FrancescoIlario/usplay/internal/services/activity/api"
-	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
@@ -15,12 +14,7 @@ import (
 
 func Test_DeleteHappyPath(t *testing.T) {
 	// arrange
-	activity := storage.Activity{
-		ID:          uuid.New().String(),
-		Code:        "Activity Code",
-		Description: "Activity Description",
-		Name:        "Activity Name",
-	}
+	activityID := uuid.New().String()
 	store := &activityTestRepo{
 		DeleteResult: struct {
 			Err error
@@ -33,7 +27,7 @@ func Test_DeleteHappyPath(t *testing.T) {
 
 	// act
 	_, err := svr.Delete(ctx,
-		&activitycomm.DeleteActivityRequest{Id: activity.ID})
+		&activitycomm.DeleteActivityRequest{Id: activityID})
 
 	// assert
 	if err != nil {
@@ -47,10 +41,10 @@ func Test_DeleteInvalidID(t *testing.T) {
 	svr := api.NewActivityServer(store, nil, nil, 1*time.Second)
 
 	// act
-
-	// assert
 	_, err := svr.Delete(context.Background(),
 		&activitycomm.DeleteActivityRequest{Id: ""})
+
+	// assert
 	if err == nil {
 		t.Fatalf("expected error not returned: %v", err)
 	}

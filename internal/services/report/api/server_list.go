@@ -18,7 +18,7 @@ func (s *reportServer) List(ctx context.Context, req *reportcomm.ListReportsRequ
 	for _, v := range sReports {
 		reports = append(reports, &reportcomm.Report{
 			Name: v.Name,
-			Id:   v.ID.String(),
+			Id:   v.ID,
 		})
 	}
 

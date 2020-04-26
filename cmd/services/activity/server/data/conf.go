@@ -3,8 +3,8 @@ package data
 import (
 	"os"
 
-	"github.com/FrancescoIlario/usplay/internal/services/activitytype/storage/inmemstore"
-	"github.com/FrancescoIlario/usplay/internal/services/activitytype/storage/mongostore"
+	"github.com/FrancescoIlario/usplay/internal/services/activity/storage/inmemstore"
+	"github.com/FrancescoIlario/usplay/internal/services/activity/storage/mongostore"
 	"github.com/FrancescoIlario/usplay/pkg/errs/conferrs"
 )
 

@@ -14,6 +14,11 @@ var (
 		Use:   "create",
 		Short: "Creates a new activity",
 		Run: func(cmd *cobra.Command, args []string) {
+			interval, err := parseInterval(from, to)
+			if err != nil {
+				log.Fatalf("error parsing interval: %v", err)
+			}
+
 			conn, err := grpc.Dial(target, grpc.WithInsecure())
 			if err != nil {
 				log.Fatalf("cannot connect to %s: %v", target, err)
@@ -21,11 +26,12 @@ var (
 			defer conn.Close()
 
 			cli := activitycomm.NewActivitySvcClient(conn)
-			resp, err := cli.Create(context.TODO(), &activitycomm.CreateActivityRequest{
-				Code:        code,
-				Description: desc,
-				Name:        name,
-			})
+			resp, err := cli.Create(context.TODO(),
+				&activitycomm.CreateActivityRequest{
+					ActTypeID: actid,
+					OrderID:   ordid,
+					Period:    interval,
+				})
 			if err != nil {
 				log.Fatalf("error calling create: %v", err)
 			}
@@ -34,13 +40,17 @@ var (
 		},
 	}
 
-	code string
-	desc string
-	name string
+	actid string
+	ordid string
 )
 
 func init() {
-	cmdCreate.PersistentFlags().StringVarP(&code, "code", "c", "", "activity's code")
-	cmdCreate.PersistentFlags().StringVarP(&desc, "description", "d", "", "activity's description")
-	cmdCreate.PersistentFlags().StringVarP(&name, "name", "n", "", "activity's name")
+	cmdCreate.Flags().StringVarP(&actid, "activity-type", "a", "", "activityType's ID")
+	cmdCreate.MarkFlagRequired("activity-type")
+	cmdCreate.Flags().StringVarP(&ordid, "order", "o", "", "Order ID")
+	cmdCreate.MarkFlagRequired("order")
+	cmdCreate.Flags().StringVarP(&from, "from", "F", "", "Interval's From")
+	cmdCreate.MarkFlagRequired("from")
+	cmdCreate.Flags().StringVarP(&to, "to", "T", "", "Interval's To")
+	cmdCreate.MarkFlagRequired("to")
 }

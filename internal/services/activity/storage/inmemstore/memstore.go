@@ -3,7 +3,6 @@ package inmemstore
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
 	"github.com/google/uuid"
@@ -31,7 +30,6 @@ func (s *memoryStore) Create(ctx context.Context, a storage.Activity) (*uuid.UUI
 	}
 
 	a.ID = id.String()
-	a.CreationTime = time.Now()
 
 	s.data[id] = a
 	return &id, nil
@@ -80,4 +78,15 @@ func (s *memoryStore) List(ctx context.Context, ids []uuid.UUID) (storage.Activi
 		list[i] = a
 	}
 	return list, nil
+}
+
+func (s *memoryStore) ListInInterval(ctx context.Context, period storage.Interval) (storage.Activities, error) {
+	res := storage.Activities{}
+	for _, v := range s.data {
+		if v.Period.From.After(period.From) &&
+			v.Period.From.Before(period.To) {
+			res = append(res, v)
+		}
+	}
+	return res, nil
 }

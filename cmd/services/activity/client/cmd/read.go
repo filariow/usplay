@@ -28,12 +28,16 @@ var (
 				log.Fatalf("error calling read: %v", err)
 			}
 
-			log.Printf(
-				"read activity:\n\tid: %s\n\tcode: %s\n\tdescription: %s\n\tname: %s",
-				resp.Activity.Id,
-				resp.Activity.Code,
-				resp.Activity.Description,
-				resp.Activity.Name)
+			v := resp.GetActivity()
+			log.Printf(`read activity:
+	id: %s
+	activity type: %s
+	order: %s
+	period: 
+		from: %s
+		to: %s`,
+				v.Id, v.ActType.Id, v.Order.Id,
+				v.Period.From, v.Period.To)
 		},
 	}
 
@@ -41,5 +45,5 @@ var (
 )
 
 func init() {
-	cmdRead.PersistentFlags().StringVarP(&id, "id", "i", "", "activity's id")
+	cmdRead.Flags().StringVarP(&id, "id", "i", "", "activity's id")
 }

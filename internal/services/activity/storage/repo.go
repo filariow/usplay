@@ -14,4 +14,5 @@ type Repository interface {
 	Update(context.Context, Activity) error
 	Delete(context.Context, uuid.UUID) error
 	List(context.Context, []uuid.UUID) (Activities, error)
+	ListInInterval(context.Context, Interval) (Activities, error)
 }

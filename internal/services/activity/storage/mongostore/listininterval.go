@@ -4,19 +4,13 @@ import (
 	"context"
 
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
-	"github.com/google/uuid"
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func (s *mongoStore) List(ctx context.Context, ids []uuid.UUID) (storage.Activities, error) {
-	idsString := make([]string, len(ids))
-	for i, id := range ids {
-		idsString[i] = id.String()
-	}
-
-	filter := bson.M{}
-	if len(idsString) > 0 {
-		filter = bson.M{"_id": bson.M{"$in": idsString}}
+func (s *mongoStore) ListInInterval(ctx context.Context, interval storage.Interval) (storage.Activities, error) {
+	filter := bson.M{
+		"interval.from": bson.M{"$gte": interval.From},
+		"interval.to":   bson.M{"$lte": interval.To},
 	}
 
 	cursor, err := s.Collection.Find(ctx, filter)
