@@ -21,7 +21,7 @@
             }
         },
         {
-            "label": "Build ActivityType Client",
+            "label": "Build ActivityType Server",
             "type": "shell",
             "command": "go",
             "args": [

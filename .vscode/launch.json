@@ -11,7 +11,9 @@
             "mode": "auto",
             "program": "${workspaceFolder}/cmd/services/activity/server/main.go",
             "env": {
-                "ACTTYPE_HOST": "localhost:9090",
+                "US_ACTTYPE_HOST": "localhost:9091",
+                "US_ADDRESS": "localhost:9090",
+                "US_ORDER_HOST": "localhost:9092",
                 "US_STORAGE_TYPE": "Mongo",
                 "US_MONGO_CONNSTR": "mongodb://mongo:27017",
                 "US_MONGO_DATABASE": "usplay",
@@ -28,6 +30,7 @@
             "mode": "auto",
             "program": "${workspaceFolder}/cmd/services/activitytype/server/main.go",
             "env": {
+                "US_ADDRESS": "localhost:9091",
                 "US_STORAGE_TYPE": "Mongo",
                 "US_MONGO_CONNSTR": "mongodb://mongo:27017",
                 "US_MONGO_DATABASE": "usplay",
@@ -36,6 +39,33 @@
                 "US_MONGO_PASSWORD": "supersecret"
             },
             "args": []
+        },
+        {
+            "name": "Order Server",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/cmd/services/order/server/main.go",
+            "env": {
+                "US_ADDRESS": "localhost:9092",
+                "US_STORAGE_TYPE": "Mongo",
+                "US_MONGO_CONNSTR": "mongodb://mongo:27017",
+                "US_MONGO_DATABASE": "usplay",
+                "US_MONGO_COLLECTION": "order",
+                "US_MONGO_USERNAME": "root",
+                "US_MONGO_PASSWORD": "supersecret"
+            },
+            "args": []
+        }
+    ],
+    "compounds": [
+        {
+            "name": "Run All",
+            "configurations": [
+                "Order Server",
+                "Activity Server",
+                "ActivityType Server"
+            ]
         }
     ]
 }
