@@ -9,6 +9,7 @@ import (
 	"github.com/FrancescoIlario/usplay/cmd/services/activity/server/data"
 	"github.com/FrancescoIlario/usplay/internal/services/activity/api"
 	"github.com/FrancescoIlario/usplay/internal/services/activity/storage"
+	"github.com/FrancescoIlario/usplay/pkg/osext"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/activitytypecomm"
 	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
@@ -17,15 +18,25 @@ import (
 )
 
 const (
-	actTypeHostKey = "ACTTYPE_HOST"
-	address        = "localhost:8080"
+	actTypeHostKey = "US_ACTTYPE_HOST"
+	orderHostKey   = "US_ORDER_HOST"
+	addressKey     = "US_ADDRESS"
+	addressDefault = "localhost:8080"
 )
 
 func main() {
+	log.Println("Starting Server")
+
 	actTypeHost := os.Getenv(actTypeHostKey)
 	if actTypeHost == "" {
 		log.Fatalf("ActivityType Host address environment variable is empty %s", actTypeHostKey)
 	}
+	orderHost := os.Getenv(orderHostKey)
+	if orderHost == "" {
+		log.Fatalf("Order Host address environment variable is empty %s", orderHostKey)
+	}
+
+	address := osext.GetEnvOrDefault(addressKey, addressDefault)
 
 	ls, err := net.Listen("tcp", address)
 	if err != nil {
@@ -33,12 +44,17 @@ func main() {
 	}
 	log.Printf("acquired address %v", address)
 
-	conn, err := grpc.Dial(actTypeHost, grpc.WithInsecure())
+	connActType, err := grpc.Dial(actTypeHost, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("cannot connect to %s: %v", actTypeHost, err)
 	}
-	actTypeCli := activitytypecomm.NewActivityTypeSvcClient(conn)
-	orderCli := ordercomm.NewOrderSvcClient(conn)
+	actTypeCli := activitytypecomm.NewActivityTypeSvcClient(connActType)
+
+	connOrders, err := grpc.Dial(orderHost, grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("cannot connect to %s: %v", orderHost, err)
+	}
+	orderCli := ordercomm.NewOrderSvcClient(connOrders)
 
 	repo, err := setUpRepository()
 	if err != nil {

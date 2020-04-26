@@ -7,16 +7,21 @@ import (
 	"github.com/FrancescoIlario/usplay/cmd/services/order/server/data"
 	"github.com/FrancescoIlario/usplay/internal/services/order/api"
 	"github.com/FrancescoIlario/usplay/internal/services/order/storage"
+	"github.com/FrancescoIlario/usplay/pkg/osext"
 	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
 
 	"google.golang.org/grpc"
 )
 
-const address = "localhost:8080"
+const (
+	addressKey     = "US_ADDRESS"
+	addressDefault = "localhost:8080"
+)
 
 func main() {
-	log.Println("Hello world!")
+	log.Println("Starting Server")
 
+	address := osext.GetEnvOrDefault(addressKey, addressDefault)
 	ls, err := net.Listen("tcp", address)
 	if err != nil {
 		log.Fatalf("failed to listen at %v: %v", address, err)
