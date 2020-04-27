@@ -15,6 +15,9 @@
           Welcome to Vuetify
         </h1>
 
+        <router-link to="About">About</router-link>
+        <router-link to="Activities">Activities</router-link>
+
         <p class="subheading font-weight-regular">
           For help and collaboration with other Vuetify developers,
           <br />please join our online

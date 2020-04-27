@@ -23,7 +23,11 @@
 		"mkloubert.vscode-kanban",
 		"BazelBuild.vscode-bazel",
 		"fcrespo82.markdown-table-formatter",
-		"mervin.markdown-formatter"
+		"mervin.markdown-formatter",
+		"octref.vetur",
+		"msjsdiag.debugger-for-chrome",
+		"firefox-devtools.vscode-firefox-debug",
+		"esbenp.prettier-vscode"
 	],
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

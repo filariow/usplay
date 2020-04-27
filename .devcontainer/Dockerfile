@@ -19,7 +19,7 @@ ARG DOCKER_GUID
 
 ARG GHCLI_VERSION=0.7.0
 ARG NODEJS_VERSION=14
-
+ARG PROTOC_GRPCWEB_VERSION=1.0.7
 # Configure apt, install packages and tools
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils dialog 2>&1 \
@@ -128,6 +128,13 @@ RUN apt-get update \
     && curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
     && apt-get install -y nodejs \
     && npm install -g @vue/cli \
+    #
+    # gRPC Web
+    && mkdir -p /tmp/proto \
+    && cd /tmp/proto \
+    && wget https://github.com/grpc/grpc-web/releases/download/${PROTOC_GRPCWEB_VERSION}/protoc-gen-grpc-web-${PROTOC_GRPCWEB_VERSION}-linux-x86_64  \
+    && chmod +x protoc-gen-grpc-web-${PROTOC_GRPCWEB_VERSION}-linux-x86_64 \
+    && mv protoc-gen-grpc-web-${PROTOC_GRPCWEB_VERSION}-linux-x86_64 /usr/local/bin/protoc-gen-grpc-web \ 
     #
     # Clean up
     && cd / \

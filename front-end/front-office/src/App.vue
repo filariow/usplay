@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app>   
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
         <v-img
@@ -33,21 +33,19 @@
       </v-btn>
     </v-app-bar>
 
-    <v-content>
-      <HelloWorld />
+    <v-content transition="slide-x-transition">
+      <router-view></router-view>
     </v-content>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
 
 export default Vue.extend({
   name: "App",
 
   components: {
-    HelloWorld
   },
 
   data: () => ({
