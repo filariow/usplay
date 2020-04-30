@@ -14,6 +14,6 @@ all: $(fpath)
 	mkdir -p front-end/front-office/gen/comm
 	protoc \
 		-I protos \
-		--js_out=import_style=typescript,binary:front-end/front-office/gen/comm/$(PRJ_TARGET)comm \
-		--grpc-web_out=import_style=typescript,mode=grpcwebtext:front-end/front-office/gen/comm \
+		--js_out=import_style=typescript,binary:front-end/front-office/src/gen/comm/$(PRJ_TARGET)comm \
+		--grpc-web_out=import_style=typescript,mode=grpcwebtext:front-end/front-office/src/gen/comm \
 		$(PRJ_TARGET)comm/$(PRJ_TARGET).proto

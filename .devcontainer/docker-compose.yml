@@ -29,6 +29,15 @@ services:
 
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
+  
+  envoy_grpc:
+    build:
+      context: ../front-end/web-proxy
+      dockerfile: envoy.Dockerfile
+    ports: 
+      - "8081:8080"
+      - "9901:9901"
+    network_mode: host
 
   mongo:
     image: mongo

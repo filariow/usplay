@@ -27,7 +27,8 @@
 		"octref.vetur",
 		"msjsdiag.debugger-for-chrome",
 		"firefox-devtools.vscode-firefox-debug",
-		"esbenp.prettier-vscode"
+		"esbenp.prettier-vscode",
+		"loiane.ts-extension-pack"
 	],
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
