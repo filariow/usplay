@@ -20,7 +20,7 @@ func (s *orderServer) List(ctx context.Context, req *ordercomm.ListOrdersRequest
 	}
 
 	acts, err := s.repo.List(ctx, ids)
-if err != nil {
+	if err != nil {
 		return nil, status.Errorf(codes.Internal, "error retrieving the list of orders: %v", err)
 	}
 

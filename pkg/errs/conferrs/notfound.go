@@ -8,7 +8,7 @@ type envKeyNotFoundError struct {
 }
 
 func (e *envKeyNotFoundError) Error() string {
-	return fmt.Sprintf(`Enviroment variable "%s" not found`, e.key)
+	return fmt.Sprintf(`Environment variable "%s" not found`, e.key)
 }
 
 //NewEnvKeyNotFoundError returns an EnvKeyNotFoundError

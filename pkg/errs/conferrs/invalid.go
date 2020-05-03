@@ -9,7 +9,7 @@ type envKeyInvalidError struct {
 }
 
 func (e *envKeyInvalidError) Error() string {
-	return fmt.Sprintf(`Enviroment variable "%s" value is invalid: value is %s`, e.Key, e.Value)
+	return fmt.Sprintf(`Environment variable "%s" value is invalid: value is %s`, e.Key, e.Value)
 }
 
 // NewEnvKeyInvalidError returns an EnvKeyInvalidError
