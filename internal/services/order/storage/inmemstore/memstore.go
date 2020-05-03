@@ -55,7 +55,7 @@ func (s *memoryStore) Update(ctx context.Context, a storage.Order) error {
 	if err != nil {
 		return fmt.Errorf("error updating order, invalid id %s", a.ID)
 	}
-	
+
 	if _, err := s.Read(ctx, id); err != nil {
 		return err
 	}
