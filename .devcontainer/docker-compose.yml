@@ -31,13 +31,48 @@ services:
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
   
-  envoy_grpc:
+  proxy_activity:
     build:
       context: ../front-end/web-proxy
       dockerfile: envoy.Dockerfile
+      args: 
+        - "SVC_ADDR=devenv"
+        - "SVC_PORT=9090"
     ports: 
-      - "8081:8080"
-      - "9901:9901"
+      - "39901:9901"
+    network_mode: host
+
+  proxy_activitytype:
+    build:
+      context: ../front-end/web-proxy
+      dockerfile: envoy.Dockerfile
+      args: 
+        - "SVC_ADDR=devenv"
+        - "SVC_PORT=9091"
+    ports: 
+      - "39902:9901"
+    network_mode: host
+
+  proxy_order:
+    build:
+      context: ../front-end/web-proxy
+      dockerfile: envoy.Dockerfile
+      args: 
+        - "SVC_ADDR=devenv"
+        - "SVC_PORT=9092"
+    ports: 
+      - "39903:9901"
+    network_mode: host
+
+  proxy_report:
+    build:
+      context: ../front-end/web-proxy
+      dockerfile: envoy.Dockerfile
+      args: 
+        - "SVC_ADDR=devenv"
+        - "SVC_PORT=9093"
+    ports: 
+      - "39903:9901"
     network_mode: host
 
   mongo:
