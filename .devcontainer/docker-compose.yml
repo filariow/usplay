@@ -21,6 +21,7 @@ services:
       - vscode_insider_extension:/home/vscode/.vscode-server-insiders/extensions
       # Forwards the local Docker socket to the container.
       - /var/run/docker.sock:/var/run/docker.sock
+      - ~/.config/gh:/home/vscode/.config/gh:cached
 
     cap_add:
      - SYS_PTRACE
