@@ -16,5 +16,11 @@ module.exports = {
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off"
-  }
+  },
+  overrides: [
+    {
+      "files": "**/*.js",
+      "excludedFiles": ["**/gen/**/*_pb.js", "**/gen/**/*_pb.d.ts", "**/gen/**/*Pb.ts"]
+    }
+  ]
 };

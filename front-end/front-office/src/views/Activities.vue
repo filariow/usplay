@@ -6,37 +6,61 @@
 
 <script lang="ts">
 import Activity from "@/components/Activity.vue";
-import { ActivityTypeSvcClient } from "@/gen/comm/activitytypecomm/ActivitytypeServiceClientPb";
+import {
+  ActivityTypeSvcClient,
+  ServiceError
+} from "../gen/activitytypecomm/activitytype_pb_service";
 import {
   ListActivityTypesRequest,
-  ListActivityTypesReply,
-} from "@/gen/comm/activitytypecomm/activitytype_pb";
+  ListActivityTypesReply
+} from "../gen/activitytypecomm/activitytype_pb";
+
+function listActivityTypes() {
+  console.log("hello");
+
+  const acttypeHost = process.env.VUE_APP_US_ACTTYPE_HOST;
+  if (acttypeHost == undefined) {
+    console.log("Environment variable VUE_APP_US_ACTTYPE_HOST is not set");
+    return;
+  }
+  console.log(acttypeHost);
+
+  const client = new ActivityTypeSvcClient(acttypeHost);
+  const request = new ListActivityTypesRequest();
+
+  console.log(request);
+
+  client.list(
+    request,
+    (err: ServiceError | null, message: ListActivityTypesReply | null) => {
+      console.log("Client list ");
+      if (err != null) {
+        console.log(`Error ${err.code}: ${err.message}`);
+      } else {
+        console.log("Error is null");
+      }
+      console.log(message?.toObject());
+    }
+  );
+
+  console.log("Request sent");
+}
 
 export default {
   name: "Activities",
 
   components: {
-    Activity,
+    Activity
   },
 
-  listActivityTypes() {
-    console.log("hello");
-
-    let client = new ActivityTypeSvcClient(process.env.US_ACTTYPE_HOST);
-    var request = new ListActivityTypesRequest();
-
-    client.list(request, {}, (err, response) => {
-      console.log(response);
-    });
-  },
+  methods: {},
 
   mounted() {
-    this.listActivityTypes();
+    listActivityTypes();
   },
 
   data() {
     return {};
-  },
+  }
 };
 </script>
-./src/gen/comm/activitytypecomm/ActivitytypeServiceClientPb.ts
