@@ -16,7 +16,8 @@
         </h1>
 
         <router-link to="About">About</router-link>
-        <router-link to="Activities">Activities</router-link>
+        <br />
+        <router-link to="ActivityTypesList">ActivityTypes</router-link>
 
         <p class="subheading font-weight-regular">
           For help and collaboration with other Vuetify developers,

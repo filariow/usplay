@@ -1,5 +1,5 @@
 <template>
-  <v-app>   
+  <v-app>
     <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
         <v-img
@@ -41,15 +41,8 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { Component } from "vue-property-decorator";
 
-export default Vue.extend({
-  name: "App",
-
-  components: {
-  },
-
-  data: () => ({
-    //
-  })
-});
+@Component
+export default class App extends Vue {}
 </script>

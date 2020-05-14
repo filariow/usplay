@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 import Home from "../views/Home.vue";
-import Activities from "../views/Activities.vue";
+import ActivityTypesList from "../views/ActivityTypesList.vue";
 
 Vue.use(VueRouter);
 
@@ -12,9 +12,9 @@ const routes: Array<RouteConfig> = [
     component: Home
   },
   {
-    path: "/activities",
-    name: "Activities",
-    component: Activities
+    path: "/activitytypes",
+    name: "ActivityTypes",
+    component: ActivityTypesList
   },
   {
     path: "/about",
