@@ -20,7 +20,7 @@ module.exports = {
   overrides: [
     {
       "files": "**/*.js",
-      "excludedFiles": ["**/gen/**/*_pb.js", "**/gen/**/*_pb.d.ts", "**/gen/**/*Pb.ts"]
+      "excludedFiles": ["**/gen/**/*_pb.js", "**/gen/**/*_pb.d.ts"]
     }
   ]
 };
