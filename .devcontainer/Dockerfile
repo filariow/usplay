@@ -17,7 +17,7 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 ARG DOCKER_GUID
 
-ARG GHCLI_VERSION=0.7.0
+ARG GHCLI_VERSION=0.9.0
 ARG NODEJS_VERSION=14
 ARG PROTOC_GRPCWEB_VERSION=1.0.7
 # Configure apt, install packages and tools
@@ -89,7 +89,7 @@ RUN apt-get update \
     # GitHub CLI
     && mkdir -p /tmp/gh \
     && cd /tmp/gh \
-    && curl -sLO  https://github.com/cli/cli/releases/download/v0.7.0/gh_${GHCLI_VERSION}_linux_amd64.deb \
+    && curl -sLO  https://github.com/cli/cli/releases/download/v${GHCLI_VERSION}/gh_${GHCLI_VERSION}_linux_amd64.deb \
     && apt install ./gh_${GHCLI_VERSION}_linux_amd64.deb \
     #
     # Permit VS Code find the installed extensions after container rebuild
