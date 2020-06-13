@@ -18,7 +18,8 @@ ARG USER_GID=$USER_UID
 ARG DOCKER_GUID
 
 ARG GHCLI_VERSION=0.7.0
-
+ARG NODEJS_VERSION=14
+ARG PROTOC_GRPCWEB_VERSION=1.0.7
 # Configure apt, install packages and tools
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils dialog 2>&1 \
@@ -67,6 +68,8 @@ RUN apt-get update \
     # Create a non-root user to use if preferred - see https://aka.ms/vscode-remote/containers/non-root-user.
     && groupadd --gid $USER_GID $USERNAME \
     && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
+    && mkdir -p /home/${USERNAME}/.config \
+    && chown -R ${USER_UID}:${USER_GID} /home/${USERNAME} \
     # [Optional] Add sudo support
     && apt-get install -y sudo \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
@@ -121,6 +124,19 @@ RUN apt-get update \
     && curl -sSL "https://github.com/docker/compose/releases/download/${COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose \
     && chmod a+x /usr/local/bin/docker-compose \
     && echo ${DOCKER_GUID} > /home/${USERNAME}/dockerguid \
+    #
+    # Install NodeJS
+    # Using Debian, as root
+    && curl -sL https://deb.nodesource.com/setup_${NODEJS_VERSION}.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g @vue/cli \
+    #
+    # gRPC Web
+    && mkdir -p /tmp/proto \
+    && cd /tmp/proto \
+    && wget https://github.com/grpc/grpc-web/releases/download/${PROTOC_GRPCWEB_VERSION}/protoc-gen-grpc-web-${PROTOC_GRPCWEB_VERSION}-linux-x86_64  \
+    && chmod +x protoc-gen-grpc-web-${PROTOC_GRPCWEB_VERSION}-linux-x86_64 \
+    && mv protoc-gen-grpc-web-${PROTOC_GRPCWEB_VERSION}-linux-x86_64 /usr/local/bin/protoc-gen-grpc-web \ 
     #
     # Clean up
     && cd / \
