@@ -3,13 +3,13 @@ package api
 import (
 	"context"
 
-	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordergrpc"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
-func (s *orderServer) Exist(ctx context.Context, req *ordercomm.ExistOrderRequest) (*ordercomm.ExistOrderReply, error) {
+func (s *orderServer) Exist(ctx context.Context, req *ordergrpc.ExistOrderRequest) (*ordergrpc.ExistOrderReply, error) {
 	id := req.GetId()
 	uid, err := uuid.Parse(id)
 	if err != nil {
@@ -21,5 +21,5 @@ func (s *orderServer) Exist(ctx context.Context, req *ordercomm.ExistOrderReques
 		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", id)
 	}
 
-	return &ordercomm.ExistOrderReply{Exists: *exists}, nil
+	return &ordergrpc.ExistOrderReply{Exists: *exists}, nil
 }

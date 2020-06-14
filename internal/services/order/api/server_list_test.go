@@ -7,7 +7,7 @@ import (
 
 	"github.com/FrancescoIlario/usplay/internal/services/order/api"
 	"github.com/FrancescoIlario/usplay/internal/services/order/storage"
-	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordergrpc"
 	"github.com/google/uuid"
 )
 
@@ -37,7 +37,7 @@ func Test_ListHappyPath(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	reply, err := svr.List(ctx, &ordercomm.ListOrdersRequest{})
+	reply, err := svr.List(ctx, &ordergrpc.ListOrdersRequest{})
 
 	// assert
 	if err != nil {

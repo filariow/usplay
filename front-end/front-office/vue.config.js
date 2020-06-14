@@ -9,8 +9,8 @@ module.exports = {
     hot: true,
     open: true,
     proxy: {
-      "/activitytypecomm.ActivityTypeSvc": {
-        target: "http://localhost:9091/activitytypecomm.ActivityTypeSvc",
+      "/bookmastergrpc.ActivityTypeSvc": {
+        target: "http://localhost:9091/bookmastergrpc.ActivityTypeSvc",
         changeOrigin: true
       },
     }

@@ -1,5 +1,5 @@
 /**
- * @fileoverview gRPC-Web generated client stub for ordercomm
+ * @fileoverview gRPC-Web generated client stub for ordergrpc
  * @enhanceable
  * @public
  */
@@ -57,7 +57,7 @@ export class OrderSvcClient {
                response: CreateOrderReply) => void) {
     return this.client_.rpcCall(
       this.hostname_ +
-        '/ordercomm.OrderSvc/Create',
+        '/ordergrpc.OrderSvc/Create',
       request,
       metadata || {},
       this.methodInfoCreate,
@@ -79,7 +79,7 @@ export class OrderSvcClient {
                response: ReadOrderReply) => void) {
     return this.client_.rpcCall(
       this.hostname_ +
-        '/ordercomm.OrderSvc/Read',
+        '/ordergrpc.OrderSvc/Read',
       request,
       metadata || {},
       this.methodInfoRead,
@@ -101,7 +101,7 @@ export class OrderSvcClient {
                response: ExistOrderReply) => void) {
     return this.client_.rpcCall(
       this.hostname_ +
-        '/ordercomm.OrderSvc/Exist',
+        '/ordergrpc.OrderSvc/Exist',
       request,
       metadata || {},
       this.methodInfoExist,
@@ -123,7 +123,7 @@ export class OrderSvcClient {
                response: DeleteOrderReply) => void) {
     return this.client_.rpcCall(
       this.hostname_ +
-        '/ordercomm.OrderSvc/Delete',
+        '/ordergrpc.OrderSvc/Delete',
       request,
       metadata || {},
       this.methodInfoDelete,
@@ -145,7 +145,7 @@ export class OrderSvcClient {
                response: UpdateOrderReply) => void) {
     return this.client_.rpcCall(
       this.hostname_ +
-        '/ordercomm.OrderSvc/Update',
+        '/ordergrpc.OrderSvc/Update',
       request,
       metadata || {},
       this.methodInfoUpdate,
@@ -167,7 +167,7 @@ export class OrderSvcClient {
                response: ListOrdersReply) => void) {
     return this.client_.rpcCall(
       this.hostname_ +
-        '/ordercomm.OrderSvc/List',
+        '/ordergrpc.OrderSvc/List',
       request,
       metadata || {},
       this.methodInfoList,

@@ -6,7 +6,7 @@ import (
 
 	"github.com/FrancescoIlario/usplay/internal/services/order/api"
 	"github.com/FrancescoIlario/usplay/internal/services/order/storage"
-	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordergrpc"
 	"github.com/google/uuid"
 )
 
@@ -31,7 +31,7 @@ func Test_ReadHappyPath(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	reply, err := svr.Read(ctx, &ordercomm.ReadOrderRequest{
+	reply, err := svr.Read(ctx, &ordergrpc.ReadOrderRequest{
 		Id: order.ID,
 	})
 

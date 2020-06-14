@@ -8,8 +8,8 @@ import (
 	"github.com/FrancescoIlario/usplay/internal/services/report/api"
 	"github.com/FrancescoIlario/usplay/internal/services/report/storage"
 	"github.com/FrancescoIlario/usplay/pkg/osext"
-	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
-	"github.com/FrancescoIlario/usplay/pkg/services/reportcomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/bookmastergrpc"
+	"github.com/FrancescoIlario/usplay/pkg/services/reportgrpc"
 	"google.golang.org/grpc"
 )
 
@@ -41,11 +41,11 @@ func main() {
 	if err != nil {
 		log.Fatalf("cannot connect to %s: %v", activityHost, err)
 	}
-	activityCli := activitycomm.NewActivitySvcClient(conn)
+	activityCli := bookmastergrpc.NewActivitySvcClient(conn)
 	store := storage.NewInMemoryStore()
 	actServer := api.NewReportServer(activityCli, store)
 	grpcServer := grpc.NewServer()
-	reportcomm.RegisterReportSvcServer(grpcServer, actServer)
+	reportgrpc.RegisterReportSvcServer(grpcServer, actServer)
 
 	log.Printf("starting server at %v", address)
 	if err := grpcServer.Serve(ls); err != nil {

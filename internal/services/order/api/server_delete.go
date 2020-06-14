@@ -3,13 +3,13 @@ package api
 import (
 	"context"
 
-	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordergrpc"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
-func (s *orderServer) Delete(ctx context.Context, req *ordercomm.DeleteOrderRequest) (*ordercomm.DeleteOrderReply, error) {
+func (s *orderServer) Delete(ctx context.Context, req *ordergrpc.DeleteOrderRequest) (*ordergrpc.DeleteOrderReply, error) {
 	id := req.GetId()
 	uid, err := uuid.Parse(id)
 	if err != nil || uid == uuid.Nil {
@@ -20,5 +20,5 @@ func (s *orderServer) Delete(ctx context.Context, req *ordercomm.DeleteOrderRequ
 		return nil, status.Errorf(codes.NotFound, "no entry found for id %s", id)
 	}
 
-	return &ordercomm.DeleteOrderReply{}, nil
+	return &ordergrpc.DeleteOrderReply{}, nil
 }

@@ -4,23 +4,23 @@ import (
 	"context"
 
 	"github.com/FrancescoIlario/usplay/internal/services/report/storage"
-	"github.com/FrancescoIlario/usplay/pkg/services/activitycomm"
-	"github.com/FrancescoIlario/usplay/pkg/services/reportcomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/bookmastergrpc"
+	"github.com/FrancescoIlario/usplay/pkg/services/reportgrpc"
 	"github.com/golang/protobuf/ptypes"
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
-func (s *reportServer) Create(ctx context.Context, req *reportcomm.CreateReportRequest) (*reportcomm.CreateReportReply, error) {
+func (s *reportServer) Create(ctx context.Context, req *reportgrpc.CreateReportRequest) (*reportgrpc.CreateReportReply, error) {
 	period := req.GetPeriod()
 	if period == nil || period.GetFrom() == nil || period.GetTo() == nil {
 		return nil, status.Errorf(codes.InvalidArgument, `error creating report: provided period is null or invalid`)
 	}
 
 	rep, err := s.activityCli.ListInInterval(ctx,
-		&activitycomm.ListInIntervalActivitiesRequest{
-			Period: &activitycomm.Interval{
+		&bookmastergrpc.ListInIntervalActivitiesRequest{
+			Period: &bookmastergrpc.Interval{
 				From: period.GetFrom(),
 				To:   period.GetTo(),
 			},
@@ -70,7 +70,7 @@ func (s *reportServer) Create(ctx context.Context, req *reportcomm.CreateReportR
 		return nil, status.Errorf(codes.Internal, "error creating report: %v", err)
 	}
 
-	return &reportcomm.CreateReportReply{
+	return &reportgrpc.CreateReportReply{
 		Id: id.String(),
 	}, nil
 }

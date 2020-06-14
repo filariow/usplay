@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/FrancescoIlario/usplay/pkg/services/reportcomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/reportgrpc"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )
@@ -20,9 +20,9 @@ var (
 			}
 			defer conn.Close()
 
-			cli := reportcomm.NewReportSvcClient(conn)
+			cli := reportgrpc.NewReportSvcClient(conn)
 			if _, err := cli.Delete(context.TODO(),
-				&reportcomm.DeleteReportRequest{Id: id}); err != nil {
+				&reportgrpc.DeleteReportRequest{Id: id}); err != nil {
 				log.Fatalf("error calling delete: %v", err)
 			}
 

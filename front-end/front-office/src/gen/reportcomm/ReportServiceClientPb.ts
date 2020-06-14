@@ -1,5 +1,5 @@
 /**
- * @fileoverview gRPC-Web generated client stub for reportcomm
+ * @fileoverview gRPC-Web generated client stub for reportgrpc
  * @enhanceable
  * @public
  */
@@ -10,7 +10,7 @@
 import * as grpcWeb from 'grpc-web';
 
 import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb';
-import * as activitycomm_activity_pb from '../activitycomm/activity_pb';
+import * as bookmastergrpc_activity_pb from '../bookmastergrpc/activity_pb';
 
 import {
   CreateReportReply,
@@ -56,7 +56,7 @@ export class ReportSvcClient {
                response: CreateReportReply) => void) {
     return this.client_.rpcCall(
       this.hostname_ +
-        '/reportcomm.ReportSvc/Create',
+        '/reportgrpc.ReportSvc/Create',
       request,
       metadata || {},
       this.methodInfoCreate,
@@ -78,7 +78,7 @@ export class ReportSvcClient {
                response: ReadReportReply) => void) {
     return this.client_.rpcCall(
       this.hostname_ +
-        '/reportcomm.ReportSvc/Read',
+        '/reportgrpc.ReportSvc/Read',
       request,
       metadata || {},
       this.methodInfoRead,
@@ -100,7 +100,7 @@ export class ReportSvcClient {
                response: DeleteReportReply) => void) {
     return this.client_.rpcCall(
       this.hostname_ +
-        '/reportcomm.ReportSvc/Delete',
+        '/reportgrpc.ReportSvc/Delete',
       request,
       metadata || {},
       this.methodInfoDelete,
@@ -122,7 +122,7 @@ export class ReportSvcClient {
                response: ListReportsReply) => void) {
     return this.client_.rpcCall(
       this.hostname_ +
-        '/reportcomm.ReportSvc/List',
+        '/reportgrpc.ReportSvc/List',
       request,
       metadata || {},
       this.methodInfoList,

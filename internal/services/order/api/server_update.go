@@ -4,13 +4,13 @@ import (
 	"context"
 
 	"github.com/FrancescoIlario/usplay/internal/services/order/storage"
-	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordergrpc"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
 
-func (s *orderServer) Update(ctx context.Context, req *ordercomm.UpdateOrderRequest) (*ordercomm.UpdateOrderReply, error) {
+func (s *orderServer) Update(ctx context.Context, req *ordergrpc.UpdateOrderRequest) (*ordergrpc.UpdateOrderReply, error) {
 	id := req.GetId()
 	uid, err := uuid.Parse(id)
 	if err != nil || uid == uuid.Nil {
@@ -28,5 +28,5 @@ func (s *orderServer) Update(ctx context.Context, req *ordercomm.UpdateOrderRequ
 		return nil, status.Errorf(codes.Internal, "error creating order: %v", err)
 	}
 
-	return &ordercomm.UpdateOrderReply{}, nil
+	return &ordergrpc.UpdateOrderReply{}, nil
 }

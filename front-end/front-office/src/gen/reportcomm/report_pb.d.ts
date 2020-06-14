@@ -1,7 +1,7 @@
 import * as jspb from "google-protobuf"
 
 import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb';
-import * as activitycomm_activity_pb from '../activitycomm/activity_pb';
+import * as bookmastergrpc_activity_pb from '../bookmastergrpc/activity_pb';
 
 export class CreateReportRequest extends jspb.Message {
   getName(): string;
@@ -208,10 +208,10 @@ export class Report extends jspb.Message {
   hasPeriod(): boolean;
   clearPeriod(): void;
 
-  getActivitiesList(): Array<activitycomm_activity_pb.Activity>;
-  setActivitiesList(value: Array<activitycomm_activity_pb.Activity>): void;
+  getActivitiesList(): Array<bookmastergrpc_activity_pb.Activity>;
+  setActivitiesList(value: Array<bookmastergrpc_activity_pb.Activity>): void;
   clearActivitiesList(): void;
-  addActivities(value?: activitycomm_activity_pb.Activity, index?: number): activitycomm_activity_pb.Activity;
+  addActivities(value?: bookmastergrpc_activity_pb.Activity, index?: number): bookmastergrpc_activity_pb.Activity;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): Report.AsObject;
@@ -227,7 +227,7 @@ export namespace Report {
     name: string,
     orderid: string,
     period?: Interval.AsObject,
-    activitiesList: Array<activitycomm_activity_pb.Activity.AsObject>,
+    activitiesList: Array<bookmastergrpc_activity_pb.Activity.AsObject>,
   }
 }
 

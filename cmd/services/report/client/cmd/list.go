@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/FrancescoIlario/usplay/pkg/services/reportcomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/reportgrpc"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )
@@ -20,8 +20,8 @@ var (
 			}
 			defer conn.Close()
 
-			cli := reportcomm.NewReportSvcClient(conn)
-			resp, err := cli.List(context.TODO(), &reportcomm.ListReportsRequest{})
+			cli := reportgrpc.NewReportSvcClient(conn)
+			resp, err := cli.List(context.TODO(), &reportgrpc.ListReportsRequest{})
 			if err != nil {
 				log.Fatalf("error calling list: %v", err)
 			}

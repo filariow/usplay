@@ -6,7 +6,7 @@ import (
 	"log"
 
 	"github.com/FrancescoIlario/usplay/pkg/datext"
-	"github.com/FrancescoIlario/usplay/pkg/services/reportcomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/reportgrpc"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )
@@ -22,8 +22,8 @@ var (
 			}
 			defer conn.Close()
 
-			cli := reportcomm.NewReportSvcClient(conn)
-			resp, err := cli.Read(context.TODO(), &reportcomm.ReadReportRequest{
+			cli := reportgrpc.NewReportSvcClient(conn)
+			resp, err := cli.Read(context.TODO(), &reportgrpc.ReadReportRequest{
 				Id: id,
 			})
 			if err != nil {
@@ -41,7 +41,7 @@ func init() {
 	cmdRead.Flags().StringVarP(&id, "id", "i", "", "report's id")
 }
 
-func printReport(report *reportcomm.Report) {
+func printReport(report *reportgrpc.Report) {
 	if report == nil {
 		fmt.Println("Empty report returned")
 		return

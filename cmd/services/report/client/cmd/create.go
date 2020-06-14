@@ -6,7 +6,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/FrancescoIlario/usplay/pkg/services/reportcomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/reportgrpc"
 	"github.com/golang/protobuf/ptypes"
 	"github.com/golang/protobuf/ptypes/timestamp"
 	"github.com/spf13/cobra"
@@ -33,10 +33,10 @@ var (
 			}
 			defer conn.Close()
 
-			cli := reportcomm.NewReportSvcClient(conn)
-			resp, err := cli.Create(context.TODO(), &reportcomm.CreateReportRequest{
+			cli := reportgrpc.NewReportSvcClient(conn)
+			resp, err := cli.Create(context.TODO(), &reportgrpc.CreateReportRequest{
 				Name: name,
-				Period: &reportcomm.Interval{
+				Period: &reportgrpc.Interval{
 					From: fromTimestamp,
 					To:   toTimestamp,
 				},
@@ -77,7 +77,7 @@ func parseDateTime(value string) (*timestamp.Timestamp, error) {
 	return ts, err
 }
 
-func parseInterval(from, to string) (*reportcomm.Interval, error) {
+func parseInterval(from, to string) (*reportgrpc.Interval, error) {
 	fromTimestamp, err := parseDateTime(from)
 	if err != nil {
 		return nil, fmt.Errorf(`"from" field is invalid: %v`, err)
@@ -86,7 +86,7 @@ func parseInterval(from, to string) (*reportcomm.Interval, error) {
 	if err != nil {
 		return nil, fmt.Errorf(`"to" field is invalid: %v`, err)
 	}
-	return &reportcomm.Interval{
+	return &reportgrpc.Interval{
 		From: fromTimestamp,
 		To:   toTimestamp,
 	}, nil

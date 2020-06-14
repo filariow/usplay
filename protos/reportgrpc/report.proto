@@ -1,0 +1,83 @@
+syntax = "proto3";
+package reportgrpc;
+
+import "google/protobuf/timestamp.proto";
+import "bookmastergrpc/activity.proto";
+
+option go_package = "reportgrpc";
+// option go_package = "github.com/FrancescoIlario/usplay/pkg/services/reportgrpc";
+option optimize_for = LITE_RUNTIME;
+
+// The Report service definition.
+service ReportSvc {
+    // Creates a new report
+    rpc Create (CreateReportRequest) returns (CreateReportReply) {}
+    // Reads an report
+    rpc Read (ReadReportRequest) returns (ReadReportReply) {}
+    // Delete an report
+    rpc Delete (DeleteReportRequest) returns (DeleteReportReply) {}
+    // List an report
+    rpc List (ListReportsRequest) returns (ListReportsReply) {}
+}
+
+// The request message containing the report details
+message CreateReportRequest {
+    string Name = 1;
+    Interval Period = 2;
+}
+
+// The response message containing the id of the report
+message CreateReportReply {
+    string Id = 1;
+}
+
+// The request message for the read request
+message ReadReportRequest {
+    string Id = 1;
+}
+
+// The response message to the read request
+message ReadReportReply {
+    Report report = 1;
+}
+
+// The request message for the delete request
+message DeleteReportRequest {
+    string Id = 1;
+}
+
+// The response message to the delete request
+message DeleteReportReply {}
+
+// The request message for the update request
+message UpdateReportRequest {
+    string Id = 1;
+    string Name = 2;
+    string Code = 3;
+    string Description = 4;
+}
+
+// The response message to the update request.
+// Returns the old values for the Report
+message UpdateReportReply {}
+
+// The request message for the list reports request
+message ListReportsRequest { }
+
+// The response message to the list reports request.
+message ListReportsReply {
+    repeated Report reports = 1;
+}
+
+message Report {
+    string Id = 1;
+    string Name = 2;
+    string OrderId = 3;
+    Interval Period = 4;
+    repeated bookmastergrpc.Activity Activities = 5;
+}
+
+message Interval {
+    google.protobuf.Timestamp from = 1;
+    google.protobuf.Timestamp to = 2;
+}

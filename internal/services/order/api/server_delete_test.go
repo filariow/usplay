@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/FrancescoIlario/usplay/internal/services/order/api"
-	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordergrpc"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -20,7 +20,7 @@ func Test_DeleteHappyPath(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	_, err := svr.Delete(ctx, &ordercomm.DeleteOrderRequest{Id: uuid.New().String()})
+	_, err := svr.Delete(ctx, &ordergrpc.DeleteOrderRequest{Id: uuid.New().String()})
 
 	// assert
 	if err != nil {
@@ -37,7 +37,7 @@ func Test_DeleteInvalidId(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	_, err := svr.Delete(ctx, &ordercomm.DeleteOrderRequest{Id: "88888128312319273190"})
+	_, err := svr.Delete(ctx, &ordergrpc.DeleteOrderRequest{Id: "88888128312319273190"})
 
 	// assert
 	if err == nil {
@@ -63,7 +63,7 @@ func Test_DeleteEmptyId(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	_, err := svr.Delete(ctx, &ordercomm.DeleteOrderRequest{Id: ""})
+	_, err := svr.Delete(ctx, &ordergrpc.DeleteOrderRequest{Id: ""})
 
 	// assert
 	if err == nil {
@@ -89,7 +89,7 @@ func Test_DeleteNilId(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	_, err := svr.Delete(ctx, &ordercomm.DeleteOrderRequest{Id: uuid.Nil.String()})
+	_, err := svr.Delete(ctx, &ordergrpc.DeleteOrderRequest{Id: uuid.Nil.String()})
 
 	// assert
 	if err == nil {

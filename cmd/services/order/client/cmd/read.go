@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordergrpc"
 	"github.com/spf13/cobra"
 	"google.golang.org/grpc"
 )
@@ -20,8 +20,8 @@ var (
 			}
 			defer conn.Close()
 
-			cli := ordercomm.NewOrderSvcClient(conn)
-			resp, err := cli.Read(context.TODO(), &ordercomm.ReadOrderRequest{
+			cli := ordergrpc.NewOrderSvcClient(conn)
+			resp, err := cli.Read(context.TODO(), &ordergrpc.ReadOrderRequest{
 				Id: id,
 			})
 			if err != nil {

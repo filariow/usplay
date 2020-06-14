@@ -6,7 +6,7 @@ import (
 
 	"github.com/FrancescoIlario/usplay/internal/services/order/api"
 	"github.com/FrancescoIlario/usplay/internal/services/order/storage"
-	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordergrpc"
 	"github.com/google/uuid"
 )
 
@@ -32,7 +32,7 @@ func Test_CreateHappyPath(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	reply, err := svr.Create(ctx, &ordercomm.CreateOrderRequest{
+	reply, err := svr.Create(ctx, &ordergrpc.CreateOrderRequest{
 		Code:        order.Code,
 		Description: order.Description,
 		Name:        order.Name,

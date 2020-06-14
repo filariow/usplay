@@ -7,7 +7,7 @@ import (
 
 	"github.com/FrancescoIlario/usplay/internal/services/order/api"
 	"github.com/FrancescoIlario/usplay/internal/services/order/storage"
-	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordergrpc"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -35,7 +35,7 @@ func Test_ExistHappyPathTrue(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	reply, err := svr.Exist(ctx, &ordercomm.ExistOrderRequest{
+	reply, err := svr.Exist(ctx, &ordergrpc.ExistOrderRequest{
 		Id: order.ID,
 	})
 
@@ -71,7 +71,7 @@ func Test_ExistHappyPathFalse(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	reply, err := svr.Exist(ctx, &ordercomm.ExistOrderRequest{
+	reply, err := svr.Exist(ctx, &ordergrpc.ExistOrderRequest{
 		Id: order.ID,
 	})
 
@@ -107,7 +107,7 @@ func Test_ExistSadPath(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	_, err := svr.Exist(ctx, &ordercomm.ExistOrderRequest{
+	_, err := svr.Exist(ctx, &ordergrpc.ExistOrderRequest{
 		Id: order.ID,
 	})
 

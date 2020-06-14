@@ -10,11 +10,11 @@ import Vue from "vue";
 import {
   ActivityTypeSvcClient,
   ServiceError,
-} from "../gen/activitytypecomm/activitytype_pb_service";
+} from "../gen/bookmastergrpc/activitytype_pb_service";
 import {
   ListActivityTypesRequest,
   ListActivityTypesReply,
-} from "../gen/activitytypecomm/activitytype_pb";
+} from "../gen/bookmastergrpc/activitytype_pb";
 import Component from "vue-class-component";
 
 export class ActivityTypeViewModel {

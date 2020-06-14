@@ -19,19 +19,19 @@ static_resources:
               - name: local_service
                 domains: ["*"]
                 routes:
-                - match: { prefix: "/ordercomm.OrderSvc" }
+                - match: { prefix: "/ordergrpc.OrderSvc" }
                   route:
                     cluster: order_service
                     max_grpc_timeout: 0s
-                - match: { prefix: "/activitycomm.ActivitySvc"}
+                - match: { prefix: "/bookmastergrpc.ActivitySvc"}
                   route:
                     cluster: activity_service
                     max_grpc_timeout: 0s
-                - match: { prefix: "/activitytypecomm.ActivityTypeSvc"}
+                - match: { prefix: "/bookmastergrpc.ActivityTypeSvc"}
                   route:
                     cluster: activitytype_service
                     max_grpc_timeout: 0s
-                - match: { prefix: "/reportcomm.ReportSvc"}
+                - match: { prefix: "/reportgrpc.ReportSvc"}
                   route:
                     cluster: report_service
                     max_grpc_timeout: 0s

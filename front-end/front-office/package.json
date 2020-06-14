@@ -11,7 +11,6 @@
     "@improbable-eng/grpc-web": "^0.12.0",
     "@mdi/font": "^3.6.95",
     "@types/google-protobuf": "^3.7.2",
-    "@types/node": "^13.13.5",
     "core-js": "^3.6.4",
     "proto": "^1.0.19",
     "register-service-worker": "^1.7.1",
@@ -25,6 +24,7 @@
   },
   "devDependencies": {
     "@grpc/proto-loader": "^0.3.0",
+    "@types/node": "^13.13.12",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
     "@vue/cli-plugin-babel": "~4.3.0",

@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/FrancescoIlario/usplay/internal/services/order/api"
-	"github.com/FrancescoIlario/usplay/pkg/services/ordercomm"
+	"github.com/FrancescoIlario/usplay/pkg/services/ordergrpc"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
@@ -20,7 +20,7 @@ func Test_UpdateHappyPath(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	_, err := svr.Update(ctx, &ordercomm.UpdateOrderRequest{Id: uuid.New().String()})
+	_, err := svr.Update(ctx, &ordergrpc.UpdateOrderRequest{Id: uuid.New().String()})
 
 	// assert
 	if err != nil {
@@ -37,7 +37,7 @@ func Test_UpdateInvalidId(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	_, err := svr.Update(ctx, &ordercomm.UpdateOrderRequest{Id: "88888128312319273190"})
+	_, err := svr.Update(ctx, &ordergrpc.UpdateOrderRequest{Id: "88888128312319273190"})
 
 	// assert
 	if err == nil {
@@ -63,7 +63,7 @@ func Test_UpdateEmptyId(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	_, err := svr.Update(ctx, &ordercomm.UpdateOrderRequest{Id: ""})
+	_, err := svr.Update(ctx, &ordergrpc.UpdateOrderRequest{Id: ""})
 
 	// assert
 	if err == nil {
@@ -89,7 +89,7 @@ func Test_UpdateNilId(t *testing.T) {
 	ctx := context.Background()
 
 	// act
-	_, err := svr.Update(ctx, &ordercomm.UpdateOrderRequest{Id: uuid.Nil.String()})
+	_, err := svr.Update(ctx, &ordergrpc.UpdateOrderRequest{Id: uuid.Nil.String()})
 
 	// assert
 	if err == nil {
