@@ -22,7 +22,7 @@ func TestCreateHappyPathIntegration(t *testing.T) {
 	}
 	id, err := repo.Create(ctx, createActivityType)
 	if err != nil {
-		t.Fatalf("error creating new activity: %v", err)
+		t.Fatalf("error creating ActivityType: %v", err)
 	}
 	if id == nil {
 		t.Fatalf("error returned id is empty")

@@ -3,12 +3,15 @@ package activity_test
 import (
 	"fmt"
 	"math/rand"
+	"os"
 	"strings"
 	"time"
 
 	"github.com/FrancescoIlario/usplay/cmd/services/bookmaster/server/conf"
 	"github.com/FrancescoIlario/usplay/internal/services/bookmaster/activitytype/storage"
 	"github.com/FrancescoIlario/usplay/internal/services/bookmaster/activitytype/storage/mongostore"
+	"github.com/joho/godotenv"
+	"github.com/sirupsen/logrus"
 )
 
 var chars = []rune("abcdefghijklmnopqrstuvwxyz")
@@ -26,6 +29,12 @@ func randomString(length int) string {
 }
 
 func getRepo(collection string) (storage.Repository, error) {
+	err := godotenv.Load()
+	if err != nil {
+		wd, _ := os.Getwd()
+		logrus.Errorf("error reading .env file from %v: %v", wd, err)
+	}
+
 	c, err := conf.GetConfigurationFromEnv()
 	if err != nil {
 		return nil, fmt.Errorf(`configuration error: %w`, err)
