@@ -7,7 +7,7 @@ import (
 	"github.com/FrancescoIlario/usplay/internal/services/bookmaster/activitytype/storage"
 )
 
-func TestCreate(t *testing.T) {
+func TestCreateHappyPathIntegration(t *testing.T) {
 	collection := randomString(10)
 	repo, err := getRepo(collection)
 	if err != nil {
@@ -30,7 +30,7 @@ func TestCreate(t *testing.T) {
 
 	readActivityType, err := repo.Read(ctx, *id)
 	if err != nil {
-		t.Fatalf("error retrieving created activity from repo: %v", err)
+		t.Fatalf("error retrieving created ActivityType (%s) from repo: %v", *id, err)
 	}
 
 	if catc, ratc := createActivityType.Code, readActivityType.Code; catc != ratc {
