@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  mongo:
+  mongoitest:
     image: mongo
     environment:
       MONGO_INITDB_DATABASE: usplay
@@ -27,24 +27,23 @@ services:
       context: ../../../
       dockerfile: test/integration/bookmaster/Dockerfile
     depends_on:
-      - mongo
+      - mongoitest
     volumes:
-      # - ../../../:/app:cached
       - ./result:/app/result:cached
     environment:
       USPLAY_ORDER_HOST: order:8080
       USPLAY_ADDRESS: localhost:8080
-      USPLAY_ACTIVITY_MONGO_CONNSTR: mongodb://mongo:27017
+      USPLAY_ACTIVITY_MONGO_CONNSTR: mongodb://mongoitest:27017
       USPLAY_ACTIVITY_MONGO_DATABASE: test
       USPLAY_ACTIVITY_MONGO_COLLECTION: activity
       USPLAY_ACTIVITY_MONGO_USERNAME: root
       USPLAY_ACTIVITY_MONGO_PASSWORD: supersecret
-      USPLAY_ACTIVITYTYPE_MONGO_CONNSTR: mongodb://mongo:27017
+      USPLAY_ACTIVITYTYPE_MONGO_CONNSTR: mongodb://mongoitest:27017
       USPLAY_ACTIVITYTYPE_MONGO_DATABASE: usplay
       USPLAY_ACTIVITYTYPE_MONGO_COLLECTION: activitytype
       USPLAY_ACTIVITYTYPE_MONGO_USERNAME: root
       USPLAY_ACTIVITYTYPE_MONGO_PASSWORD: supersecret
-      WAIT_HOSTS: mongo:27017
+      WAIT_HOSTS: mongoitest:27017
       WAIT_HOSTS_TIMEOUT: 30
       WAIT_SLEEP_INTERVAL: 5
       WAIT_HOST_CONNECT_TIMEOUT: 5

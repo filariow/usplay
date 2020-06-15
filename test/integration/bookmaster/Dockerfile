@@ -23,5 +23,6 @@ RUN go mod download -x
 COPY . .
 RUN sudo chown -R $USER /app
 
+ENV RESULT_DIR /app/result
 WORKDIR /app/test/integration/bookmaster
-CMD sudo chown -R $(id -un) /app/result && /bin/wait 5 && RESULT_DIR=/app/result make integration-tests
+CMD sudo chown -R $(id -un) $RESULT_DIR && /bin/wait 5 && make integration-tests
