@@ -1,0 +1,5 @@
+Dockerfile
+docker-compose.yaml
+test.sh
+*.log
+.gitignore

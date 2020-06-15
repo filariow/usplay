@@ -1,4 +1,4 @@
-package main
+package conf
 
 import (
 	"github.com/kelseyhightower/envconfig"
@@ -7,7 +7,8 @@ import (
 // EnvPrefix prefix for environmental variables parsed by application
 const EnvPrefix = "USPLAY"
 
-type configuration struct {
+// Configuration Bookmaster service configuration
+type Configuration struct {
 	OrderHost                   string `required:"true" split_words:"true"`
 	Address                     string `default:"localhost:8080"`
 	ActivityMongoConnstr        string `required:"true" split_words:"true"`
@@ -22,7 +23,8 @@ type configuration struct {
 	ActivitytypeMongoPassword   string `required:"true" split_words:"true"`
 }
 
-func getConfigurationFromEnv() (s configuration, err error) {
+// GetConfigurationFromEnv ...
+func GetConfigurationFromEnv() (s Configuration, err error) {
 	err = envconfig.Process(EnvPrefix, &s)
 	return
 }

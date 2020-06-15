@@ -1,0 +1,50 @@
+version: "3.8"
+services:
+  mongo:
+    image: mongo
+    environment:
+      MONGO_INITDB_DATABASE: usplay
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: supersecret
+
+  # order:
+  #   dockerfile: build/container/usvc/server/Dockerfile
+  #   context: ../../../
+  #   args:
+  #     - USVC_NAME: "order"
+  #   environment:
+  #     - US_ADDRESS: "localhost:8080"
+  #     - US_STORAGE_TYPE: "Mongo"
+  #     - US_MONGO_CONNSTR: "mongodb://mongo:27017"
+  #     - US_MONGO_DATABASE: "test"
+  #     - US_MONGO_COLLECTION: "order"
+  #     - US_MONGO_USERNAME: "root"
+  #     - US_MONGO_PASSWORD: "supersecret"
+
+  test:
+    user: go
+    build:
+      context: ../../../
+      dockerfile: test/integration/bookmaster/Dockerfile
+    depends_on:
+      - mongo
+    volumes:
+      # - ../../../:/app:cached
+      - ./result:/app/result:cached
+    environment:
+      USPLAY_ORDER_HOST: order:8080
+      USPLAY_ADDRESS: localhost:8080
+      USPLAY_ACTIVITY_MONGO_CONNSTR: mongodb://mongo:27017
+      USPLAY_ACTIVITY_MONGO_DATABASE: test
+      USPLAY_ACTIVITY_MONGO_COLLECTION: activity
+      USPLAY_ACTIVITY_MONGO_USERNAME: root
+      USPLAY_ACTIVITY_MONGO_PASSWORD: supersecret
+      USPLAY_ACTIVITYTYPE_MONGO_CONNSTR: mongodb://mongo:27017
+      USPLAY_ACTIVITYTYPE_MONGO_DATABASE: usplay
+      USPLAY_ACTIVITYTYPE_MONGO_COLLECTION: activitytype
+      USPLAY_ACTIVITYTYPE_MONGO_USERNAME: root
+      USPLAY_ACTIVITYTYPE_MONGO_PASSWORD: supersecret
+      WAIT_HOSTS: mongo:27017
+      WAIT_HOSTS_TIMEOUT: 30
+      WAIT_SLEEP_INTERVAL: 5
+      WAIT_HOST_CONNECT_TIMEOUT: 5

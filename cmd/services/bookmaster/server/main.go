@@ -5,6 +5,7 @@ import (
 	"net"
 	"time"
 
+	"github.com/FrancescoIlario/usplay/cmd/services/bookmaster/server/conf"
 	actapi "github.com/FrancescoIlario/usplay/internal/services/bookmaster/activity/api"
 	actstore "github.com/FrancescoIlario/usplay/internal/services/bookmaster/activity/storage"
 	actmongostore "github.com/FrancescoIlario/usplay/internal/services/bookmaster/activity/storage/mongostore"
@@ -20,7 +21,7 @@ import (
 func main() {
 	logrus.Debug("Starting server")
 
-	conf, err := getConfigurationFromEnv()
+	conf, err := conf.GetConfigurationFromEnv()
 	if err != nil {
 		logrus.Fatalf("unable to parse configuration: %v", err)
 	}
@@ -60,7 +61,7 @@ func main() {
 	}
 }
 
-func buildActivityRepo(c *configuration) (actstore.Repository, error) {
+func buildActivityRepo(c *conf.Configuration) (actstore.Repository, error) {
 	mc := &actmongostore.Configuration{
 		Collection:       c.ActivityMongoCollection,
 		ConnectionString: c.ActivityMongoConnstr,
@@ -71,7 +72,7 @@ func buildActivityRepo(c *configuration) (actstore.Repository, error) {
 	return actmongostore.New(mc)
 }
 
-func buildActivityTypeRepo(c *configuration) (acttypestore.Repository, error) {
+func buildActivityTypeRepo(c *conf.Configuration) (acttypestore.Repository, error) {
 	mc := &acttypemongostore.Configuration{
 		Collection:       c.ActivitytypeMongoCollection,
 		ConnectionString: c.ActivitytypeMongoConnstr,
