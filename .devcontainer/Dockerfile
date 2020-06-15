@@ -17,9 +17,10 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 ARG DOCKER_GUID
 
-ARG GHCLI_VERSION=0.7.0
+ARG GHCLI_VERSION=0.10.0
 ARG NODEJS_VERSION=14
-ARG PROTOC_GRPCWEB_VERSION=1.0.7
+ARG PROTOC_GRPCWEB_VERSION=1.1.0
+ARG COMPOSE_VERSION=1.26.0
 # Configure apt, install packages and tools
 RUN apt-get update \
     && apt-get -y install --no-install-recommends apt-utils dialog 2>&1 \
